@@ -15,6 +15,20 @@ them to both versions. All data is fictional (`seed/seed.json`), so the repo is 
 - `seed/seed.json`: the shared mock data both versions are loaded from.
 - `supabase/schema.sql`: tables, row-level security and the `client_portal` function.
 - `scripts/`: Node scripts for applying the schema, seeding and creating the staff login.
+- `web/`: the Vite + React app (client pages and staff console).
+
+## Web app
+
+Run locally with `cd web && npm install && npm run dev`. It needs
+`VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` in `web/.env.local`
+(ignored); copy them from `SUPABASE_PROJECT_URL` and `SUPABASE_PUBLISHABLE_KEY`
+in the root `.env`.
+
+Deployed at https://client-status-tracker-mock.vercel.app (Vercel project
+`client-status-tracker-mock`, team `alejandros-projects-a115cc74`, root
+directory `web`). Pushes to `main` deploy to production; the two `VITE_`
+variables are set in the Vercel project. `web/vercel.json` rewrites every path
+to `index.html` so `/c/<share_token>` and `/admin` load the app.
 
 ## Credentials
 
