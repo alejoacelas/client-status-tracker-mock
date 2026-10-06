@@ -64,10 +64,10 @@ export default function AdminApp() {
 }
 
 const NAV = [
-  { to: 'board', label: 'Board', icon: 'M3 3h4v10H3zM9 3h4v6H9z' },
-  { to: 'projects', label: 'Projects', icon: 'M2 4h12M2 8h12M2 12h12' },
-  { to: 'clients', label: 'Clients', icon: 'M8 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM3 14c0-2.8 2.2-4.5 5-4.5s5 1.7 5 4.5' },
-  { to: 'activity', label: 'Activity', icon: 'M2 8h3l2-5 2 10 2-5h3' },
+  { to: '/admin/board', label: 'Board', icon: 'M3 3h4v10H3zM9 3h4v6H9z' },
+  { to: '/admin/projects', label: 'Projects', icon: 'M2 4h12M2 8h12M2 12h12' },
+  { to: '/admin/clients', label: 'Clients', icon: 'M8 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM3 14c0-2.8 2.2-4.5 5-4.5s5 1.7 5 4.5' },
+  { to: '/admin/activity', label: 'Activity', icon: 'M2 8h3l2-5 2 10 2-5h3' },
 ];
 
 function Console({ email }: { email: string }) {
@@ -115,12 +115,12 @@ function Console({ email }: { email: string }) {
           </div>
         ) : (
           <Routes>
-            <Route index element={<Navigate to="board" replace />} />
+            <Route index element={<Navigate to="/admin/board" replace />} />
             <Route path="board" element={<Board />} />
             <Route path="projects" element={<ProjectsTable />} />
             <Route path="clients" element={<Clients />} />
             <Route path="activity" element={<Activity />} />
-            <Route path="*" element={<Navigate to="board" replace />} />
+            <Route path="*" element={<Navigate to="/admin/board" replace />} />
           </Routes>
         )}
       </main>

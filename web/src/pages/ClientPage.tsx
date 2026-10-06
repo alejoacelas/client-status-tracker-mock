@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { supabase } from '../lib/supabase';
 import type { Portal } from '../lib/types';
-import { dueLabel, formatDate, relativeTime } from '../lib/format';
+import { daysUntil, dueLabel, formatDate, relativeTime } from '../lib/format';
 import { Check, Logo, PhaseSteps, ProgressBar, Spinner, StatusPill } from '../components/ui';
 
 type Load = { state: 'loading' } | { state: 'missing' } | { state: 'error'; message: string } | { state: 'ok'; portal: Portal };
@@ -82,7 +82,7 @@ export default function ClientPage() {
                 <dt>Due</dt>
                 <dd>
                   {formatDate(p.due_date, { year: true })}
-                  {p.status !== 'Done' && p.due_date && <span className="muted small"> · {dueLabel(p.due_date)}</span>}
+                  {p.status !== 'Done' && p.due_date && daysUntil(p.due_date) <= 14 && <span className="muted small"> · {dueLabel(p.due_date)}</span>}
                 </dd>
               </div>
               <div>
