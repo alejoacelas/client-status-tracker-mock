@@ -1,0 +1,148 @@
+{
+  "agency": "Fieldwork Studio",
+  "staff": [
+    { "name": "Maya Chen", "role": "Project manager" },
+    { "name": "Tom Okafor", "role": "Development lead" },
+    { "name": "Priya Nair", "role": "Design lead" }
+  ],
+  "clients": [
+    {
+      "key": "harbor",
+      "name": "Harbor & Pine Coffee",
+      "contact_name": "Dana Ruiz",
+      "contact_email": "dana@harborpine.example",
+      "share_token": "ghHTdi3aLYOv"
+    },
+    {
+      "key": "meridian",
+      "name": "Meridian Family Clinic",
+      "contact_name": "Dr. Sam Patel",
+      "contact_email": "sam.patel@meridianclinic.example",
+      "share_token": "VHw8sw4Rlx83"
+    },
+    {
+      "key": "lumen",
+      "name": "Lumen Books",
+      "contact_name": "Iris Novak",
+      "contact_email": "iris@lumenbooks.example",
+      "share_token": "XB-n2B844L7C"
+    },
+    {
+      "key": "atlas",
+      "name": "Atlas Robotics",
+      "contact_name": "Kofi Mensah",
+      "contact_email": "kofi@atlasrobotics.example",
+      "share_token": "8h6S89QzpTk3"
+    }
+  ],
+  "projects": [
+    {
+      "key": "harbor-shop",
+      "client": "harbor",
+      "name": "Online shop rebuild",
+      "status": "On track",
+      "phase": "Build",
+      "owner": "Tom Okafor",
+      "start_date": "2026-08-04",
+      "due_date": "2026-11-14",
+      "progress": 60,
+      "client_summary": "The product catalogue is fully imported. We're now building checkout and payments, on schedule for a mid-November launch.",
+      "internal_notes": "Stripe account is in Dana's name; she needs to add Tom as a developer before we can test live payments."
+    },
+    {
+      "key": "meridian-portal",
+      "client": "meridian",
+      "name": "Patient intake portal",
+      "status": "At risk",
+      "phase": "Build",
+      "owner": "Maya Chen",
+      "start_date": "2026-07-14",
+      "due_date": "2026-10-30",
+      "progress": 70,
+      "client_summary": "Forms and the patient dashboard are built. Connecting to your records system is waiting on sandbox access from your EHR vendor, which puts the 30 October go-live at risk.",
+      "internal_notes": "CareStack still hasn't issued sandbox API keys. Escalate to Sam if nothing arrives by Thursday 8 Oct."
+    },
+    {
+      "key": "lumen-brand",
+      "client": "lumen",
+      "name": "Brand refresh",
+      "status": "Blocked",
+      "phase": "Design",
+      "owner": "Priya Nair",
+      "start_date": "2026-08-18",
+      "due_date": "2026-10-24",
+      "progress": 45,
+      "client_summary": "Round two logo concepts were shared on 25 September. We need your team's feedback before we can start the brand guidelines.",
+      "internal_notes": "Iris said the board meets 9 Oct. Due date will slip a week if feedback lands after that."
+    },
+    {
+      "key": "atlas-site",
+      "client": "atlas",
+      "name": "Investor website",
+      "status": "Done",
+      "phase": "Launch",
+      "owner": "Maya Chen",
+      "start_date": "2026-06-30",
+      "due_date": "2026-09-19",
+      "progress": 100,
+      "client_summary": "Launched on 19 September. Analytics are live and the handoff documentation is in your shared folder.",
+      "internal_notes": "Invoice for final 30% sent 22 Sep."
+    },
+    {
+      "key": "atlas-docs",
+      "client": "atlas",
+      "name": "Developer docs migration",
+      "status": "On track",
+      "phase": "Discovery",
+      "owner": "Tom Okafor",
+      "start_date": "2026-09-29",
+      "due_date": "2026-12-12",
+      "progress": 10,
+      "client_summary": "We're auditing the 140 existing docs pages and mapping them to the new structure. Expect the migration plan by 16 October.",
+      "internal_notes": "Old docs use a custom Markdown dialect; budget extra time for the converter."
+    }
+  ],
+  "milestones": [
+    { "project": "harbor-shop", "name": "Discovery workshop", "due_date": "2026-08-08", "status": "Done", "completed_on": "2026-08-08" },
+    { "project": "harbor-shop", "name": "Design sign-off", "due_date": "2026-09-05", "status": "Done", "completed_on": "2026-09-04" },
+    { "project": "harbor-shop", "name": "Product catalogue import", "due_date": "2026-09-26", "status": "Done", "completed_on": "2026-09-25" },
+    { "project": "harbor-shop", "name": "Checkout and payments", "due_date": "2026-10-17", "status": "In progress" },
+    { "project": "harbor-shop", "name": "Content load and QA", "due_date": "2026-10-31", "status": "Not started" },
+    { "project": "harbor-shop", "name": "Launch", "due_date": "2026-11-14", "status": "Not started" },
+
+    { "project": "meridian-portal", "name": "Requirements sign-off", "due_date": "2026-07-25", "status": "Done", "completed_on": "2026-07-24" },
+    { "project": "meridian-portal", "name": "Form designs approved", "due_date": "2026-08-22", "status": "Done", "completed_on": "2026-08-26" },
+    { "project": "meridian-portal", "name": "EHR integration", "due_date": "2026-10-10", "status": "In progress" },
+    { "project": "meridian-portal", "name": "Accessibility audit", "due_date": "2026-10-20", "status": "Not started" },
+    { "project": "meridian-portal", "name": "Staff training", "due_date": "2026-10-27", "status": "Not started" },
+    { "project": "meridian-portal", "name": "Go-live", "due_date": "2026-10-30", "status": "Not started" },
+
+    { "project": "lumen-brand", "name": "Brand audit", "due_date": "2026-08-28", "status": "Done", "completed_on": "2026-08-27" },
+    { "project": "lumen-brand", "name": "Logo concepts, round one", "due_date": "2026-09-11", "status": "Done", "completed_on": "2026-09-11" },
+    { "project": "lumen-brand", "name": "Logo concepts, round two", "due_date": "2026-09-25", "status": "Done", "completed_on": "2026-09-25" },
+    { "project": "lumen-brand", "name": "Client feedback on round two", "due_date": "2026-10-02", "status": "In progress" },
+    { "project": "lumen-brand", "name": "Brand guidelines", "due_date": "2026-10-17", "status": "Not started" },
+    { "project": "lumen-brand", "name": "Final asset handoff", "due_date": "2026-10-24", "status": "Not started" },
+
+    { "project": "atlas-site", "name": "Content outline", "due_date": "2026-07-17", "status": "Done", "completed_on": "2026-07-16" },
+    { "project": "atlas-site", "name": "Design and copy approved", "due_date": "2026-08-14", "status": "Done", "completed_on": "2026-08-14" },
+    { "project": "atlas-site", "name": "Launch", "due_date": "2026-09-19", "status": "Done", "completed_on": "2026-09-19" },
+
+    { "project": "atlas-docs", "name": "Docs audit", "due_date": "2026-10-09", "status": "In progress" },
+    { "project": "atlas-docs", "name": "Migration plan", "due_date": "2026-10-16", "status": "Not started" },
+    { "project": "atlas-docs", "name": "Converter and first 50 pages", "due_date": "2026-11-13", "status": "Not started" },
+    { "project": "atlas-docs", "name": "Full migration and redirects", "due_date": "2026-12-12", "status": "Not started" }
+  ],
+  "updates": [
+    { "project": "atlas-site", "date": "2026-09-19", "source": "Manual", "client_visible": true, "summary": "Investor site launched. DNS switched at 10:00 and analytics confirmed live." },
+    { "project": "lumen-brand", "date": "2026-09-25", "source": "Email", "client_visible": true, "summary": "Shared round two logo concepts (three directions) with Iris for board review." },
+    { "project": "harbor-shop", "date": "2026-09-25", "source": "Slack", "client_visible": true, "summary": "All 212 products imported with photos and variants. Spot-checked 30 against the old shop." },
+    { "project": "meridian-portal", "date": "2026-09-28", "source": "Email", "client_visible": false, "summary": "Asked CareStack support for sandbox API keys a second time; ticket #48213." },
+    { "project": "atlas-docs", "date": "2026-09-29", "source": "Manual", "client_visible": true, "summary": "Kickoff call with Kofi. Agreed to keep existing URLs where possible." },
+    { "project": "meridian-portal", "date": "2026-09-30", "source": "Slack", "client_visible": true, "summary": "Patient dashboard and all six intake forms are built and in staging." },
+    { "project": "lumen-brand", "date": "2026-10-01", "source": "Email", "client_visible": false, "summary": "Iris replied that the board reviews logos on 9 Oct; no feedback before then." },
+    { "project": "harbor-shop", "date": "2026-10-02", "source": "Slack", "client_visible": false, "summary": "Waiting on Dana to add Tom to the Stripe account before testing live payments." },
+    { "project": "atlas-docs", "date": "2026-10-05", "source": "Slack", "client_visible": true, "summary": "Audited 60 of 140 pages. About a third are out of date and will be flagged for review." },
+    { "project": "meridian-portal", "date": "2026-10-05", "source": "Email", "client_visible": true, "summary": "Still waiting on EHR sandbox access. Go-live on 30 Oct is at risk if access isn't granted by 10 Oct." }
+  ]
+}
