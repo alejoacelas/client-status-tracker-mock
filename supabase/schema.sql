@@ -14,7 +14,7 @@ create table if not exists clients (
   name text not null,
   contact_name text,
   contact_email text,
-  share_token text not null unique default encode(gen_random_bytes(9), 'base64'),
+  share_token text not null unique default translate(encode(gen_random_bytes(9), 'base64'), '+/', '-_'),
   created_at timestamptz not null default now()
 );
 
