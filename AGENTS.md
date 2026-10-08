@@ -31,6 +31,12 @@ inspiration and arrows, plus a first-visit help popup. The site sends
 design, add its folder under `replicas/` and an entry to the `designs` list in
 `gallery/index.html`, and to `DESIGNS` in `api/comments.js`.
 
+The gallery opens on Now / Next / Later. A one-word path names the viewer for
+comments: `https://status-tracker-designs.vercel.app/varun#hill-chart` posts as
+"Varun" (`vercel.json` rewrites such paths to the gallery). Check the deployed
+site with `node scripts/check-gallery.mjs [base-url] [screenshot-dir]`, which
+needs `npx playwright install chromium` once.
+
 Comments: the "Comments" panel in the gallery posts to `api/comments.js`, which
 stores one private JSON blob per comment in the Vercel Blob store
 `status-tracker-comments`. Read them all with
