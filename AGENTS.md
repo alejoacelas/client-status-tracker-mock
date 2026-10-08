@@ -29,4 +29,13 @@ inspiration and arrows, plus a first-visit help popup. The site sends
 `main` runs `scripts/build-site.sh` per [vercel.json](vercel.json) and deploys
 `site/`. Run the same script locally to check a build. To add a
 design, add its folder under `replicas/` and an entry to the `designs` list in
-`gallery/index.html`.
+`gallery/index.html`, and to `DESIGNS` in `api/comments.js`.
+
+Comments: the "Comments" panel in the gallery posts to `api/comments.js`, which
+stores one private JSON blob per comment in the Vercel Blob store
+`status-tracker-comments`. Read them all with
+`vercel blob list --prefix comments/` from the repo root. The store's
+`BLOB_READ_WRITE_TOKEN` is set in the Vercel project's environment; a copy is in
+1Password (personal account, vault `mac-agents`, item
+"Vercel Blob — status-tracker-comments", field `credential`), and
+`vercel env pull .env.local` restores it locally.

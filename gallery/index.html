@@ -47,6 +47,36 @@
     .card kbd { border: 1px solid #d1d5db; border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; font: 12px ui-monospace, monospace; }
     .card .actions { display: flex; justify-content: flex-end; margin-top: 14px; }
     .card button { background: #111418; color: #fff; border: 0; border-radius: 8px; padding: 8px 14px; font: inherit; cursor: pointer; }
+    .btn .badge { margin-left: 6px; min-width: 18px; padding: 0 5px; border-radius: 9px; background: var(--accent); color: #0b0d10; font-size: 12px; font-weight: 600; line-height: 18px; }
+    .btn .badge:empty { display: none; }
+    .drawer {
+      position: fixed; top: var(--bar-h); right: 0; bottom: 0; width: 380px; max-width: 100%;
+      background: #fff; color: #111418; border-left: 1px solid #e5e7eb; box-shadow: -12px 0 32px rgba(0,0,0,.18);
+      display: none; flex-direction: column; z-index: 5;
+    }
+    .drawer.open { display: flex; }
+    .drawer header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #eef0f3; }
+    .drawer header h3 { margin: 0; font-size: 15px; }
+    .drawer .x { border: 0; background: none; font-size: 20px; line-height: 1; cursor: pointer; color: #6b7280; padding: 4px 6px; }
+    .list { flex: 1; overflow-y: auto; padding: 8px 16px; }
+    .empty { color: #6b7280; padding: 16px 0; }
+    .comment { padding: 12px 0; border-bottom: 1px solid #f1f2f4; }
+    .comment .meta { display: flex; gap: 8px; align-items: baseline; font-size: 12px; color: #6b7280; }
+    .comment .who { font-weight: 600; color: #111418; font-size: 13px; }
+    .comment .text { margin: 4px 0 6px; white-space: pre-wrap; word-wrap: break-word; }
+    .comment .links { display: flex; gap: 12px; font-size: 12px; }
+    .comment .links button { border: 0; background: none; padding: 0; color: #4b5bd7; cursor: pointer; font: inherit; }
+    .comment .links .del { color: #b42318; }
+    form.compose { border-top: 1px solid #eef0f3; padding: 12px 16px 16px; display: grid; gap: 8px; }
+    form.compose label { font-size: 12px; color: #4b5563; display: grid; gap: 4px; }
+    form.compose input, form.compose textarea { font: inherit; border: 1px solid #d1d5db; border-radius: 8px; padding: 8px 10px; width: 100%; }
+    form.compose textarea { min-height: 84px; resize: vertical; }
+    form.compose .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    form.compose .where { font-size: 12px; color: #6b7280; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    form.compose button[type=submit] { background: #111418; color: #fff; border: 0; border-radius: 8px; padding: 8px 14px; font: inherit; cursor: pointer; }
+    form.compose button[disabled] { opacity: .5; cursor: default; }
+    .hp { position: absolute; left: -9999px; }
+    .error { color: #b42318; font-size: 12px; min-height: 0; }
     @media (max-width: 640px) {
       .inspired, .full span { display: none; }
       .bar { gap: 8px; }
@@ -61,16 +91,36 @@
     <span class="spacer"></span>
     <button class="btn arrow" id="prev" aria-label="Previous design">‹</button>
     <button class="btn arrow" id="next" aria-label="Next design">›</button>
+    <button class="btn" id="comments-btn" aria-expanded="false" aria-controls="drawer">Comments<span class="badge" id="badge"></span></button>
     <button class="btn" id="help" aria-label="How this works">?</button>
     <a class="btn full" id="full" target="_blank" rel="noopener"><span>Open full page&nbsp;</span>↗</a>
   </div>
   <iframe id="frame" title="Design"></iframe>
+
+  <aside class="drawer" id="drawer" aria-labelledby="drawer-title">
+    <header>
+      <h3 id="drawer-title">Comments</h3>
+      <button class="x" id="drawer-close" aria-label="Close comments">×</button>
+    </header>
+    <div class="list" id="list"></div>
+    <form class="compose" id="compose">
+      <label>Your name <input id="c-name" maxlength="60" autocomplete="name" /></label>
+      <label>Comment <textarea id="c-text" maxlength="2000" required placeholder="What works, what doesn't, what you'd change…"></textarea></label>
+      <input class="hp" id="c-website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="error" id="c-error" role="alert"></div>
+      <div class="row">
+        <span class="where" id="c-where"></span>
+        <button type="submit" id="c-submit">Post</button>
+      </div>
+    </form>
+  </aside>
 
   <div class="hint" id="hint" role="dialog" aria-modal="true" aria-labelledby="hint-title">
     <div class="card">
       <h2 id="hint-title">Seven ways to show project status</h2>
       <p>Each page is a working copy of how a well-known product shows progress, filled with the same made-up agency and clients.</p>
       <p>Use the <strong>‹ ›</strong> arrows in the top bar, or the <kbd>←</kbd> <kbd>→</kbd> keys, to move between designs. The bar names each design and what inspired it. Click around: most things work.</p>
+      <p>To leave feedback, click <strong>Comments</strong> in the top bar. Comments are saved with the design and the screen you were on, and everyone with this link can read them.</p>
       <p>These are internal references, not finished designs.</p>
       <div class="actions"><button id="close">Got it</button></div>
     </div>
@@ -111,6 +161,7 @@
     $('prev').onclick = () => go(-1);
     $('next').onclick = () => go(1);
     document.addEventListener('keydown', (e) => {
+      if (e.target.closest && e.target.closest('input, textarea')) return;
       if ($('hint').classList.contains('open')) { if (e.key === 'Escape' || e.key === 'Enter') closeHint(); return; }
       if (e.key === 'ArrowLeft') go(-1);
       if (e.key === 'ArrowRight') go(1);
@@ -126,6 +177,106 @@
     let seen = false;
     try { seen = localStorage.getItem('seen-hint') === '1'; } catch {}
     if (!seen) $('hint').classList.add('open');
+    // Comments
+    const store = {
+      get(k, fallback) { try { return localStorage.getItem(k) ?? fallback; } catch { return fallback; } },
+      set(k, v) { try { localStorage.setItem(k, v); } catch {} },
+    };
+    let key = store.get('comment-key', '');
+    if (key.length < 16) { key = crypto.randomUUID() + crypto.randomUUID(); store.set('comment-key', key); }
+    const mine = new Set(JSON.parse(store.get('my-comments', '[]')));
+    $('c-name').value = store.get('comment-name', '');
+    const current = () => designs[indexFromHash()];
+    const innerRoute = () => { try { return $('frame').contentWindow.location.hash || ''; } catch { return ''; } };
+    const ago = (iso) => {
+      const s = (Date.now() - new Date(iso)) / 1000;
+      if (s < 60) return 'just now';
+      if (s < 3600) return `${Math.floor(s / 60)} min ago`;
+      if (s < 86400) return `${Math.floor(s / 3600)} h ago`;
+      return new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
+    };
+    const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+
+    async function refreshCounts() {
+      try {
+        const { counts } = await (await fetch('/api/comments')).json();
+        $('badge').textContent = counts[current().slug] || '';
+        window.commentCounts = counts;
+      } catch {}
+    }
+    async function loadComments() {
+      const slug = current().slug;
+      $('drawer-title').textContent = `Comments on ${current().name}`;
+      $('list').replaceChildren(el('div', 'empty', 'Loading…'));
+      try {
+        const { comments } = await (await fetch(`/api/comments?design=${slug}`)).json();
+        if (slug !== current().slug) return;
+        renderComments(comments);
+      } catch { $('list').replaceChildren(el('div', 'empty', "Couldn't load comments.")); }
+    }
+    function renderComments(comments) {
+      if (!comments.length) { $('list').replaceChildren(el('div', 'empty', 'No comments yet. Be the first.')); return; }
+      $('list').replaceChildren(...comments.map((c) => {
+        const item = el('div', 'comment');
+        const meta = el('div', 'meta');
+        meta.append(el('span', 'who', c.name), el('span', null, ago(c.createdAt)));
+        const links = el('div', 'links');
+        if (c.route) {
+          const go = el('button', null, 'Show the screen');
+          go.type = 'button';
+          go.onclick = () => { try { $('frame').contentWindow.location.hash = c.route; } catch {} };
+          links.append(go);
+        }
+        if (mine.has(c.id)) {
+          const del = el('button', 'del', 'Delete');
+          del.type = 'button';
+          del.onclick = async () => {
+            del.disabled = true;
+            const r = await fetch(`/api/comments?design=${c.design}&id=${c.id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key }) });
+            if (r.ok) { mine.delete(c.id); store.set('my-comments', JSON.stringify([...mine])); loadComments(); refreshCounts(); } else del.disabled = false;
+          };
+          links.append(del);
+        }
+        item.append(meta, el('div', 'text', c.text), links);
+        return item;
+      }));
+      $('list').scrollTop = $('list').scrollHeight;
+    }
+    function updateWhere() {
+      const r = innerRoute();
+      $('c-where').textContent = r && r !== '#' && r !== '#/' ? `On screen ${r.replace(/^#/, '')}` : 'On the first screen';
+    }
+    function openDrawer() { $('drawer').classList.add('open'); $('comments-btn').setAttribute('aria-expanded', 'true'); updateWhere(); loadComments(); }
+    function closeDrawer() { $('drawer').classList.remove('open'); $('comments-btn').setAttribute('aria-expanded', 'false'); }
+    $('comments-btn').onclick = () => ($('drawer').classList.contains('open') ? closeDrawer() : openDrawer());
+    $('drawer-close').onclick = closeDrawer;
+    $('c-text').addEventListener('focus', updateWhere);
+    $('compose').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      $('c-error').textContent = '';
+      const text = $('c-text').value.trim();
+      if (!text) return;
+      $('c-submit').disabled = true;
+      store.set('comment-name', $('c-name').value.trim());
+      try {
+        const r = await fetch('/api/comments', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ design: current().slug, route: innerRoute(), name: $('c-name').value, text, key, website: $('c-website').value }),
+        });
+        const data = await r.json();
+        if (!r.ok) throw new Error(data.error || 'Could not post');
+        if (data.comment) { mine.add(data.comment.id); store.set('my-comments', JSON.stringify([...mine])); }
+        $('c-text').value = '';
+        loadComments(); refreshCounts();
+      } catch (err) { $('c-error').textContent = err.message; }
+      finally { $('c-submit').disabled = false; }
+    });
+    $('frame').addEventListener('load', () => {
+      try { $('frame').contentWindow.addEventListener('hashchange', updateWhere); } catch {}
+    });
+    window.addEventListener('hashchange', () => { if ($('drawer').classList.contains('open')) loadComments(); refreshCounts(); });
+    refreshCounts();
+
     show(indexFromHash());
   </script>
 </body>
