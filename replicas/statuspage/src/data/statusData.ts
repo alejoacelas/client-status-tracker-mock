@@ -77,6 +77,8 @@ export interface ClientPage {
   contact: string
   /** Shown in the "About This Site" text block. */
   about: string
+  /** Statuspage's component layout setting. Two columns is what githubstatus.com uses. */
+  layout?: 'one-column' | 'two-columns'
   groups: ComponentGroup[]
   components: StatusComponent[]
   incidents: Incident[]
@@ -97,6 +99,7 @@ export const clients: ClientPage[] = [
     key: 'harbor',
     name: 'Harbor & Pine Coffee',
     contact: 'Dana Ruiz',
+    layout: 'two-columns',
     about:
       'Live progress on the Online shop rebuild for Harbor & Pine Coffee. Each line below is one workstream; incidents are anything that could move the 14 November launch.',
     groups: [],

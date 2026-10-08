@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import type { ClientPage, StatusComponent } from '../data/statusData'
 import {
   STATUS_COLOR_CLASS,
+  STATUS_ICON,
   STATUS_LABEL,
   barColor,
   componentDay,
@@ -90,8 +91,10 @@ function UptimeBars({
   )
 }
 
+/** The status as text (one column) or as a coloured icon (two columns), with an optional dark tooltip. */
 function ComponentStatusText({ status, title }: { status: StatusComponent['status']; title?: string }) {
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
+  const tip = title ?? STATUS_LABEL[status]
   return (
     <>
       <span
@@ -101,8 +104,37 @@ function ComponentStatusText({ status, title }: { status: StatusComponent['statu
       >
         {STATUS_LABEL[status]}
       </span>
-      {anchor && title && <DarkTip anchor={anchor}>{title}</DarkTip>}
+      <button
+        type="button"
+        className={`icon-indicator fa ${STATUS_ICON[status]}`}
+        aria-label={STATUS_LABEL[status]}
+        onMouseEnter={(e) => setAnchor(e.currentTarget)}
+        onMouseLeave={() => setAnchor(null)}
+      />
+      {anchor && <DarkTip anchor={anchor}>{anchor.classList.contains('icon-indicator') ? STATUS_LABEL[status] : tip}</DarkTip>}
     </>
+  )
+}
+
+const LEGEND: { cls: string; icon: string; label: string }[] = [
+  { cls: 'status-green', icon: 'fa-check', label: 'Operational' },
+  { cls: 'status-yellow', icon: 'fa-minus-square', label: 'Degraded Performance' },
+  { cls: 'status-orange', icon: 'fa-exclamation-triangle', label: 'Partial Outage' },
+  { cls: 'status-red', icon: 'fa-times', label: 'Major Outage' },
+  { cls: 'status-blue', icon: 'fa-wrench', label: 'Maintenance' },
+]
+
+function StatusLegend() {
+  return (
+    <div className="component-statuses-legend font-small">
+      {LEGEND.flatMap((l, i) => [
+        ...(i === 3 ? [<div className="breaker" key="breaker" />] : []),
+        <div className={`legend-item ${l.cls}`} key={l.label}>
+          <span className={`icon-indicator fa ${l.icon}`} />
+          {l.label}
+        </div>,
+      ])}
+    </div>
   )
 }
 
@@ -200,13 +232,15 @@ export function ComponentsSection({ page }: { page: ClientPage }) {
   const n = useBarDays()
   const days = dayRange(n)
   const { bind, tooltip, activeKey } = useDayTooltip(page)
+  const layout = page.layout ?? 'one-column'
+  const list = rows(page)
   return (
     <div className="components-section font-regular">
       <div className="components-uptime-link history-footer-link">
         Uptime over the past {n} days. <a href={href(page.key, 'uptime')}>View historical uptime.</a>
       </div>
-      <div className="components-container one-column">
-        {rows(page).map((r) =>
+      <div className={`components-container ${layout}`}>
+        {list.map((r) =>
           r.kind === 'component' ? (
             <div className="component-container border-color" key={r.component.id}>
               <ComponentRow page={page} comp={r.component} days={days} bind={bind} activeKey={activeKey} />
@@ -224,7 +258,9 @@ export function ComponentsSection({ page }: { page: ClientPage }) {
             />
           ),
         )}
+        {layout === 'two-columns' && list.length % 2 === 1 && <div className="component-container border-color filler" />}
       </div>
+      {layout === 'two-columns' && <StatusLegend />}
       {tooltip}
     </div>
   )

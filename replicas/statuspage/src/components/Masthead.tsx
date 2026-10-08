@@ -97,7 +97,7 @@ function SubscribeDropdown({ page }: { page?: ClientPage }) {
       {open && (
         <div className="updates-dropdown" role="dialog" aria-label="Subscribe to updates">
           <div className="updates-dropdown-nav" role="tablist">
-            {TABS.map((t) => (
+            {TABS.filter((t) => page || t.id !== 'atom').map((t) => (
               <a
                 key={t.id}
                 href={`#updates-dropdown-${t.id}`}

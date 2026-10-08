@@ -376,7 +376,6 @@ input::placeholder {
   position: absolute;
   top: 105%;
   right: 0;
-  text-align: left;
   background: var(--bg);
 }
 
@@ -413,7 +412,7 @@ input::placeholder {
   padding: 0;
   margin: 0;
   background: transparent;
-  color: var(--link);
+  color: #666;
   font-size: 15px;
   cursor: pointer;
 }
@@ -537,7 +536,7 @@ input::placeholder {
   color: #fff;
   position: relative;
   top: 2px;
-  margin: 0;
+  margin: 0 0 0.7rem;
 }
 
 .page-status.status-none { background-color: var(--green); }
@@ -826,6 +825,126 @@ input::placeholder {
   font-weight: 400;
 }
 
+/* Status icons: shown instead of status text in the two-column layout. */
+.icon-indicator {
+  display: none;
+  float: right;
+  position: relative;
+  top: 4px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 14px;
+  cursor: default;
+}
+
+.status-green .icon-indicator { color: var(--green); }
+.status-yellow .icon-indicator { color: var(--yellow); }
+.status-orange .icon-indicator { color: var(--orange); }
+.status-red .icon-indicator { color: var(--red); }
+.status-blue .icon-indicator { color: var(--blue); }
+
+.components-container.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.two-columns .component-container {
+  border-width: 0 1px 1px 0;
+  border-radius: 0;
+}
+
+.two-columns .component-container:nth-child(odd) {
+  border-left-width: 1px;
+}
+
+.two-columns .component-container:nth-child(1),
+.two-columns .component-container:nth-child(2) {
+  border-top-width: 1px;
+}
+
+.two-columns .component-container:nth-child(1) { border-radius: 4px 0 0 0; }
+.two-columns .component-container:nth-child(2) { border-radius: 0 4px 0 0; }
+.two-columns .component-container:nth-last-child(2):nth-child(odd) { border-radius: 0 0 0 4px; }
+.two-columns .component-container:last-child:nth-child(even) { border-radius: 0 0 4px 0; }
+
+.two-columns .component-inner-container .component-status {
+  display: none;
+}
+
+.two-columns .component-inner-container .icon-indicator {
+  display: inline-block;
+}
+
+.component-statuses-legend {
+  overflow: hidden;
+  text-align: center;
+  margin-top: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.component-statuses-legend .breaker {
+  display: none;
+}
+
+.component-statuses-legend .legend-item {
+  display: inline-block;
+  margin-right: 5%;
+}
+
+.component-statuses-legend .legend-item:last-of-type {
+  margin-right: 0;
+}
+
+.component-statuses-legend .legend-item .icon-indicator {
+  display: inline-block;
+  float: none;
+  margin-right: 5px;
+  top: 0;
+}
+
+@media screen and (max-width: 825px) {
+  .component-statuses-legend .breaker {
+    display: block;
+  }
+  .component-statuses-legend .legend-item:nth-child(3) {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .components-container.two-columns {
+    display: block;
+  }
+  .two-columns .component-container {
+    border-width: 0 1px 1px 1px;
+    border-radius: 0;
+  }
+  .two-columns .component-container:first-child {
+    border-top-width: 1px;
+    border-radius: 4px 4px 0 0;
+  }
+  .two-columns .component-container:nth-child(2) {
+    border-top-width: 0;
+  }
+  .two-columns .component-container:last-child,
+  .two-columns .component-container:nth-last-child(2):has(+ .filler) {
+    border-radius: 0 0 4px 4px;
+  }
+  .two-columns .component-container.filler {
+    display: none;
+  }
+  .two-columns .component-inner-container .component-status {
+    display: inline-block;
+  }
+  .two-columns .component-inner-container .icon-indicator {
+    display: none;
+  }
+  .component-statuses-legend {
+    display: none;
+  }
+}
+
 /* "?" description bubble */
 .tooltip-base {
   border-radius: 99px;
@@ -1012,6 +1131,7 @@ input::placeholder {
 
 .uptime-tooltip .outage-field span {
   line-height: 16px;
+  white-space: nowrap;
 }
 
 .uptime-tooltip .outage-field .label {
@@ -1090,6 +1210,12 @@ input::placeholder {
 @media screen and (max-width: 450px) {
   .uptime-tooltip .tooltip-box {
     width: 290px;
+  }
+  .uptime-tooltip .outage-field {
+    padding: 9px 10px 8px;
+  }
+  .uptime-tooltip .outage-field .label {
+    margin-right: 0.5rem;
   }
 }
 
@@ -1393,7 +1519,7 @@ input::placeholder {
     margin-top: 0.75rem;
   }
   .update-row .update-title {
-    flex-basis: 33%;
+    flex-basis: 31%;
   }
   .status-incident .page-footer {
     margin-top: 30px;
@@ -1526,6 +1652,7 @@ input::placeholder {
 
 .month .incident-body {
   max-width: 100%;
+  text-align: justify;
   overflow-wrap: break-word;
 }
 

@@ -33,6 +33,14 @@ export const STATUS_COLOR_CLASS: Record<ComponentStatus, string> = {
   under_maintenance: 'status-blue',
 }
 
+export const STATUS_ICON: Record<ComponentStatus, string> = {
+  operational: 'fa-check',
+  degraded_performance: 'fa-minus-square',
+  partial_outage: 'fa-exclamation-triangle',
+  major_outage: 'fa-times',
+  under_maintenance: 'fa-wrench',
+}
+
 const STATUS_RANK: Record<ComponentStatus, number> = {
   operational: 0,
   under_maintenance: 1,
