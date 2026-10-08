@@ -7,3 +7,4 @@ dist/
 .projects/
 # Reference captures of third-party pages stay local.
 replicas/*/reference/
+site/

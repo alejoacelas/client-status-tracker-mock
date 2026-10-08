@@ -19,18 +19,20 @@ closely as possible, but replace logos and brand names with "Fieldwork Studio".
 They are internal references; restyle anything taken from them before Varun uses
 it commercially. Run one with `cd replicas/<name> && npm install && npm run dev`.
 
-## Resources from the deleted October 2026 builds
+## Gallery site
 
-These still exist until deleted:
+https://status-tracker-designs.vercel.app shows every replica behind one
+wrapper (`gallery/index.html`): a top bar with the design name, its
+inspiration and arrows, plus a first-visit help popup. The site sends
+`noindex`. Rebuild and redeploy with:
 
-- Supabase project `nnkugftlytvjsgdixvuo` (provisioned through Stripe Projects;
-  local state in the ignored `.projects/`).
-- Vercel project `client-status-tracker-mock` (team `alejandros-projects-a115cc74`).
-- Airtable base `apppVEn1Dkc0dBXfk` in the personal workspace, with a shared view
-  link, and a personal access token named "client-status-tracker-mock daily job".
-- GitHub Actions secrets `SUPABASE_POOLER_URL`, `SUPABASE_DB_PASS`, `AIRTABLE_TOKEN`.
-- Claude routine `trig_0165VFWqKuR5pY4gXyb3Chic`, disabled.
-- 1Password items in `mac-agents`: "Supabase — client-status-tracker-mock",
-  "Status tracker mock — staff test login" and
-  "Airtable — client-status-tracker-mock daily job". The ignored `.env` holds the
-  same values.
+```sh
+./scripts/build-site.sh && cp -R .vercel site/ && (cd site && vercel deploy --prod --yes)
+```
+
+The repo root must be linked to Vercel project `status-tracker-designs` (team
+`alejandros-projects-a115cc74`); run
+`vercel link --yes --project status-tracker-designs --scope alejandros-projects-a115cc74`
+if `.vercel/` is missing, then delete the `.env.local` it creates. To add a
+design, add its folder under `replicas/` and an entry to the `designs` list in
+`gallery/index.html`.
