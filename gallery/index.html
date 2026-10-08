@@ -39,13 +39,18 @@
     }
     .hint.open { display: flex; }
     .card {
-      background: #fff; color: #111418; max-width: 440px; width: 100%; border-radius: 12px;
-      padding: 22px 22px 18px; box-shadow: 0 20px 50px rgba(0,0,0,.35);
+      background: #fff; color: #111418; max-width: 480px; width: 100%; border-radius: 14px;
+      padding: 26px 26px 20px; box-shadow: 0 20px 50px rgba(0,0,0,.35);
     }
     .card h2 { margin: 0 0 8px; font-size: 18px; }
     .card p { margin: 0 0 10px; color: #374151; }
     .card kbd { border: 1px solid #d1d5db; border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; font: 12px ui-monospace, monospace; }
-    .card .actions { display: flex; justify-content: flex-end; margin-top: 14px; }
+    .card .actions { display: flex; justify-content: flex-end; margin-top: 18px; }
+    .card .eyebrow { margin: 0 0 4px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: #6b7280; }
+    .card h2 { font-size: 22px; }
+    .steps { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 12px; }
+    .steps li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; color: #374151; }
+    .steps .key { display: inline-flex; align-items: center; justify-content: center; height: 32px; border-radius: 8px; background: #eef1fb; color: #2f3fa8; font-weight: 700; }
     .card button { background: #111418; color: #fff; border: 0; border-radius: 8px; padding: 8px 14px; font: inherit; cursor: pointer; }
     .btn .badge { margin-left: 6px; min-width: 18px; padding: 0 5px; border-radius: 9px; background: var(--accent); color: #0b0d10; font-size: 12px; font-weight: 600; line-height: 18px; }
     .btn .badge:empty { display: none; }
@@ -142,12 +147,15 @@
 
   <div class="hint" id="hint" role="dialog" aria-modal="true" aria-labelledby="hint-title">
     <div class="card">
-      <h2 id="hint-title">Seven ways to show project status</h2>
-      <p>Each page is a working copy of how a well-known product shows progress, filled with the same made-up agency and clients.</p>
-      <p>Use the <strong>‹ ›</strong> arrows on the sides of the screen or in the top bar, or the <kbd>←</kbd> <kbd>→</kbd> keys, to move between designs. The bar names each design and what inspired it. Click around: most things work.</p>
-      <p>To leave feedback, click <strong>Comments</strong> in the top bar. Comments are saved with the design and the screen you were on, and everyone with this link can read them.</p>
-      <p>These are internal references, not finished designs.</p>
-      <div class="actions"><button id="close">Got it</button></div>
+      <p class="eyebrow">Status tracker designs</p>
+      <h2 id="hint-title">Welcome</h2>
+      <p>Seven ways to show clients how their projects are going. Each one is a working copy of a well-known product's design, filled with the same made-up agency and clients.</p>
+      <ol class="steps">
+        <li><span class="key">‹ ›</span><span>Use the arrows on the sides of the screen, or the <kbd>←</kbd> <kbd>→</kbd> keys, to move between designs.</span></li>
+        <li><span class="key">Aa</span><span>The top bar names each design and the product that inspired it. Click around: most things work.</span></li>
+        <li><span class="key">✎</span><span>Click <strong>Comments</strong> in the top bar to say what you like or would change. Everyone with this link can read them.</span></li>
+      </ol>
+      <div class="actions"><button id="close">Start browsing</button></div>
     </div>
   </div>
 
@@ -204,14 +212,14 @@
     });
     function closeHint() {
       $('hint').classList.remove('open');
-      try { localStorage.setItem('seen-hint', '1'); } catch {}
+      try { sessionStorage.setItem('seen-welcome', '1'); } catch {}
       $('frame').focus();
     }
     $('close').onclick = closeHint;
     $('help').onclick = () => $('hint').classList.add('open');
     $('hint').onclick = (e) => { if (e.target === $('hint')) closeHint(); };
     let seen = false;
-    try { seen = localStorage.getItem('seen-hint') === '1'; } catch {}
+    try { seen = sessionStorage.getItem('seen-welcome') === '1'; } catch {}
     if (!seen) $('hint').classList.add('open');
     // Comments
     const store = {
@@ -229,6 +237,7 @@
       return seg.replace(/[-_.]+/g, ' ').trim().replace(/(^|\s)(\p{L})/gu, (m, s, c) => s + c.toUpperCase());
     })();
     if (linkName) {
+      $('hint-title').textContent = `Welcome, ${linkName}`;
       $('c-name').value = linkName;
       $('c-name-label').hidden = true;
       $('c-as').textContent = `Commenting as ${linkName}`;
