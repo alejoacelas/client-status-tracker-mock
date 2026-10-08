@@ -93,7 +93,12 @@
     .side .label { max-width: 0; overflow: hidden; white-space: nowrap; transition: max-width .2s ease; }
     .side:hover .label, .side:focus-visible .label { max-width: 200px; }
     @media (prefers-reduced-motion: reduce) { .side .label { transition: none; } }
-    @media (max-width: 640px) { .side { height: 40px; padding: 0 10px; } .side .label { display: none; } }
+    @media (max-width: 640px) {
+      .side { height: 34px; padding: 0 8px; opacity: .88; }
+      .side.left { left: 6px; } .side.right { right: 6px; padding: 0 8px; }
+      .side .label { display: none; }
+      .bar .arrow { display: none; }
+    }
     @media (max-width: 640px) {
       .inspired, .full span { display: none; }
       .bar { gap: 8px; }
