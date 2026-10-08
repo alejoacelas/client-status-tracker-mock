@@ -109,8 +109,8 @@ a person and a date. "Today" is 8 October 2026.
 ## Remaining differences
 
 - **Typeface.** The original uses the proprietary One Dot Condensed. The replica
-  uses Barlow Condensed (SemiBold for bold), which matches its width closely
-  but has slightly lighter strokes and a smaller registered mark. Body text is
+  uses Barlow Condensed Bold, which matches its width and weight closely; letter
+  shapes differ slightly (rounder S and R, smaller registered mark). Body text is
   Arial, as on the original.
 - **Branding.** No logos: a tilted "FS" tile and "Fieldwork Studio" replace the
   logo, the store marker and the patent number ("Patent pending" instead).
