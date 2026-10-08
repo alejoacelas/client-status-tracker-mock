@@ -1,0 +1,490 @@
+{
+  "agency": "Fieldwork Studio",
+  "today": "2026-10-08",
+  "staff": [
+    { "id": "maya", "name": "Maya Chen", "role": "Project manager", "initials": "MC", "email": "maya@fieldwork.example" },
+    { "id": "tom", "name": "Tom Okafor", "role": "Development lead", "initials": "TO", "email": "tom@fieldwork.example" },
+    { "id": "priya", "name": "Priya Nair", "role": "Design lead", "initials": "PN", "email": "priya@fieldwork.example" }
+  ],
+  "productLines": [
+    { "id": "harbor", "name": "Harbor & Pine Coffee", "contact": "Dana Ruiz", "contactEmail": "dana@harborpine.example", "shareToken": "ghHTdi3aLYOv" },
+    { "id": "meridian", "name": "Meridian Family Clinic", "contact": "Dr. Sam Patel", "contactEmail": "sam.patel@meridianclinic.example", "shareToken": "VHw8sw4Rlx83" },
+    { "id": "lumen", "name": "Lumen Books", "contact": "Iris Novak", "contactEmail": "iris@lumenbooks.example", "shareToken": "XB-n2B844L7C" },
+    { "id": "atlas", "name": "Atlas Robotics", "contact": "Kofi Mensah", "contactEmail": "kofi@atlasrobotics.example", "shareToken": "8h6S89QzpTk3" }
+  ],
+  "products": [
+    {
+      "id": "harbor-shop", "line": "harbor", "name": "Online shop rebuild", "status": "On track", "phase": "Build", "owner": "tom",
+      "startDate": "2026-08-04", "dueDate": "2026-11-14", "progress": 60, "color": "#b45309",
+      "clientSummary": "The product catalogue is fully imported. We're now building checkout and payments, on schedule for a mid-November launch.",
+      "internalNotes": "Stripe account is in Dana's name; she needs to add Tom as a developer before we can test live payments."
+    },
+    {
+      "id": "meridian-portal", "line": "meridian", "name": "Patient intake portal", "status": "At risk", "phase": "Build", "owner": "maya",
+      "startDate": "2026-07-14", "dueDate": "2026-10-30", "progress": 70, "color": "#0d9488",
+      "clientSummary": "Forms and the patient dashboard are built. Connecting to your records system is waiting on sandbox access from your EHR vendor, which puts the 30 October go-live at risk.",
+      "internalNotes": "CareStack still hasn't issued sandbox API keys. Escalate to Sam if nothing arrives by Thursday 8 Oct."
+    },
+    {
+      "id": "lumen-brand", "line": "lumen", "name": "Brand refresh", "status": "Blocked", "phase": "Design", "owner": "priya",
+      "startDate": "2026-08-18", "dueDate": "2026-10-24", "progress": 45, "color": "#db2777",
+      "clientSummary": "Round two logo concepts were shared on 25 September. We need your team's feedback before we can start the brand guidelines.",
+      "internalNotes": "Iris said the board meets 9 Oct. Due date will slip a week if feedback lands after that."
+    },
+    {
+      "id": "atlas-site", "line": "atlas", "name": "Investor website", "status": "Done", "phase": "Launch", "owner": "maya",
+      "startDate": "2026-06-30", "dueDate": "2026-09-19", "progress": 100, "color": "#263b55",
+      "clientSummary": "Launched on 19 September. Analytics are live and the handoff documentation is in your shared folder.",
+      "internalNotes": "Invoice for final 30% sent 22 Sep."
+    },
+    {
+      "id": "atlas-docs", "line": "atlas", "name": "Developer docs migration", "status": "On track", "phase": "Discovery", "owner": "tom",
+      "startDate": "2026-09-29", "dueDate": "2026-12-12", "progress": 10, "color": "#2563eb",
+      "clientSummary": "We're auditing the 140 existing docs pages and mapping them to the new structure. Expect the migration plan by 16 October.",
+      "internalNotes": "Old docs use a custom Markdown dialect; budget extra time for the converter."
+    }
+  ],
+  "objectives": [
+    { "id": "o-shop", "name": "Grow Harbor & Pine's online sales", "color": 7, "line": "harbor" },
+    { "id": "o-intake", "name": "Faster patient intake", "color": 6, "line": "meridian" },
+    { "id": "o-brand", "name": "Refresh the Lumen brand", "color": 10, "line": "lumen" },
+    { "id": "o-investor", "name": "Win investor confidence", "color": 2, "line": "atlas" },
+    { "id": "o-devx", "name": "Better developer docs", "color": 3, "line": "atlas" },
+    { "id": "o-ontime", "name": "Deliver on agreed dates", "color": 5, "line": null },
+    { "id": "o-handoff", "name": "Clients run it without us", "color": 4, "line": null }
+  ],
+  "tags": ["Discovery", "Design", "Build", "QA", "Launch", "Handoff", "⚠️ Dependency", "Waiting on client", "At risk"],
+  "workflowStages": ["New Idea", "Queued", "In Development", "In Review", "Released"],
+  "columns": [
+    { "id": "now", "title": "Now", "description": "What we're working on this week, with a date we're confident in." },
+    { "id": "next", "title": "Next", "description": "Starts as soon as the current step is signed off." },
+    { "id": "later", "title": "Later", "description": "Planned, but the dates will firm up as we get closer." }
+  ],
+  "initiatives": [
+    {
+      "id": "i-201", "product": "harbor-shop", "column": "now", "order": 1,
+      "title": "Checkout and payments",
+      "description": "Build the cart, checkout and card payments so customers can buy coffee, subscriptions and gift cards in one flow.",
+      "targetOutcomes": "Customers can complete a purchase in under a minute, and every payment reconciles in Stripe.",
+      "objectives": ["o-shop", "o-ontime"], "tags": ["Build", "Waiting on client"], "owners": ["tom"],
+      "visibility": "public", "targetDate": "2026-10-17", "milestoneStatus": "In progress",
+      "impact": 8, "effort": 6, "dateAdded": "2026-08-04T09:30:00", "lastUpdated": "2026-10-02T16:12:00",
+      "internalNote": "Stripe account is in Dana's name; she needs to add Tom as a developer before we can test live payments.",
+      "ideas": [
+        { "id": 1611, "title": "Cart and checkout flow", "stage": "In Review" },
+        { "id": 1612, "title": "Stripe card payments", "stage": "In Development" },
+        { "id": 1613, "title": "Gift card redemption", "stage": "Queued" },
+        { "id": 1614, "title": "Live payment test with Dana's account", "stage": "New Idea" }
+      ],
+      "updates": [
+        { "date": "2026-10-02", "source": "Slack", "clientVisible": false, "author": "tom", "text": "Waiting on Dana to add Tom to the Stripe account before testing live payments." }
+      ]
+    },
+    {
+      "id": "i-202", "product": "harbor-shop", "column": "next", "order": 1,
+      "title": "Content load and QA",
+      "description": "Load the remaining page copy and photography, then test every product page, the checkout and emails on phones and desktops.",
+      "targetOutcomes": "No open bugs rated high before launch week.",
+      "objectives": ["o-shop"], "tags": ["QA"], "owners": ["tom", "maya"],
+      "visibility": "public", "targetDate": "2026-10-31", "milestoneStatus": "Not started",
+      "impact": 6, "effort": 5, "dateAdded": "2026-08-04T09:32:00", "lastUpdated": "2026-09-26T10:05:00",
+      "ideas": [
+        { "id": 1621, "title": "Copy for About and Wholesale pages", "stage": "Queued" },
+        { "id": 1622, "title": "Cross-browser test plan", "stage": "New Idea" },
+        { "id": 1623, "title": "Order confirmation emails", "stage": "New Idea" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-203", "product": "harbor-shop", "column": "later", "order": 1,
+      "title": "Launch the new shop",
+      "description": "Switch the domain to the new shop, redirect old product URLs and watch the first week of orders closely.",
+      "targetOutcomes": "Online orders in the first month match or beat the old shop.",
+      "objectives": ["o-shop", "o-ontime"], "tags": ["Launch"], "owners": ["tom"],
+      "visibility": "public", "targetDate": "2026-11-14", "milestoneStatus": "Not started",
+      "impact": 9, "effort": 3, "dateAdded": "2026-08-04T09:35:00", "lastUpdated": "2026-09-05T11:20:00",
+      "blockedBy": ["i-202"],
+      "ideas": [
+        { "id": 1631, "title": "301 redirects from the old shop", "stage": "New Idea" },
+        { "id": 1632, "title": "Launch-day checklist", "stage": "New Idea" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-204", "product": "harbor-shop", "column": "completed", "order": 1,
+      "title": "Discovery workshop",
+      "description": "A half-day workshop with Dana's team to agree what the new shop must do on day one.",
+      "outcome": "Agreed 14 must-have features, with subscriptions and wholesale pricing at the top of the list.",
+      "objectives": ["o-shop"], "tags": ["Discovery"], "owners": ["maya"],
+      "visibility": "public", "targetDate": "2026-08-08", "completedOn": "2026-08-08", "milestoneStatus": "Done",
+      "impact": 5, "effort": 2, "dateAdded": "2026-08-04T09:20:00", "lastUpdated": "2026-08-08T17:00:00",
+      "ideas": [
+        { "id": 1601, "title": "Workshop agenda and stakeholder list", "stage": "Released" },
+        { "id": 1602, "title": "Feature priority list", "stage": "Released" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-205", "product": "harbor-shop", "column": "completed", "order": 2,
+      "title": "Design sign-off",
+      "description": "Designs for the home page, product pages, cart and checkout, approved by Dana.",
+      "outcome": "Signed off a day early, on 4 September.",
+      "objectives": ["o-shop"], "tags": ["Design"], "owners": ["priya"],
+      "visibility": "public", "targetDate": "2026-09-05", "completedOn": "2026-09-04", "milestoneStatus": "Done",
+      "impact": 6, "effort": 5, "dateAdded": "2026-08-04T09:22:00", "lastUpdated": "2026-09-04T15:40:00",
+      "ideas": [
+        { "id": 1603, "title": "Product page design", "stage": "Released" },
+        { "id": 1604, "title": "Checkout design", "stage": "Released" },
+        { "id": 1605, "title": "Mobile navigation", "stage": "Released" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-206", "product": "harbor-shop", "column": "completed", "order": 3,
+      "title": "Product catalogue import",
+      "description": "Move every product, photo and variant from the old shop into the new catalogue.",
+      "outcome": "All 212 products imported with photos and variants. We spot-checked 30 against the old shop.",
+      "objectives": ["o-shop"], "tags": ["Build"], "owners": ["tom"],
+      "visibility": "public", "targetDate": "2026-09-26", "completedOn": "2026-09-25", "milestoneStatus": "Done",
+      "impact": 7, "effort": 6, "dateAdded": "2026-08-04T09:25:00", "lastUpdated": "2026-09-25T18:02:00",
+      "ideas": [
+        { "id": 1606, "title": "Import script for products and variants", "stage": "Released" },
+        { "id": 1607, "title": "Photo migration", "stage": "Released" }
+      ],
+      "updates": [
+        { "date": "2026-09-25", "source": "Slack", "clientVisible": true, "author": "tom", "text": "All 212 products imported with photos and variants. Spot-checked 30 against the old shop." }
+      ]
+    },
+
+    {
+      "id": "i-301", "product": "meridian-portal", "column": "now", "order": 2,
+      "title": "EHR integration",
+      "description": "Connect the intake forms to the clinic's records system so patient details arrive without retyping.",
+      "targetOutcomes": "New patient records appear in the EHR within a minute of a form being submitted.",
+      "objectives": ["o-intake", "o-ontime"], "tags": ["Build", "⚠️ Dependency", "At risk"], "owners": ["maya", "tom"],
+      "visibility": "public", "targetDate": "2026-10-10", "milestoneStatus": "In progress",
+      "impact": 9, "effort": 8, "dateAdded": "2026-07-14T10:00:00", "lastUpdated": "2026-10-05T12:30:00",
+      "externalDependency": "Sandbox access from the EHR vendor",
+      "internalNote": "CareStack still hasn't issued sandbox API keys. Escalate to Sam if nothing arrives by Thursday 8 Oct.",
+      "ideas": [
+        { "id": 1711, "title": "Patient dashboard", "stage": "Released" },
+        { "id": 1712, "title": "Six intake forms in staging", "stage": "Released" },
+        { "id": 1713, "title": "EHR API connector", "stage": "In Development" },
+        { "id": 1714, "title": "Sandbox end-to-end test", "stage": "New Idea" }
+      ],
+      "updates": [
+        { "date": "2026-09-28", "source": "Email", "clientVisible": false, "author": "maya", "text": "Asked CareStack support for sandbox API keys a second time; ticket #48213." },
+        { "date": "2026-09-30", "source": "Slack", "clientVisible": true, "author": "tom", "text": "Patient dashboard and all six intake forms are built and in staging." },
+        { "date": "2026-10-05", "source": "Email", "clientVisible": true, "author": "maya", "text": "Still waiting on EHR sandbox access. Go-live on 30 Oct is at risk if access isn't granted by 10 Oct." }
+      ]
+    },
+    {
+      "id": "i-302", "product": "meridian-portal", "column": "next", "order": 2,
+      "title": "Accessibility audit",
+      "description": "Check every form against WCAG 2.2 AA with screen readers and keyboard-only use, and fix what we find.",
+      "targetOutcomes": "No AA failures on any patient-facing page.",
+      "objectives": ["o-intake"], "tags": ["QA"], "owners": ["priya"],
+      "visibility": "public", "targetDate": "2026-10-20", "milestoneStatus": "Not started",
+      "impact": 7, "effort": 4, "dateAdded": "2026-07-14T10:05:00", "lastUpdated": "2026-09-30T09:10:00",
+      "ideas": [
+        { "id": 1721, "title": "Screen reader pass", "stage": "Queued" },
+        { "id": 1722, "title": "Colour contrast fixes", "stage": "New Idea" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-303", "product": "meridian-portal", "column": "later", "order": 2,
+      "title": "Staff training",
+      "description": "Two short sessions for front-desk staff on reviewing submitted forms and helping patients who get stuck.",
+      "targetOutcomes": "Every front-desk staff member has processed a test submission.",
+      "objectives": ["o-intake", "o-handoff"], "tags": ["Handoff"], "owners": ["maya"],
+      "visibility": "public", "targetDate": "2026-10-27", "milestoneStatus": "Not started",
+      "impact": 5, "effort": 2, "dateAdded": "2026-07-14T10:08:00", "lastUpdated": "2026-09-12T14:45:00",
+      "ideas": [
+        { "id": 1731, "title": "Training slides and cheat sheet", "stage": "New Idea" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-304", "product": "meridian-portal", "column": "later", "order": 3,
+      "title": "Go-live",
+      "description": "Turn on online intake for new patients and retire the paper forms.",
+      "targetOutcomes": "Half of new patients complete intake online in the first month.",
+      "objectives": ["o-intake", "o-ontime"], "tags": ["Launch", "At risk"], "owners": ["maya"],
+      "visibility": "public", "targetDate": "2026-10-30", "milestoneStatus": "Not started",
+      "impact": 9, "effort": 2, "dateAdded": "2026-07-14T10:10:00", "lastUpdated": "2026-10-05T12:32:00",
+      "blockedBy": ["i-301"],
+      "ideas": [
+        { "id": 1741, "title": "Go-live checklist", "stage": "New Idea" },
+        { "id": 1742, "title": "Patient email announcing online intake", "stage": "New Idea" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-305", "product": "meridian-portal", "column": "completed", "order": 4,
+      "title": "Requirements sign-off",
+      "description": "Agree which forms move online first and what data the clinic needs from each.",
+      "outcome": "Six forms prioritised; insurance details deferred to phase two.",
+      "objectives": ["o-intake"], "tags": ["Discovery"], "owners": ["maya"],
+      "visibility": "public", "targetDate": "2026-07-25", "completedOn": "2026-07-24", "milestoneStatus": "Done",
+      "impact": 5, "effort": 2, "dateAdded": "2026-07-14T09:50:00", "lastUpdated": "2026-07-24T16:00:00",
+      "ideas": [
+        { "id": 1701, "title": "Form inventory", "stage": "Released" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-306", "product": "meridian-portal", "column": "completed", "order": 5,
+      "title": "Form designs approved",
+      "description": "Designs for all six intake forms and the patient dashboard, reviewed with clinic staff.",
+      "outcome": "Approved on 26 August, four days after the target, after one extra review round with nurses.",
+      "objectives": ["o-intake"], "tags": ["Design"], "owners": ["priya"],
+      "visibility": "public", "targetDate": "2026-08-22", "completedOn": "2026-08-26", "milestoneStatus": "Done",
+      "impact": 6, "effort": 4, "dateAdded": "2026-07-14T09:55:00", "lastUpdated": "2026-08-26T11:30:00",
+      "ideas": [
+        { "id": 1702, "title": "Form designs", "stage": "Released" },
+        { "id": 1703, "title": "Dashboard design", "stage": "Released" }
+      ],
+      "updates": []
+    },
+
+    {
+      "id": "i-401", "product": "lumen-brand", "column": "now", "order": 3,
+      "title": "Client feedback on round two",
+      "description": "Lumen's board reviews the three round-two logo directions and picks one to develop.",
+      "targetOutcomes": "One chosen direction, with notes we can act on.",
+      "objectives": ["o-brand", "o-ontime"], "tags": ["Design", "Waiting on client"], "owners": ["priya"],
+      "visibility": "public", "targetDate": "2026-10-02", "milestoneStatus": "In progress",
+      "impact": 8, "effort": 1, "dateAdded": "2026-08-18T09:00:00", "lastUpdated": "2026-10-01T15:20:00",
+      "externalDependency": "Lumen board review on 9 October",
+      "internalNote": "Iris said the board meets 9 Oct. Due date will slip a week if feedback lands after that.",
+      "ideas": [
+        { "id": 1811, "title": "Feedback form for board members", "stage": "Released" },
+        { "id": 1812, "title": "Consolidated board feedback", "stage": "New Idea" }
+      ],
+      "updates": [
+        { "date": "2026-10-01", "source": "Email", "clientVisible": false, "author": "priya", "text": "Iris replied that the board reviews logos on 9 Oct; no feedback before then." }
+      ]
+    },
+    {
+      "id": "i-402", "product": "lumen-brand", "column": "next", "order": 3,
+      "title": "Brand guidelines",
+      "description": "Develop the chosen logo into a full identity: colour, type, imagery and a short guidelines document.",
+      "targetOutcomes": "Lumen's team can brief a printer or designer from the guidelines alone.",
+      "objectives": ["o-brand"], "tags": ["Design"], "owners": ["priya"],
+      "visibility": "public", "targetDate": "2026-10-17", "milestoneStatus": "Not started",
+      "impact": 8, "effort": 6, "dateAdded": "2026-08-18T09:05:00", "lastUpdated": "2026-09-25T17:30:00",
+      "blockedBy": ["i-401"],
+      "ideas": [
+        { "id": 1821, "title": "Colour and type system", "stage": "Queued" },
+        { "id": 1822, "title": "Guidelines document", "stage": "New Idea" },
+        { "id": 1823, "title": "Photography direction", "stage": "New Idea" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-403", "product": "lumen-brand", "column": "later", "order": 4,
+      "title": "Final asset handoff",
+      "description": "Deliver logo files, templates and the guidelines in a shared folder, with a walkthrough call.",
+      "targetOutcomes": "Every file Lumen needs is in one place and named consistently.",
+      "objectives": ["o-brand", "o-handoff"], "tags": ["Handoff"], "owners": ["priya"],
+      "visibility": "public", "targetDate": "2026-10-24", "milestoneStatus": "Not started",
+      "impact": 6, "effort": 3, "dateAdded": "2026-08-18T09:10:00", "lastUpdated": "2026-09-11T10:00:00",
+      "blockedBy": ["i-402"],
+      "ideas": [
+        { "id": 1831, "title": "Logo file export set", "stage": "New Idea" },
+        { "id": 1832, "title": "Social and stationery templates", "stage": "New Idea" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-404", "product": "lumen-brand", "column": "completed", "order": 6,
+      "title": "Brand audit",
+      "description": "Review Lumen's current brand across shop signage, the website, social and print.",
+      "outcome": "Found 9 logo variants in use; agreed to consolidate to one primary mark.",
+      "objectives": ["o-brand"], "tags": ["Discovery"], "owners": ["priya"],
+      "visibility": "public", "targetDate": "2026-08-28", "completedOn": "2026-08-27", "milestoneStatus": "Done",
+      "impact": 5, "effort": 3, "dateAdded": "2026-08-18T08:50:00", "lastUpdated": "2026-08-27T12:00:00",
+      "ideas": [
+        { "id": 1801, "title": "Audit deck", "stage": "Released" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-405", "product": "lumen-brand", "column": "completed", "order": 7,
+      "title": "Logo concepts, round one",
+      "description": "Five early logo directions to test with Iris and the team.",
+      "outcome": "Narrowed to three directions for round two.",
+      "objectives": ["o-brand"], "tags": ["Design"], "owners": ["priya"],
+      "visibility": "public", "targetDate": "2026-09-11", "completedOn": "2026-09-11", "milestoneStatus": "Done",
+      "impact": 6, "effort": 5, "dateAdded": "2026-08-18T08:52:00", "lastUpdated": "2026-09-11T16:30:00",
+      "ideas": [
+        { "id": 1802, "title": "Five sketch directions", "stage": "Released" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-406", "product": "lumen-brand", "column": "completed", "order": 8,
+      "title": "Logo concepts, round two",
+      "description": "Three refined logo directions with colour and type, shown on signage and book bags.",
+      "outcome": "Shared with Iris on 25 September for board review.",
+      "objectives": ["o-brand"], "tags": ["Design"], "owners": ["priya"],
+      "visibility": "public", "targetDate": "2026-09-25", "completedOn": "2026-09-25", "milestoneStatus": "Done",
+      "impact": 7, "effort": 5, "dateAdded": "2026-08-18T08:55:00", "lastUpdated": "2026-09-25T14:10:00",
+      "ideas": [
+        { "id": 1803, "title": "Three refined directions", "stage": "Released" },
+        { "id": 1804, "title": "Mock-ups on signage and bags", "stage": "Released" }
+      ],
+      "updates": [
+        { "date": "2026-09-25", "source": "Email", "clientVisible": true, "author": "priya", "text": "Shared round two logo concepts (three directions) with Iris for board review." }
+      ]
+    },
+
+    {
+      "id": "i-501", "product": "atlas-site", "column": "completed", "order": 9,
+      "title": "Content outline",
+      "description": "Page structure and key messages for the investor site.",
+      "outcome": "Outline approved by Kofi; seven pages.",
+      "objectives": ["o-investor"], "tags": ["Discovery"], "owners": ["maya"],
+      "visibility": "public", "targetDate": "2026-07-17", "completedOn": "2026-07-16", "milestoneStatus": "Done",
+      "impact": 5, "effort": 2, "dateAdded": "2026-06-30T10:00:00", "lastUpdated": "2026-07-16T15:00:00",
+      "ideas": [
+        { "id": 1901, "title": "Sitemap", "stage": "Released" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-502", "product": "atlas-site", "column": "completed", "order": 10,
+      "title": "Design and copy approved",
+      "description": "Final designs and copy for every page of the investor site.",
+      "outcome": "Approved on schedule, 14 August.",
+      "objectives": ["o-investor"], "tags": ["Design"], "owners": ["priya"],
+      "visibility": "public", "targetDate": "2026-08-14", "completedOn": "2026-08-14", "milestoneStatus": "Done",
+      "impact": 6, "effort": 5, "dateAdded": "2026-06-30T10:05:00", "lastUpdated": "2026-08-14T17:45:00",
+      "ideas": [
+        { "id": 1902, "title": "Page designs", "stage": "Released" },
+        { "id": 1903, "title": "Investor copy", "stage": "Released" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-503", "product": "atlas-site", "column": "completed", "order": 11,
+      "title": "Launch the investor site",
+      "description": "Switch DNS, confirm analytics and hand over documentation.",
+      "outcome": "Launched on 19 September. Analytics are live and the handoff documentation is in your shared folder.",
+      "objectives": ["o-investor", "o-ontime"], "tags": ["Launch"], "owners": ["maya"],
+      "visibility": "public", "targetDate": "2026-09-19", "completedOn": "2026-09-19", "milestoneStatus": "Done",
+      "impact": 8, "effort": 3, "dateAdded": "2026-06-30T10:10:00", "lastUpdated": "2026-09-19T10:30:00",
+      "ideas": [
+        { "id": 1904, "title": "DNS switch", "stage": "Released" },
+        { "id": 1905, "title": "Analytics setup", "stage": "Released" },
+        { "id": 1906, "title": "Handoff documentation", "stage": "Released" }
+      ],
+      "updates": [
+        { "date": "2026-09-19", "source": "Manual", "clientVisible": true, "author": "maya", "text": "Investor site launched. DNS switched at 10:00 and analytics confirmed live." }
+      ]
+    },
+
+    {
+      "id": "i-601", "product": "atlas-docs", "column": "now", "order": 4,
+      "title": "Docs audit",
+      "description": "Review all 140 existing docs pages, flag what's out of date and map each page to the new structure.",
+      "targetOutcomes": "Every page has a destination (keep, merge, rewrite or retire).",
+      "objectives": ["o-devx"], "tags": ["Discovery"], "owners": ["tom"],
+      "visibility": "public", "targetDate": "2026-10-09", "milestoneStatus": "In progress",
+      "impact": 7, "effort": 4, "dateAdded": "2026-09-29T11:00:00", "lastUpdated": "2026-10-05T17:15:00",
+      "ideas": [
+        { "id": 2011, "title": "Audit pages 1–60", "stage": "Released" },
+        { "id": 2012, "title": "Audit pages 61–140", "stage": "In Development" },
+        { "id": 2013, "title": "Keep existing URLs where possible", "stage": "Queued" }
+      ],
+      "updates": [
+        { "date": "2026-09-29", "source": "Manual", "clientVisible": true, "author": "tom", "text": "Kickoff call with Kofi. Agreed to keep existing URLs where possible." },
+        { "date": "2026-10-05", "source": "Slack", "clientVisible": true, "author": "tom", "text": "Audited 60 of 140 pages. About a third are out of date and will be flagged for review." }
+      ]
+    },
+    {
+      "id": "i-602", "product": "atlas-docs", "column": "next", "order": 4,
+      "title": "Migration plan",
+      "description": "A page-by-page plan for moving the docs, with the redirect map and an order of work.",
+      "targetOutcomes": "Kofi signs off the plan and the redirect map.",
+      "objectives": ["o-devx"], "tags": ["Discovery"], "owners": ["tom"],
+      "visibility": "public", "targetDate": "2026-10-16", "milestoneStatus": "Not started",
+      "impact": 7, "effort": 3, "dateAdded": "2026-09-29T11:05:00", "lastUpdated": "2026-10-05T17:20:00",
+      "blockedBy": ["i-601"],
+      "ideas": [
+        { "id": 2021, "title": "Redirect map", "stage": "New Idea" },
+        { "id": 2022, "title": "New information architecture", "stage": "New Idea" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-603", "product": "atlas-docs", "column": "later", "order": 5,
+      "title": "Converter and first 50 pages",
+      "description": "Build a converter for the old Markdown dialect and migrate the 50 most-visited pages.",
+      "targetOutcomes": "The top 50 pages live on the new docs site with no broken links.",
+      "objectives": ["o-devx"], "tags": ["Build"], "owners": ["tom"],
+      "visibility": "public", "targetDate": "2026-11-13", "milestoneStatus": "Not started",
+      "impact": 8, "effort": 8, "dateAdded": "2026-09-29T11:10:00", "lastUpdated": "2026-09-29T11:10:00",
+      "internalNote": "Old docs use a custom Markdown dialect; budget extra time for the converter.",
+      "ideas": [
+        { "id": 2031, "title": "Markdown dialect converter", "stage": "New Idea" },
+        { "id": 2032, "title": "Top 50 pages by traffic", "stage": "New Idea" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-604", "product": "atlas-docs", "column": "later", "order": 6,
+      "title": "Full migration and redirects",
+      "description": "Move the remaining pages, switch on redirects and retire the old docs site.",
+      "targetOutcomes": "Old docs URLs all redirect; search traffic holds steady.",
+      "objectives": ["o-devx", "o-handoff"], "tags": ["Launch"], "owners": ["tom"],
+      "visibility": "public", "targetDate": "2026-12-12", "milestoneStatus": "Not started",
+      "impact": 8, "effort": 7, "dateAdded": "2026-09-29T11:15:00", "lastUpdated": "2026-09-29T11:15:00",
+      "blockedBy": ["i-603"],
+      "ideas": [
+        { "id": 2041, "title": "Migrate remaining pages", "stage": "New Idea" },
+        { "id": 2042, "title": "Redirects live", "stage": "New Idea" },
+        { "id": 2043, "title": "Docs style guide for Atlas engineers", "stage": "New Idea" }
+      ],
+      "updates": []
+    },
+
+    {
+      "id": "i-701", "product": "harbor-shop", "column": "candidate", "order": 1,
+      "title": "Coffee subscription boxes",
+      "description": "Dana asked whether customers could choose a monthly box of three coffees. Worth scoping after launch.",
+      "objectives": ["o-shop"], "tags": [], "owners": ["maya"],
+      "visibility": "internal", "milestoneStatus": "Not started",
+      "impact": 7, "effort": 6, "dateAdded": "2026-09-14T10:00:00", "lastUpdated": "2026-09-14T10:00:00",
+      "ideas": [], "updates": []
+    },
+    {
+      "id": "i-702", "product": "meridian-portal", "column": "candidate", "order": 2,
+      "title": "Online appointment booking",
+      "description": "Phase two: let patients book a first appointment straight after completing intake.",
+      "objectives": ["o-intake"], "tags": [], "owners": ["maya"],
+      "visibility": "internal", "milestoneStatus": "Not started",
+      "impact": 8, "effort": 8, "dateAdded": "2026-08-30T10:00:00", "lastUpdated": "2026-08-30T10:00:00",
+      "ideas": [
+        { "id": 2101, "title": "Insurance details form", "stage": "New Idea" }
+      ],
+      "updates": []
+    },
+    {
+      "id": "i-703", "product": "atlas-site", "column": "candidate", "order": 3,
+      "title": "Quarterly investor update template",
+      "description": "Kofi mentioned a reusable page for quarterly updates. Could be a small retainer.",
+      "objectives": ["o-investor"], "tags": [], "owners": ["priya"],
+      "visibility": "internal", "milestoneStatus": "Not started",
+      "impact": 4, "effort": 3, "dateAdded": "2026-09-22T10:00:00", "lastUpdated": "2026-09-22T10:00:00",
+      "ideas": [], "updates": []
+    }
+  ],
+  "publishedRoadmaps": [
+    { "token": "ghHTdi3aLYOv", "line": "harbor", "name": "Harbor & Pine Coffee", "description": "What Fieldwork Studio is working on for Harbor & Pine, and what comes next.", "createdBy": "maya", "lastUpdated": "2026-10-02" },
+    { "token": "VHw8sw4Rlx83", "line": "meridian", "name": "Meridian Family Clinic", "description": "What Fieldwork Studio is working on for Meridian, and what comes next.", "createdBy": "maya", "lastUpdated": "2026-10-05" },
+    { "token": "XB-n2B844L7C", "line": "lumen", "name": "Lumen Books", "description": "What Fieldwork Studio is working on for Lumen Books, and what comes next.", "createdBy": "maya", "lastUpdated": "2026-10-01" },
+    { "token": "8h6S89QzpTk3", "line": "atlas", "name": "Atlas Robotics", "description": "What Fieldwork Studio is working on for Atlas Robotics, and what comes next.", "createdBy": "maya", "lastUpdated": "2026-10-05" }
+  ]
+}
