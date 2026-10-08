@@ -91,10 +91,10 @@ export function useDnd(enabled: boolean, onDrop: (id: string, target: DropTarget
         }, 16);
       };
 
-      const move = (ev: PointerEvent) => {
-        pointer.current = { x: ev.clientX, y: ev.clientY };
+      const moveTo = (cx: number, cy: number) => {
+        pointer.current = { x: cx, y: cy };
         if (!started) {
-          const dist = Math.hypot(ev.clientX - startX, ev.clientY - startY);
+          const dist = Math.hypot(cx - startX, cy - startY);
           if (isTouch) {
             if (dist > 8) cleanup.current();
             return;
@@ -102,16 +102,26 @@ export function useDnd(enabled: boolean, onDrop: (id: string, target: DropTarget
           if (dist < 5) return;
           begin();
         }
-        setGhost((g) => (g ? { ...g, x: ev.clientX, y: ev.clientY } : g));
-        const t = computeTarget(ev.clientX, ev.clientY);
+        setGhost((g) => (g ? { ...g, x: cx, y: cy } : g));
+        const t = computeTarget(cx, cy);
         targetRef.current = t;
         setTarget(t);
       };
+      const move = (ev: PointerEvent) => moveTo(ev.clientX, ev.clientY);
       const up = () => (started ? end(true) : cleanup.current());
       const cancel = () => (started ? end(false) : cleanup.current());
+      // Browsers may cancel the pointer when a touch looks like a scroll; a started touch drag
+      // keeps going on touch events.
+      const pointerCancel = () => (isTouch && started ? undefined : cancel());
       const key = (ev: KeyboardEvent) => ev.key === 'Escape' && cancel();
       const touchMove = (ev: TouchEvent) => {
-        if (started) ev.preventDefault();
+        if (!started) return;
+        if (ev.cancelable) ev.preventDefault();
+        const t = ev.touches[0];
+        if (t) moveTo(t.clientX, t.clientY);
+      };
+      const touchEnd = () => {
+        if (started) end(true);
       };
       const ctx = (ev: Event) => {
         if (started || isTouch) ev.preventDefault();
@@ -121,7 +131,9 @@ export function useDnd(enabled: boolean, onDrop: (id: string, target: DropTarget
       if (isTouch) pressTimer = window.setTimeout(begin, 300);
       window.addEventListener('pointermove', move);
       window.addEventListener('pointerup', up);
-      window.addEventListener('pointercancel', cancel);
+      window.addEventListener('pointercancel', pointerCancel);
+      window.addEventListener('touchend', touchEnd);
+      window.addEventListener('touchcancel', touchEnd);
       window.addEventListener('keydown', key);
       window.addEventListener('touchmove', touchMove, { passive: false });
       window.addEventListener('contextmenu', ctx);
@@ -130,7 +142,9 @@ export function useDnd(enabled: boolean, onDrop: (id: string, target: DropTarget
         window.clearInterval(scrollTimer);
         window.removeEventListener('pointermove', move);
         window.removeEventListener('pointerup', up);
-        window.removeEventListener('pointercancel', cancel);
+        window.removeEventListener('pointercancel', pointerCancel);
+        window.removeEventListener('touchend', touchEnd);
+        window.removeEventListener('touchcancel', touchEnd);
         window.removeEventListener('keydown', key);
         window.removeEventListener('touchmove', touchMove);
         window.removeEventListener('contextmenu', ctx);
@@ -159,6 +173,16 @@ export function useDnd(enabled: boolean, onDrop: (id: string, target: DropTarget
   }, []);
 
   useEffect(() => () => cleanup.current(), []);
+
+  // A blocking touchmove listener has to exist before the touch starts, or the browser
+  // commits to scrolling and won't let a long-press drag take over.
+  useEffect(() => {
+    const block = (e: TouchEvent) => {
+      if (dragRef.current && e.cancelable) e.preventDefault();
+    };
+    window.addEventListener('touchmove', block, { passive: false });
+    return () => window.removeEventListener('touchmove', block);
+  }, []);
 
   const ghostEl =
     ghost && dragId ? (
