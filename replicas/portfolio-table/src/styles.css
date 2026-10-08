@@ -847,3 +847,4 @@ body.dragging-bar, body.dragging-bar * { cursor: grabbing !important; user-selec
   .tl-tools { gap: 0; }
   .toolbar-left, .toolbar-right { flex: none; }
 }
+.sort-panel { width: 460px; }
