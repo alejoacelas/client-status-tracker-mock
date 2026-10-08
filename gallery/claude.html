@@ -47,6 +47,21 @@
   .card .actions { display: flex; justify-content: flex-end; margin-top: 14px; }
   .card button { background: var(--card-fg); color: var(--card); border: 0; border-radius: 8px; padding: 8px 14px; font: inherit; cursor: pointer; }
   .card button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .side {
+    position: fixed; top: calc(50% + var(--bar-h) / 2); transform: translateY(-50%); z-index: 4;
+    display: flex; align-items: center; gap: 8px; height: 48px; padding: 0 14px 0 12px;
+    border: 1px solid rgba(255,255,255,.18); border-radius: 24px; cursor: pointer;
+    background: rgba(17, 20, 24, .82); color: #f3f4f6; font: 600 13px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    box-shadow: 0 6px 20px rgba(0,0,0,.28); backdrop-filter: blur(6px);
+  }
+  .side .chev { font-size: 24px; line-height: 1; font-weight: 400; }
+  .side.left { left: 12px; }
+  .side.right { right: 12px; padding: 0 12px 0 14px; }
+  .side:hover, .side:focus-visible { background: rgba(17, 20, 24, .95); border-color: #8fa6ff; outline: none; }
+  .side .label { max-width: 0; overflow: hidden; white-space: nowrap; transition: max-width .2s ease; }
+  .side:hover .label, .side:focus-visible .label { max-width: 200px; }
+  @media (prefers-reduced-motion: reduce) { .side .label { transition: none; } }
+  @media (max-width: 640px) { .side { height: 40px; padding: 0 10px; } .side .label { display: none; } }
   @media (max-width: 640px) {
     .inspired, .full-label { display: none; }
     .bar { gap: 8px; padding-left: 16px; }
@@ -67,12 +82,14 @@
 <div class="stage" id="stage">
   <div class="note" id="note" hidden></div>
 </div>
+  <button class="side left" id="side-prev" aria-label="Previous design"><span class="chev">‹</span><span class="label" id="side-prev-label"></span></button>
+  <button class="side right" id="side-next" aria-label="Next design"><span class="label" id="side-next-label"></span><span class="chev">›</span></button>
 
 <div class="hint" id="hint" role="dialog" aria-modal="true" aria-labelledby="hint-title" hidden>
   <div class="card">
     <h2 id="hint-title">Seven ways to show project status</h2>
     <p>Each page is a working copy of how a well-known product shows progress, filled with the same made-up agency and clients.</p>
-    <p>Use the <strong>‹ ›</strong> arrows in the top bar, or the <kbd>←</kbd> <kbd>→</kbd> keys, to move between designs. The bar names each design and what inspired it. Click around: most things work.</p>
+    <p>Use the <strong>‹ ›</strong> arrows on the sides of the screen or in the top bar, or the <kbd>←</kbd> <kbd>→</kbd> keys, to move between designs. The bar names each design and what inspired it. Click around: most things work.</p>
     <p>To leave feedback, click <strong>Comment</strong> in the top bar, or use Claude's comment button. Comments stay pinned to the design you were looking at.</p>
     <p>These are internal references, not finished designs.</p>
     <div class="actions"><button id="close">Got it</button></div>
@@ -81,11 +98,11 @@
 
 <script>
   const designs = [
+    { slug: 'now-next-later', name: 'Now / Next / Later', inspiration: 'ProdPad roadmap', url: 'https://www.prodpad.com/blog/invented-now-next-later-roadmap/' },
     { slug: 'statuspage', name: 'Status page', inspiration: 'Atlassian Statuspage', url: 'https://www.githubstatus.com' },
     { slug: 'delivery-tracker', name: 'Delivery tracker', inspiration: "Domino's Pizza Tracker" },
     { slug: 'linear-updates', name: 'Weekly updates', inspiration: 'Linear project updates', url: 'https://linear.app/docs/initiative-and-project-updates' },
     { slug: 'github-roadmap', name: 'Timeline', inspiration: 'GitHub Projects roadmap', url: 'https://docs.github.com/en/issues/planning-and-tracking-with-projects/customizing-views-in-your-project/customizing-the-roadmap-layout' },
-    { slug: 'now-next-later', name: 'Now / Next / Later', inspiration: 'ProdPad roadmap', url: 'https://www.prodpad.com/blog/invented-now-next-later-roadmap/' },
     { slug: 'hill-chart', name: 'Hill chart', inspiration: 'Basecamp Hill Charts', url: 'https://basecamp.com/hill-charts' },
     { slug: 'portfolio-table', name: 'Portfolio table', inspiration: 'Asana portfolios' },
   ];
@@ -106,8 +123,17 @@
     }
     return frames[d.slug];
   }
+  function labelSides(i) {
+      const prev = designs[(i - 1 + designs.length) % designs.length];
+      const next = designs[(i + 1) % designs.length];
+      document.getElementById('side-prev-label').textContent = prev.name;
+      document.getElementById('side-next-label').textContent = next.name;
+      document.getElementById('side-prev').setAttribute('aria-label', `Previous design: ${prev.name}`);
+      document.getElementById('side-next').setAttribute('aria-label', `Next design: ${next.name}`);
+    }
   function show(i) {
     const d = designs[i];
+    labelSides(i);
     $('count').textContent = `${i + 1} / ${designs.length}`;
     $('name').textContent = d.name;
     $('inspired').replaceChildren();
@@ -130,6 +156,8 @@
   }
   window.addEventListener('hashchange', () => show(indexFromHash()));
   $('prev').addEventListener('click', () => go(-1));
+  $('side-prev').addEventListener('click', () => go(-1));
+  $('side-next').addEventListener('click', () => go(1));
   $('next').addEventListener('click', () => go(1));
   document.addEventListener('keydown', (e) => {
     if (!$('hint').hidden) { if (e.key === 'Escape' || e.key === 'Enter') closeHint(); return; }

@@ -4,5 +4,8 @@
   "type": "module",
   "dependencies": {
     "@vercel/blob": "^2.8.1"
+  },
+  "devDependencies": {
+    "playwright": "^1.64.0"
   }
 }

@@ -3,5 +3,25 @@
   "installCommand": "npm ci",
   "buildCommand": "sh scripts/build-site.sh",
   "outputDirectory": "site",
-  "headers": [{ "source": "/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }]
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/:name([^/.]+)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/:name([^/.]+)/",
+      "destination": "/index.html"
+    }
+  ]
 }
