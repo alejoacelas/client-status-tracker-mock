@@ -14,7 +14,7 @@ export function PublishedList() {
   const { state } = useStore();
   return (
     <>
-      <div className="toolbar" style={{ gridTemplateColumns: '1fr auto' }}>
+      <div className="toolbar toolbar--split">
         <p className="muted" style={{ margin: 0 }}>
           Each client gets a read-only link showing only their public initiatives. Internal notes, internal comments and candidates are never shown.
         </p>

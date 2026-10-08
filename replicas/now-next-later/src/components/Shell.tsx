@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   BarChart3,
   Bell,
@@ -125,8 +125,14 @@ export function MobileBar({ onMenu }: { onMenu: () => void }) {
 type Tab = { label: string; to?: string; link?: boolean; icon?: React.ReactNode };
 
 function Tabs({ tabs, active }: { tabs: (Tab | '|')[]; active: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  // Keep the active tab visible when the tab row scrolls sideways on phones.
+  useEffect(() => {
+    const el = ref.current?.querySelector<HTMLElement>('.tab.is-active');
+    if (el && ref.current) ref.current.scrollLeft = Math.max(0, el.offsetLeft - 16);
+  }, [active]);
   return (
-    <div className="tabs" role="tablist">
+    <div className="tabs" role="tablist" ref={ref}>
       {tabs.map((t, n) =>
         t === '|' ? (
           <span key={n} className="tab-sep" />

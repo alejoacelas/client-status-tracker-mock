@@ -607,6 +607,7 @@ ul {
   margin-top: 20px;
 }
 .tabs {
+  position: relative;
   display: flex;
   align-items: center;
   overflow-x: auto;
@@ -671,6 +672,14 @@ ul {
   align-items: center;
   gap: 16px;
   margin-bottom: 24px;
+}
+.toolbar--split {
+  grid-template-columns: minmax(0, 1fr) auto !important;
+}
+@media (max-width: 720px) {
+  .toolbar--split {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
 }
 .toolbar__left {
   display: flex;
