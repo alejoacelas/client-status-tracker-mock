@@ -182,7 +182,7 @@ export const projects: Project[] = [
     clientSummary:
       "Round two logo concepts were shared on 25 September. We need your team's feedback before we can start the brand guidelines.",
     step: 2,
-    estimate: '24 Oct (waiting on your feedback)',
+    estimate: '24 Oct (needs your feedback)',
     deliverable: 'new brand',
     briefReceived: '2026-08-12',
     phases: [

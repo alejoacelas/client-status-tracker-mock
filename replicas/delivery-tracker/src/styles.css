@@ -1495,6 +1495,16 @@ a {
     width: 34%;
   }
 
+  /* "Discovery" is longer than the original's first label */
+  .ft-bar[data-step='1'] .ft-bar__active-text {
+    font-size: 1.2em;
+    margin-left: 0.9em;
+  }
+
+  .ft-bar__label--2 {
+    padding-left: 0.7em;
+  }
+
   .ft-card__patent {
     left: 3em;
     top: 6.9em;
