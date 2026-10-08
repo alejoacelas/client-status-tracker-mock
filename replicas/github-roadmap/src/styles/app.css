@@ -479,6 +479,94 @@
   flex: 1;
   min-height: 0;
 }
+.ViewBody-main {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---------- Slice panel ---------- */
+
+.SlicePanel {
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  flex-shrink: 0;
+  overflow: auto;
+  border-top: var(--borderWidth-thin) solid var(--borderColor-default);
+  border-right: var(--borderWidth-thin) solid var(--borderColor-default);
+  background-color: var(--bgColor-default);
+}
+.SlicePanel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--base-size-8) var(--base-size-8) var(--base-size-8) var(--base-size-16);
+}
+.SlicePanel-field,
+.SlicePanel-close {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--base-size-8);
+  height: 28px;
+  padding: 0 var(--base-size-8);
+  border: 0;
+  border-radius: var(--borderRadius-medium);
+  background: none;
+  color: var(--fgColor-default);
+  font-weight: var(--base-text-weight-semibold);
+  cursor: pointer;
+}
+.SlicePanel-field {
+  margin-left: calc(var(--base-size-8) * -1);
+}
+.SlicePanel-field .octicon,
+.SlicePanel-close {
+  color: var(--fgColor-muted);
+}
+.SlicePanel-field:hover,
+.SlicePanel-close:hover {
+  background-color: var(--control-transparent-bgColor-hover);
+}
+.SlicePanel-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--base-size-8) var(--base-size-8);
+}
+.SlicePanel-item {
+  display: flex;
+  align-items: center;
+  gap: var(--base-size-8);
+  width: 100%;
+  min-height: 32px;
+  padding: 6px var(--base-size-8);
+  border: 0;
+  border-radius: var(--borderRadius-medium);
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+.SlicePanel-item:hover {
+  background-color: var(--control-transparent-bgColor-hover);
+}
+.SlicePanel-item.is-selected {
+  background-color: var(--control-transparent-bgColor-selected);
+  font-weight: var(--base-text-weight-semibold);
+  box-shadow: inset 2px 0 0 var(--borderColor-accent-emphasis);
+}
+.SlicePanel-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 767px) {
+  .SlicePanel {
+    width: 140px;
+  }
+}
 
 /* ---------- Project details pane ---------- */
 

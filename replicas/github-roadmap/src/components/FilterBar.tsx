@@ -10,6 +10,7 @@ import {
   ZoomInIcon,
   ColumnsIcon,
   ProjectIcon,
+  FilterIcon,
 } from '@primer/octicons-react'
 import type { Layout, ViewConfig } from '../types'
 import { FIELDS, MILESTONES, SPRINTS, USERS, useStore } from '../store'
@@ -17,8 +18,11 @@ import { fieldForKey, isKnownKey, quote, tokenize } from '../lib/filter'
 import { slug } from '../lib/fields'
 import { FieldIcon, SortIcon, fieldName } from './FieldIcon'
 import { LayoutIcon } from './Header'
+import { SliceMenu } from './SlicePanel'
 import { Avatar, Button, ColorDecorator, Counter, MenuDivider, MenuItem, Overlay } from './primitives'
 import { DateFieldsMenu, FieldsMenu, GroupByMenu, MarkersMenu, SortMenu, ZoomMenu, ZOOM_LABEL, datesSummary, markersSummary, sortSummary } from './ViewMenus'
+
+let measureCanvas: HTMLCanvasElement | undefined
 
 interface Suggestion {
   label: string
@@ -122,6 +126,17 @@ export function FilterBar({ view, count }: { view: ViewConfig; count: number }) 
 
   const showSuggest = focused && !suppress && context.suggestions.length > 0
 
+  const suggestLeft = () => {
+    const el = inputRef.current
+    if (!el) return -8
+    const ctx = (measureCanvas ??= document.createElement('canvas')).getContext('2d')
+    if (!ctx) return -8
+    ctx.font = getComputedStyle(el).font
+    const start = context.tok ? (context.tok.key !== undefined ? context.tok.end - (context.partial?.length ?? 0) : context.tok.start) : caret
+    const w = ctx.measureText(view.filter.slice(0, start)).width - el.scrollLeft
+    return Math.max(-8, Math.min(w - 8, el.clientWidth - 240))
+  }
+
   const accept = (s: Suggestion) => {
     const q = view.filter
     const tok = context.tok
@@ -213,7 +228,7 @@ export function FilterBar({ view, count }: { view: ViewConfig; count: number }) 
             }}
           />
           {showSuggest && (
-            <ul className="FilterSuggest Menu" role="listbox">
+            <ul className="FilterSuggest Menu" role="listbox" style={{ left: suggestLeft() }}>
               {context.suggestions.slice(0, 12).map((s, i) => (
                 <li
                   key={s.kind + s.insert}
@@ -270,7 +285,7 @@ export function FilterBar({ view, count }: { view: ViewConfig; count: number }) 
   )
 }
 
-type Sub = 'group' | 'markers' | 'sort' | 'dates' | 'zoom' | 'fields' | 'column' | null
+type Sub = 'group' | 'markers' | 'sort' | 'dates' | 'zoom' | 'fields' | 'column' | 'slice' | null
 
 export function ViewOptionsMenu({ view, anchor, onClose }: { view: ViewConfig; anchor: HTMLElement | null; onClose: () => void }) {
   const store = useStore()
@@ -330,6 +345,7 @@ export function ViewOptionsMenu({ view, anchor, onClose }: { view: ViewConfig; a
             {row('sort', <SortIcon />, 'Sort by', sortSummary(view), view.sort.length === 0)}
             {view.layout === 'roadmap' && row('dates', <CalendarIcon />, 'Dates', datesSummary(view))}
             {view.layout === 'roadmap' && row('zoom', <ZoomInIcon />, 'Zoom level', ZOOM_LABEL[view.zoom])}
+            {row('slice', <FilterIcon />, 'Slice by', view.sliceBy ? fieldName(view.sliceBy) : 'none', !view.sliceBy)}
             {view.layout === 'roadmap' && (
               <>
                 <MenuDivider />
@@ -361,6 +377,7 @@ export function ViewOptionsMenu({ view, anchor, onClose }: { view: ViewConfig; a
           {sub === 'dates' && <DateFieldsMenu view={view} update={update} onDone={closeSub} />}
           {sub === 'zoom' && <ZoomMenu view={view} update={update} onDone={closeSub} />}
           {sub === 'fields' && <FieldsMenu view={view} update={update} />}
+          {sub === 'slice' && <SliceMenu view={view} update={update} onDone={closeSub} />}
         </Overlay>
       )}
     </>

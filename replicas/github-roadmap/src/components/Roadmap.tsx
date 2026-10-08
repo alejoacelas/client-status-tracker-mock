@@ -396,19 +396,19 @@ export function RoadmapView({ view, groups, onOpenItem }: { view: ViewConfig; gr
         const el = scrollRef.current
         if (el) el.scrollBy({ left: dir * (el.clientWidth - pane) * 0.9, behavior: 'smooth' })
       }} />
-      {drag?.moved && <DragTooltip drag={drag} x={x} scrollLeft={scroll.left} />}
+      {drag?.moved && <DragTooltip drag={drag} x={x} scrollLeft={scroll.left} minLeft={pane + 90} maxLeft={scroll.width - 90} />}
     </div>
   )
 }
 
 /* ------------------------------------------------------------------ */
 
-function DragTooltip({ drag, x, scrollLeft }: { drag: DragState; x: (d: number) => number; scrollLeft: number }) {
+function DragTooltip({ drag, x, scrollLeft, minLeft, maxLeft }: { drag: DragState; x: (d: number) => number; scrollLeft: number; minLeft: number; maxLeft: number }) {
   const center = drag.mode === 'start' ? x(drag.span.start) : drag.mode === 'end' ? x(drag.span.end + 1) : (x(drag.span.start) + x(drag.span.end + 1)) / 2
   const el = document.querySelector(`[data-item-row="${CSS.escape(drag.itemId)}"]`) as HTMLElement | null
   const top = el ? el.getBoundingClientRect().top - (el.closest('.Roadmap')?.getBoundingClientRect().top ?? 0) - 30 : 0
   return (
-    <div className="PillTooltip" style={{ left: center - scrollLeft, top }}>
+    <div className="PillTooltip" style={{ left: Math.max(minLeft, Math.min(center - scrollLeft, maxLeft)), top }}>
       {drag.span.start === drag.span.end ? fmtShort(drag.span.start) : `${fmtShort(drag.span.start)} – ${fmtShort(drag.span.end)}`}
     </div>
   )
@@ -626,7 +626,7 @@ const TimeHeader = memo(function TimeHeader({ zoom, dw, rangeStart, totalDays, x
     <div className="Roadmap-header" style={{ height }}>
       <div className="Roadmap-monthRow">
         {months.map((m) => (
-          <div key={`${m.y}-${m.m}`} className="Roadmap-month" style={{ left: Math.max(0, x(m.start)), width: x(m.end) - Math.max(0, x(m.start)) }}>
+          <div key={`${m.y}-${m.m}`} className="Roadmap-month" style={{ left: Math.max(0, x(m.start) - 12), width: x(m.end) - Math.max(0, x(m.start) - 12) }}>
             <span className="Roadmap-monthLabel">{zoom === 'year' ? `${MONTHS_SHORT[m.m]} ${m.y}` : `${MONTHS[m.m]} ${m.y}`}</span>
           </div>
         ))}
@@ -634,7 +634,19 @@ const TimeHeader = memo(function TimeHeader({ zoom, dw, rangeStart, totalDays, x
       {showMarkerRow && (
         <div className="Roadmap-markerRow">
           {markers
-            .filter((m) => m.kind !== 'date')
+            .filter((m) => m.kind === 'sprint' || m.kind === 'currentSprint')
+            .map((m) => {
+              const sp = sprintSpan(m.key)!
+              return (
+                <div key={m.key} className="Roadmap-sprintCell" style={{ left: x(sp.start), width: (sp.end - sp.start + 1) * dw }}>
+                  <span className={`Roadmap-markerLabel Roadmap-sprintLabel is-${m.kind}`} title={`${m.label} · ${fmtShort(sp.start)} – ${fmtShort(sp.end)}`}>
+                    {m.label}
+                  </span>
+                </div>
+              )
+            })}
+          {markers
+            .filter((m) => m.kind === 'milestone')
             .sort((a, b) => a.day - b.day)
             .map((m, i, arr) => {
               const left = x(m.day) + (m.kind === 'milestone' ? dw / 2 : 0)

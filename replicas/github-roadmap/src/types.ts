@@ -110,6 +110,7 @@ export interface ViewConfig {
   fields: string[]
   truncateTitles?: boolean
   showDateFields?: boolean
+  sliceBy?: string | null
 }
 
 export interface ProjectMeta {
