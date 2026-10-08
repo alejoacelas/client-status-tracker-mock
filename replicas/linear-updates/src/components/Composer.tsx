@@ -22,10 +22,12 @@ export function RichEditor({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [bar, setBar] = useState<{ left: number; top: number } | null>(null);
+  const [isEmpty, setIsEmpty] = useState(!initial.trim());
 
   useEffect(() => {
     const el = ref.current!;
-    el.innerHTML = mdToHtml(initial);
+    document.execCommand('defaultParagraphSeparator', false, 'p');
+    el.innerHTML = mdToHtml(initial) || '<p><br></p>';
     if (autoFocus) {
       el.focus();
       const r = document.createRange();
@@ -52,9 +54,22 @@ export function RichEditor({
 
   const emit = () => {
     const el = ref.current!;
+    // Keep content inside block elements so lists and paragraphs convert cleanly.
+    if (!el.firstElementChild || el.firstChild?.nodeType === 3) {
+      const text = el.textContent ?? '';
+      if (!el.querySelector('p, ul, ol, div')) {
+        el.innerHTML = `<p>${text.replace(/</g, '&lt;') || '<br>'}</p>`;
+        const r = document.createRange();
+        r.selectNodeContents(el.firstElementChild!);
+        r.collapse(false);
+        const sel = window.getSelection();
+        sel?.removeAllRanges();
+        sel?.addRange(r);
+      }
+    }
     const md = htmlToMd(el);
-    const empty = !el.textContent?.trim();
-    if (empty && el.innerHTML !== '') el.innerHTML = '';
+    const empty = !el.textContent?.trim() && !el.querySelector('li');
+    setIsEmpty(empty);
     onChange(md, empty);
   };
 
@@ -75,11 +90,17 @@ export function RichEditor({
       // Markdown shortcut: "-" or "*" at the start of a line becomes a bullet list.
       const s = window.getSelection();
       const node = s?.anchorNode;
-      if (node && node.nodeType === 3 && /^[-*]$/.test((node.textContent ?? '').slice(0, s!.anchorOffset)) && s!.anchorOffset === 1) {
-        const inList = (node.parentElement?.closest('li')) != null;
-        if (!inList) {
+      const block = node?.parentElement?.closest('p, div:not(.editor)');
+      if (node && node.nodeType === 3 && s!.anchorOffset === 1 && /^[-*]$/.test(node.textContent?.slice(0, 1) ?? '') && block && block.textContent?.startsWith(node.textContent ?? '')) {
+        if (!node.parentElement?.closest('li')) {
           e.preventDefault();
           node.textContent = (node.textContent ?? '').slice(1);
+          if (!block.textContent) block.innerHTML = '<br>';
+          const r = document.createRange();
+          r.setStart(block, 0);
+          r.collapse(true);
+          s!.removeAllRanges();
+          s!.addRange(r);
           exec('insertUnorderedList');
         }
       }
@@ -92,7 +113,8 @@ export function RichEditor({
   };
 
   return (
-    <>
+    <div style={{ position: 'relative' }}>
+      {isEmpty && <div className="editor-placeholder">{placeholder}</div>}
       <div
         ref={ref}
         className={className}
@@ -122,7 +144,7 @@ export function RichEditor({
         </div>,
         document.body,
       )}
-    </>
+    </div>
   );
 }
 

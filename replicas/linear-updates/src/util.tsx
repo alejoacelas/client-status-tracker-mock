@@ -42,6 +42,12 @@ export function fullDateTime(s: string): string {
   return `${MONTHS[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} at ${t}`;
 }
 
+export function ymd(ms: number): string {
+  const d = new Date(ms);
+  const p = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+}
+
 export function dayKey(s: string) {
   return s.slice(0, 10);
 }
@@ -155,19 +161,26 @@ export function htmlToMd(root: HTMLElement): string {
     if (buf.trim()) blocks.push(buf.trim());
     buf = '';
   };
-  for (const n of [...root.childNodes]) {
-    if (n instanceof HTMLElement && (n.tagName === 'UL' || n.tagName === 'OL')) {
-      flush();
-      const ordered = n.tagName === 'OL';
-      blocks.push([...n.children].map((li, i) => `${ordered ? `${i + 1}.` : '-'} ${inl(li).replace(/\n/g, ' ').trim()}`).join('\n'));
-    } else if (n instanceof HTMLElement && (n.tagName === 'P' || n.tagName === 'DIV')) {
-      flush();
-      const t = inl(n).replace(/\n$/, '');
-      if (t.trim()) blocks.push(t.trim());
-    } else {
-      buf += inl(n);
+  const walk = (container: Node) => {
+    for (const n of [...container.childNodes]) {
+      if (n instanceof HTMLElement && (n.tagName === 'UL' || n.tagName === 'OL')) {
+        flush();
+        const ordered = n.tagName === 'OL';
+        const items = [...n.children].map((li) => inl(li).replace(/\n/g, ' ').trim()).filter(Boolean);
+        if (items.length) blocks.push(items.map((t, i) => `${ordered ? `${i + 1}.` : '-'} ${t}`).join('\n'));
+      } else if (n instanceof HTMLElement && (n.tagName === 'P' || n.tagName === 'DIV')) {
+        flush();
+        if (n.querySelector('ul, ol, p, div')) walk(n);
+        else {
+          const t = inl(n).replace(/\n$/, '');
+          if (t.trim()) blocks.push(t.trim());
+        }
+      } else {
+        buf += inl(n);
+      }
     }
-  }
+  };
+  walk(root);
   flush();
   return blocks.join('\n\n');
 }

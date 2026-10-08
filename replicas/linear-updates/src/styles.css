@@ -333,8 +333,9 @@ a { color: inherit; text-decoration: none; }
 .health-pick { display: inline-flex; align-items: center; gap: 7px; height: 28px; padding: 0 10px 0 7px; border-radius: 6px; font-size: 13px; font-weight: var(--w-medium); background: var(--bg-active); border: 1px solid var(--border); }
 .health-pick:hover { background: var(--bg-selected); }
 .editor { min-height: 88px; outline: none; padding: 10px 18px 14px; cursor: text; }
-.editor:empty::before { content: attr(data-placeholder); color: var(--text-quaternary); pointer-events: none; }
-.composer-foot { display: flex; align-items: center; gap: 8px; padding: 10px 12px 10px 14px; border-top: 1px solid var(--border-subtle); }
+.editor p { margin: 0 0 6px; }
+.editor-placeholder { position: absolute; left: 18px; top: 10px; color: var(--text-quaternary); pointer-events: none; font-size: 15px; line-height: 1.6; }
+.composer-foot { display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 10px 12px 10px 14px; border-top: 1px solid var(--border-subtle); }
 .composer-foot .hint { font-size: 12px; color: var(--text-quaternary); margin-right: auto; display: flex; align-items: center; gap: 6px; }
 .kbd { display: inline-grid; place-items: center; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 4px; background: var(--bg-active); border: 1px solid var(--border); font-size: 11px; color: var(--text-tertiary); font-weight: var(--w-medium); }
 .composer-progress { margin: 0 18px 12px; }
@@ -485,7 +486,9 @@ a { color: inherit; text-decoration: none; }
   .details { width: 100%; top: 44px; }
   .pulse-wrap { padding: 4px 18px 96px; }
   .trow { padding: 0 12px 0 16px; grid-template-columns: minmax(0, 1fr) auto; }
-  .trow .hide-sm { display: none; }
+  .trow .hide-sm { display: none !important; }
+  .trow { padding-left: 24px; }
+  .expander { margin-left: -20px; margin-right: 0; }
   .trow.child .name::before, .trow.child.mid .name::after { left: 27px; }
   .upd-pop { left: 12px !important; right: 12px; top: auto !important; bottom: 12px; width: auto; }
   .page-title { font-size: 22px; }

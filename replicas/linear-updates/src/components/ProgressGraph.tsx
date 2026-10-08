@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { Milestone, Project } from '../data/mock';
 import { now } from '../store';
-import { shortDate } from '../util';
+import { shortDate, ymd } from '../util';
 
 const DAY = 86400000;
 const d = (s: string) => new Date(s + 'T00:00:00').getTime();
@@ -36,7 +36,7 @@ export function ProgressGraph({ project, milestones }: { project: Project; miles
   const [hover, setHover] = useState<number | null>(null);
   const W = 300;
   const H = 150;
-  const pad = { l: 4, r: 4, t: 8, b: 22 };
+  const pad = { l: 4, r: 4, t: 8, b: 30 };
   const x1 = Math.max(end, target);
   const xs = (t: number) => pad.l + ((t - start) / (x1 - start || 1)) * (W - pad.l - pad.r);
   const max = Math.max(...pts.map((p) => p.scope), 1);
@@ -88,18 +88,18 @@ export function ProgressGraph({ project, milestones }: { project: Project; miles
           <path d={line('completed')} fill="none" stroke="var(--graph-completed)" strokeWidth="1.5" />
           <line x1={xs(target)} x2={xs(target)} y1={pad.t} y2={ys(0)} stroke="var(--graph-target)" strokeWidth="1.2" />
           {milestones.map((m) => (
-            <path key={m.id} transform={`translate(${xs(d(m.targetDate))},${ys(0) + 7})`} d="M0,-3.5 3.5,0 0,3.5 -3.5,0Z" fill={m.completedOn ? 'var(--text-tertiary)' : 'var(--text-quaternary)'}>
+            <path key={m.id} transform={`translate(${xs(d(m.targetDate))},${ys(0) + 8})`} d="M0,-3.5 3.5,0 0,3.5 -3.5,0Z" fill={m.completedOn ? 'var(--text-tertiary)' : 'var(--text-quaternary)'}>
               <title>{m.name} · {shortDate(m.targetDate)}</title>
             </path>
           ))}
           {hp && <line x1={xs(hp.t)} x2={xs(hp.t)} y1={pad.t} y2={ys(0)} stroke="var(--text-quaternary)" strokeDasharray="2 2" />}
           {hp && <circle cx={xs(hp.t)} cy={ys(hp.completed)} r="3" fill="var(--graph-completed)" />}
           <text x={pad.l} y={H - 2} fontSize="11" fill="var(--text-tertiary)">{shortDate(project.startDate)}</text>
-          <text x={W - pad.r} y={H - 2} fontSize="11" textAnchor="end" fill="var(--text-tertiary)">{shortDate(new Date(x1).toISOString().slice(0, 10))}</text>
+          <text x={W - pad.r} y={H - 2} fontSize="11" textAnchor="end" fill="var(--text-tertiary)">{shortDate(ymd(x1))}</text>
         </svg>
         {hp && (
           <div className="graph-tip" style={{ left: `${Math.min(62, (xs(hp.t) / W) * 100)}%`, top: -6 }}>
-            <div style={{ color: 'var(--text-tertiary)', marginBottom: 2 }}>Week of {shortDate(new Date(hp.t).toISOString().slice(0, 10))}</div>
+            <div style={{ color: 'var(--text-tertiary)', marginBottom: 2 }}>Week of {shortDate(ymd(hp.t))}</div>
             <div>Scope {hp.scope} · Started {hp.started} · Completed {hp.completed}</div>
           </div>
         )}

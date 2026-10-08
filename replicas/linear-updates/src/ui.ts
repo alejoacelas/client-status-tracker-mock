@@ -15,7 +15,7 @@ let ui: UI = {
   toast: null,
   details: (() => {
     try {
-      return localStorage.getItem(DETAILS_KEY) !== '0';
+      return window.innerWidth > 1100 && localStorage.getItem(DETAILS_KEY) !== '0';
     } catch {
       return true;
     }
@@ -26,7 +26,7 @@ let ui: UI = {
 const ls = new Set<() => void>();
 export function setUI(p: Partial<UI>) {
   ui = { ...ui, ...p };
-  if (p.details !== undefined) {
+  if (p.details !== undefined && window.innerWidth > 1100) {
     try {
       localStorage.setItem(DETAILS_KEY, p.details ? '1' : '0');
     } catch {
