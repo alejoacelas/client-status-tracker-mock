@@ -23,7 +23,7 @@ export function CommandMenu({ route }: { route: string[] }) {
       const latest = latestProjectUpdate(s, project.id);
       c.push({ id: 'write', group: 'Project', label: 'Write project update…', icon: <I.pencil size={16} />, run: () => { go(`project/${project.id}/overview`); setUI({ composeFor: project.id }); } });
       if (latest) c.push({ id: 'copy-md', group: 'Project', label: 'Copy latest update as Markdown', icon: <I.markdown size={16} />, run: () => { copyText(updateMarkdown(latest)); toast('Update copied as Markdown'); } });
-      c.push({ id: 'copy-link', group: 'Project', label: 'Copy project link', icon: <I.link size={16} />, keys: ['⌘', '⇧', ','], run: () => { copyText(window.location.href); toast('Project link copied'); } });
+      c.push({ id: 'copy-link', group: 'Project', label: 'Copy project link', icon: <I.link size={16} />, run: () => { copyText(window.location.href); toast('Project link copied'); } });
       c.push({ id: 'fav', group: 'Project', label: s.favorites.includes(project.id) ? 'Remove project from favorites' : 'Add project to favorites', icon: <I.star size={16} />, run: () => actions.toggleFavorite(project.id) });
       c.push({ id: 'details', group: 'Project', label: 'Toggle project details', icon: <I.panel size={16} />, keys: ['⌘', 'I'], run: () => setUI({ details: !getUI().details }) });
       c.push({ id: 'updates', group: 'Project', label: 'Open project updates', icon: <I.pulse size={16} />, run: () => go(`project/${project.id}/updates`) });

@@ -313,7 +313,7 @@ export const updates: Update[] = [
       { id: 'c-mp-7-1', authorId: 'tom', createdAt: '2026-10-05T16:20:00', body: 'The PDF fallback is about a day of work. I can start it Thursday if we still have nothing.' },
       { id: 'c-mp-7-2', authorId: 'maya', createdAt: '2026-10-06T09:05:00', body: 'Internal: escalating to Sam if nothing arrives by Thursday 8 Oct.', reactions: [r('👍', 'tom')] },
     ],
-    progress: { from: 62, to: 70, milestone: 'EHR integration' },
+    progress: { from: 62, to: 66, milestone: 'EHR integration' },
   },
 
   // ---- Brand refresh (Lumen Books) ----

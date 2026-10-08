@@ -16,8 +16,10 @@ import { UpdateItem } from '../components/UpdateItem';
 const pct = (m: { issues: number; done: number }) => (m.issues ? Math.round((m.done / m.issues) * 100) : 0);
 
 function progressSince(s: State, p: Project): Update['progress'] | undefined {
-  const last = latestProjectUpdate(s, p.id);
-  const from = last?.progress?.to ?? (last ? p.progress : 0);
+  // Progress shown in the last update that reported it; the original only shows changes above 2%.
+  const ups = projectUpdates(s, p.id);
+  const last = ups.find((u) => u.progress);
+  const from = last?.progress?.to ?? (ups.length ? p.progress : 0);
   if (Math.abs(p.progress - from) <= 2) return undefined;
   const current = allMilestones.find((m) => m.projectId === p.id && !m.completedOn);
   return { from, to: p.progress, milestone: current?.name };
