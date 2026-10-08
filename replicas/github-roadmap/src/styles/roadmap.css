@@ -636,3 +636,36 @@
     display: none;
   }
 }
+
+/* ---------- Row reordering ---------- */
+
+.Roadmap-numberText {
+  display: inline;
+}
+.Roadmap-grabber {
+  display: none;
+  color: var(--fgColor-muted);
+}
+.Roadmap-row:hover .Roadmap-number.can-reorder .Roadmap-numberText {
+  display: none;
+}
+.Roadmap-row:hover .Roadmap-number.can-reorder .Roadmap-grabber {
+  display: inline-flex;
+}
+.Roadmap-number.can-reorder {
+  cursor: grab;
+}
+body.is-row-dragging,
+body.is-row-dragging * {
+  cursor: grabbing !important;
+  user-select: none;
+}
+.Roadmap-row.is-row-dragged .Roadmap-pane {
+  background-color: var(--bgColor-accent-muted);
+}
+.Roadmap-row.is-drop-before .Roadmap-pane {
+  box-shadow: inset 0 2px 0 var(--borderColor-accent-emphasis);
+}
+.Roadmap-row.is-drop-after .Roadmap-pane {
+  box-shadow: inset 0 -2px 0 var(--borderColor-accent-emphasis);
+}

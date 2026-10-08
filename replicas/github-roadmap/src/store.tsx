@@ -49,6 +49,8 @@ interface Store extends Persisted {
   updateItem: (id: string, patch: Partial<Item>) => void
   setField: (id: string, field: keyof ItemFields, value: ItemFields[keyof ItemFields] | undefined) => void
   addItem: (title: string, fields: ItemFields) => Item
+  /** Manual ordering: move an item before or after another one. */
+  moveItem: (id: string, targetId: string, position: 'before' | 'after') => void
   reset: () => void
 }
 
@@ -187,6 +189,19 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     return item
   }, [])
 
+  const moveItem = useCallback((id: string, targetId: string, position: 'before' | 'after') => {
+    if (id === targetId) return
+    setState((s) => {
+      const moving = s.items.find((i) => i.id === id)
+      if (!moving) return s
+      const rest = s.items.filter((i) => i.id !== id)
+      const idx = rest.findIndex((i) => i.id === targetId)
+      if (idx < 0) return s
+      rest.splice(position === 'before' ? idx : idx + 1, 0, moving)
+      return { ...s, items: rest }
+    })
+  }, [])
+
   const reset = useCallback(() => {
     setState({ items: DATA.items, views: DATA.views, drafts: {}, project: DATA.project })
   }, [])
@@ -206,9 +221,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       updateItem,
       setField,
       addItem,
+      moveItem,
       reset,
     }),
-    [state, viewFor, isDirty, updateView, saveView, discardView, renameView, addView, duplicateView, deleteView, updateItem, setField, addItem, reset],
+    [state, viewFor, isDirty, updateView, saveView, discardView, renameView, addView, duplicateView, deleteView, updateItem, setField, addItem, moveItem, reset],
   )
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>
 }

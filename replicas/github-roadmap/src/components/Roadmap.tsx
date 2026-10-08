@@ -7,6 +7,7 @@ import {
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  GrabberIcon,
   KebabHorizontalIcon,
   LocationIcon,
   PlusIcon,
@@ -93,6 +94,9 @@ export function RoadmapView({ view, groups, onOpenItem }: { view: ViewConfig; gr
   const [drag, setDrag] = useState<DragState | null>(null)
   const dragRef = useRef<DragState | null>(null)
   const [hoverGhost, setHoverGhost] = useState<{ itemId: string; day: number } | null>(null)
+  const [rowDrag, setRowDrag] = useState<{ itemId: string; fromGroup: string; overId: string | null; overGroup: string | null; position: 'before' | 'after' } | null>(null)
+  const rowDragRef = useRef(rowDrag)
+  rowDragRef.current = rowDrag
 
   // Day sitting under the pane-adjusted reference point; kept fixed across zoom changes.
   const anchorDay = useRef<number>(TODAY)
@@ -259,6 +263,42 @@ export function RoadmapView({ view, groups, onOpenItem }: { view: ViewConfig; gr
   const showMarkerRow = markers.some((m) => m.kind !== 'date')
   const headerH = 64 + (showMarkerRow ? 24 : 0)
 
+  /* ---------------- row reordering ---------------- */
+
+  const startRowDrag = (e: React.PointerEvent, item: Item, groupKey: string) => {
+    if (e.button !== 0 || e.pointerType === 'touch' || view.sort.length > 0) return
+    e.preventDefault()
+    setRowDrag({ itemId: item.id, fromGroup: groupKey, overId: null, overGroup: null, position: 'before' })
+    document.body.classList.add('is-row-dragging')
+    const move = (ev: PointerEvent) => {
+      const row = (document.elementFromPoint(ev.clientX, ev.clientY) as HTMLElement | null)?.closest('[data-item-row]') as HTMLElement | null
+      if (!row) return
+      const r = row.getBoundingClientRect()
+      setRowDrag((d) => d && { ...d, overId: row.dataset.itemRow!, overGroup: row.dataset.group ?? null, position: ev.clientY < r.top + r.height / 2 ? 'before' : 'after' })
+    }
+    const up = () => {
+      window.removeEventListener('pointermove', move)
+      window.removeEventListener('pointerup', up)
+      document.body.classList.remove('is-row-dragging')
+      const d = rowDragRef.current
+      setRowDrag(null)
+      if (!d || !d.overId || d.overId === d.itemId) return
+      store.moveItem(d.itemId, d.overId, d.position)
+      if (view.groupBy && d.overGroup && d.overGroup !== d.fromGroup) {
+        const g = groups.find((x) => x.key === d.overGroup)
+        const preset = g ? groupPreset(g) : {}
+        const item = store.items.find((i) => i.id === d.itemId)
+        if (view.groupBy === 'assignees' && item) {
+          const rest = (item.fields.assignees ?? []).filter((l) => l !== d.fromGroup)
+          store.setField(d.itemId, 'assignees', d.overGroup === '__none' ? rest : [...new Set([...rest, d.overGroup])])
+        } else if (d.overGroup === '__none') store.setField(d.itemId, view.groupBy as keyof ItemFields, undefined)
+        else for (const [k, v] of Object.entries(preset)) store.setField(d.itemId, k as keyof ItemFields, v)
+      }
+    }
+    window.addEventListener('pointermove', move)
+    window.addEventListener('pointerup', up)
+  }
+
   /* ---------------- render helpers ---------------- */
 
   const groupPreset = (g: Group): ItemFields => {
@@ -367,6 +407,11 @@ export function RoadmapView({ view, groups, onOpenItem }: { view: ViewConfig; gr
                           onAddDates={(day) => addDates(item, day)}
                           rangeStart={rangeStart}
                           scrollLeft={scroll.left}
+                          groupKey={g.key}
+                          canReorder={view.sort.length === 0}
+                          onRowDragStart={(e) => startRowDrag(e, item, g.key)}
+                          dropPosition={rowDrag && rowDrag.overId === item.id && rowDrag.itemId !== item.id ? rowDrag.position : null}
+                          isRowDragged={rowDrag?.itemId === item.id}
                         />
                       )
                     })}
@@ -490,6 +535,11 @@ interface RowProps {
   onAddDates: (day: number) => void
   rangeStart: number
   scrollLeft: number
+  groupKey: string
+  canReorder: boolean
+  onRowDragStart: (e: React.PointerEvent) => void
+  dropPosition: 'before' | 'after' | null
+  isRowDragged: boolean
 }
 
 function Row(p: RowProps) {
@@ -504,9 +554,10 @@ function Row(p: RowProps) {
 
   return (
     <div
-      className={`Roadmap-row${p.dragging ? ' is-dragging' : ''}`}
+      className={`Roadmap-row${p.dragging ? ' is-dragging' : ''}${p.dropPosition ? ` is-drop-${p.dropPosition}` : ''}${p.isRowDragged ? ' is-row-dragged' : ''}`}
       style={{ height: ROW_H }}
       data-item-row={item.id}
+      data-group={p.groupKey}
       onMouseMove={(e) => {
         if (span) return
         const rect = (e.currentTarget.closest('.Roadmap-content') as HTMLElement).getBoundingClientRect()
@@ -517,8 +568,16 @@ function Row(p: RowProps) {
       onMouseLeave={() => !span && p.onGhost(null)}
     >
       <div className="Roadmap-pane" style={{ width: p.pane + p.dateCols }}>
-        <div className="Roadmap-number" style={{ width: NUMBER_W }}>
-          {p.n}
+        <div
+          className={`Roadmap-number${p.canReorder ? ' can-reorder' : ''}`}
+          style={{ width: NUMBER_W }}
+          onPointerDown={p.onRowDragStart}
+          title={p.canReorder ? 'Drag to reorder' : 'Remove sorting to reorder items'}
+        >
+          <span className="Roadmap-numberText">{p.n}</span>
+          <span className="Roadmap-grabber" aria-hidden="true">
+            <GrabberIcon size={16} />
+          </span>
         </div>
         <div className={`Roadmap-title${p.view.truncateTitles === false ? '' : ''}`} style={{ width: p.pane - NUMBER_W }}>
           <ItemIcon item={item} />
