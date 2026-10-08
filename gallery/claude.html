@@ -1,0 +1,172 @@
+<title>Status Tracker Designs</title>
+<style>
+  /* Layout: one slim control bar over a full-height frame per design; a single dark look on purpose. */
+  :root {
+    --bar: #111418;
+    --bar-line: #262b33;
+    --fg: #f3f4f6;
+    --muted: #a3aab5;
+    --control: #1b2027;
+    --control-line: #3a414c;
+    --accent: #8fa6ff;
+    --card: #ffffff;
+    --card-fg: #111418;
+    --card-muted: #3f4652;
+    --bar-h: 40px;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color-scheme: dark;
+  }
+  html, body { height: 100%; }
+  body { margin: 0; background: var(--bar); color: var(--fg); font: 14px/1.4 var(--ui); display: flex; flex-direction: column; }
+  .bar {
+    flex: none; min-height: var(--bar-h); display: flex; align-items: center; gap: 12px;
+    padding: env(safe-area-inset-top, 0px) 8px 0 16px; background: var(--bar);
+    border-bottom: 1px solid var(--bar-line); white-space: nowrap; overflow: hidden;
+  }
+  .count { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .name { font-weight: 600; }
+  .inspired { color: var(--muted); overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .inspired a { color: var(--muted); }
+  .spacer { flex: 1; }
+  .btn {
+    appearance: none; border: 1px solid var(--control-line); background: var(--control); color: var(--fg);
+    height: 28px; min-width: 28px; padding: 0 10px; border-radius: 6px; cursor: pointer;
+    font: inherit; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn.arrow { font-size: 18px; line-height: 1; padding: 0 9px; }
+  .stage { flex: 1; position: relative; min-height: 0; }
+  .stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #fff; }
+  .note { position: absolute; right: 12px; top: 8px; z-index: 2; background: var(--card); color: var(--card-fg); border-radius: 8px; padding: 8px 12px; box-shadow: 0 8px 24px rgba(0,0,0,.3); max-width: 300px; white-space: normal; }
+  .hint { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(10, 12, 16, .55); padding: 16px; z-index: 10; }
+  .card { background: var(--card); color: var(--card-fg); max-width: 440px; width: 100%; border-radius: 12px; padding: 22px 22px 18px; box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+  .card h2 { margin: 0 0 8px; font-size: 18px; text-wrap: balance; }
+  .card p { margin: 0 0 10px; color: var(--card-muted); }
+  .card kbd { border: 1px solid #c9ced6; border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; font: 12px ui-monospace, Menlo, monospace; }
+  .card .actions { display: flex; justify-content: flex-end; margin-top: 14px; }
+  .card button { background: var(--card-fg); color: var(--card); border: 0; border-radius: 8px; padding: 8px 14px; font: inherit; cursor: pointer; }
+  .card button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (max-width: 640px) {
+    .inspired, .full-label { display: none; }
+    .bar { gap: 8px; padding-left: 16px; }
+  }
+</style>
+
+<div class="bar">
+  <span class="count" id="count"></span>
+  <span class="name" id="name"></span>
+  <span class="inspired" id="inspired"></span>
+  <span class="spacer"></span>
+  <button class="btn arrow" id="prev" aria-label="Previous design">‹</button>
+  <button class="btn arrow" id="next" aria-label="Next design">›</button>
+  <button class="btn" id="comment">Comment</button>
+  <button class="btn" id="help" aria-label="How this works">?</button>
+  <a class="btn" id="full" target="_blank" rel="noopener"><span class="full-label">Open full page&nbsp;</span>↗</a>
+</div>
+<div class="stage" id="stage">
+  <div class="note" id="note" hidden></div>
+</div>
+
+<div class="hint" id="hint" role="dialog" aria-modal="true" aria-labelledby="hint-title" hidden>
+  <div class="card">
+    <h2 id="hint-title">Seven ways to show project status</h2>
+    <p>Each page is a working copy of how a well-known product shows progress, filled with the same made-up agency and clients.</p>
+    <p>Use the <strong>‹ ›</strong> arrows in the top bar, or the <kbd>←</kbd> <kbd>→</kbd> keys, to move between designs. The bar names each design and what inspired it. Click around: most things work.</p>
+    <p>To leave feedback, click <strong>Comment</strong> in the top bar, or use Claude's comment button. Comments stay pinned to the design you were looking at.</p>
+    <p>These are internal references, not finished designs.</p>
+    <div class="actions"><button id="close">Got it</button></div>
+  </div>
+</div>
+
+<script>
+  const designs = [
+    { slug: 'statuspage', name: 'Status page', inspiration: 'Atlassian Statuspage', url: 'https://www.githubstatus.com' },
+    { slug: 'delivery-tracker', name: 'Delivery tracker', inspiration: "Domino's Pizza Tracker" },
+    { slug: 'linear-updates', name: 'Weekly updates', inspiration: 'Linear project updates', url: 'https://linear.app/docs/initiative-and-project-updates' },
+    { slug: 'github-roadmap', name: 'Timeline', inspiration: 'GitHub Projects roadmap', url: 'https://docs.github.com/en/issues/planning-and-tracking-with-projects/customizing-views-in-your-project/customizing-the-roadmap-layout' },
+    { slug: 'now-next-later', name: 'Now / Next / Later', inspiration: 'ProdPad roadmap', url: 'https://www.prodpad.com/blog/invented-now-next-later-roadmap/' },
+    { slug: 'hill-chart', name: 'Hill chart', inspiration: 'Basecamp Hill Charts', url: 'https://basecamp.com/hill-charts' },
+    { slug: 'portfolio-table', name: 'Portfolio table', inspiration: 'Asana portfolios' },
+  ];
+  const $ = (id) => document.getElementById(id);
+  const frames = {};
+  const indexFromHash = () => {
+    const i = designs.findIndex((d) => d.slug === location.hash.slice(1));
+    return i === -1 ? 0 : i;
+  };
+  function frameFor(d) {
+    if (!frames[d.slug]) {
+      const f = document.createElement('iframe');
+      f.title = `${d.name} design`;
+      f.src = `${d.slug}/index.html`;
+      f.dataset.design = d.slug;
+      $('stage').append(f);
+      frames[d.slug] = f;
+    }
+    return frames[d.slug];
+  }
+  function show(i) {
+    const d = designs[i];
+    $('count').textContent = `${i + 1} / ${designs.length}`;
+    $('name').textContent = d.name;
+    $('inspired').replaceChildren();
+    if (d.url) {
+      const a = document.createElement('a');
+      a.href = d.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = d.inspiration;
+      $('inspired').append('Inspired by ', a);
+    } else {
+      $('inspired').textContent = `Inspired by ${d.inspiration}`;
+    }
+    const current = frameFor(d);
+    for (const f of Object.values(frames)) f.hidden = f !== current;
+    $('full').href = `${d.slug}/index.html`;
+    $('note').hidden = true;
+    document.title = `${d.name} · Status Tracker Designs`;
+  }
+  function go(step) {
+    const i = (indexFromHash() + step + designs.length) % designs.length;
+    location.hash = designs[i].slug;
+  }
+  window.addEventListener('hashchange', () => show(indexFromHash()));
+  $('prev').addEventListener('click', () => go(-1));
+  $('next').addEventListener('click', () => go(1));
+  document.addEventListener('keydown', (e) => {
+    if (!$('hint').hidden) { if (e.key === 'Escape' || e.key === 'Enter') closeHint(); return; }
+    if (e.target.closest && e.target.closest('input, textarea, [contenteditable]')) return;
+    if (e.key === 'ArrowLeft') go(-1);
+    if (e.key === 'ArrowRight') go(1);
+  });
+  function closeHint() {
+    $('hint').hidden = true;
+    try { localStorage.setItem('seen-hint', '1'); } catch {}
+  }
+  $('close').addEventListener('click', closeHint);
+  $('help').addEventListener('click', () => { $('hint').hidden = false; });
+  $('hint').addEventListener('click', (e) => { if (e.target === $('hint')) closeHint(); });
+  let seen = false;
+  try { seen = localStorage.getItem('seen-hint') === '1'; } catch {}
+  if (!seen) $('hint').hidden = false;
+
+  function say(text) {
+    $('note').textContent = text;
+    $('note').hidden = false;
+    clearTimeout(say.t);
+    say.t = setTimeout(() => { $('note').hidden = true; }, 6000);
+  }
+  let comments = null;
+  const ready = window.claude?.use ? window.claude.use('comments').then((c) => { comments = c; return c; }).catch(() => null) : Promise.resolve(null);
+  $('comment').addEventListener('click', async () => {
+    const c = comments ?? await ready;
+    if (!c) { say("Use the comment button in Claude's viewer to leave a comment on this design."); return; }
+    try {
+      await c.openComposer({ element: frames[designs[indexFromHash()].slug] });
+    } catch (err) {
+      say(err && err.code === 'forbidden'
+        ? 'Commenting from the page is off here. Use the comment button in Claude’s viewer instead.'
+        : "Couldn't open the comment box. Try Claude's comment button instead.");
+    }
+  });
+
+  show(indexFromHash());
+</script>

@@ -62,7 +62,8 @@ The first question to ask Varun is how their staff update project status today.
 ## Design references
 
 [replicas/](replicas/) holds internal replicas of well-known status-page
-patterns, browsable together at https://status-tracker-designs.vercel.app, so
+patterns, browsable together at https://status-tracker-designs.vercel.app (and as a
+private Claude artifact for sharing with Varun), so
 that a design can be described as "layout X, grouped by Y, plus block
 Z". They copy layout, colours and behaviour but carry no logos. They are
 references only and must be restyled before any commercial use.

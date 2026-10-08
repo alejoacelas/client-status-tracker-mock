@@ -39,3 +39,16 @@ stores one private JSON blob per comment in the Vercel Blob store
 1Password (personal account, vault `mac-agents`, item
 "Vercel Blob — status-tracker-comments", field `credential`), and
 `vercel env pull .env.local` restores it locally.
+
+## Claude artifact
+
+The same gallery is also a private Claude artifact,
+https://claude.ai/artifact/Cu4Yfn9stgT87cg6FfPWpQ, shared from its Share menu.
+Its wrapper is `gallery/claude.html`: the "Comment" button opens Claude's
+comment box anchored to the design on screen, and comments are read with the
+`ArtifactComments` tool. To update it, run `scripts/build-site.sh`, copy each
+`site/<name>/` folder plus `gallery/claude.html` (as `index.html`) into one
+folder, and republish to that URL with every file under the replica folders
+except the `.eot`, `.ttf` and `.svg` font fallbacks, which the artifact host
+rejects or doesn't need.
+
