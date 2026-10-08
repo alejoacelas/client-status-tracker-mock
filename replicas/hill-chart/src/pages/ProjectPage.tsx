@@ -30,7 +30,7 @@ function MessagesCard({ p }: { p: Project }) {
     <div className="mcard">
       <div className="mcard__featured">
         <div className="mcard__byline">
-          <Avatar who={first.author} size={36} />
+          <Avatar who={first.author} size={32} />
           <div>
             <div>{PEOPLE[first.author].name}</div>
             <div className="subtle">{shortDate(parse(first.date), parse('2025-01-01'))}</div>
@@ -42,7 +42,7 @@ function MessagesCard({ p }: { p: Project }) {
       <ul className="mcard__list">
         {rest.slice(0, 4).map((m) => (
           <li key={m.id}>
-            <Avatar who={m.author} size={36} />
+            <Avatar who={m.author} size={32} />
             <div>
               <strong>{m.title}</strong>
               <span className="subtle">{m.body}</span>
@@ -109,7 +109,7 @@ function ChatCard({ p }: { p: Project }) {
     <div className="ccard">
       {p.chat.map((c, i) => (
         <div className="ccard__line" key={i}>
-          <Avatar who={c.author} size={36} />
+          <Avatar who={c.author} size={32} />
           <div className="ccard__bubble">
             <div>
               <strong>{PEOPLE[c.author].name}</strong> <span className="subtle">{c.time}</span>
@@ -224,11 +224,11 @@ export function ProjectPage({ projectKey }: { projectKey: string }) {
         <>
           <span className="bar__people">
             <button className="bar__people-btn" aria-label="People on this project">
-              <People />
+              <People width={18} height={18} />
             </button>
             <span className="avatars">
               {p.people.map((k) => (
-                <Avatar key={k} who={k} size={30} />
+                <Avatar key={k} who={k} size={24} />
               ))}
             </span>
           </span>

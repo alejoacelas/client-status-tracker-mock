@@ -68,7 +68,7 @@ export function Switcher() {
   return (
     <div className="switcher" ref={ref}>
       <button className="switcher__button" onClick={() => setOpen(!open)} aria-expanded={open}>
-        <Mark />
+        <Mark size={26} />
         <span className="switcher__name">{AGENCY}</span>
         <ChevronDown width={18} height={18} strokeWidth={2.2} />
       </button>

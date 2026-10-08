@@ -26,15 +26,14 @@ export function HillPanel({ projectKey }: { projectKey: string }) {
   const lists = state.lists[projectKey] ?? [];
   const snaps = state.snapshots[projectKey] ?? [];
   const last = snaps.length - 1;
-  const [index, setIndex] = useState(last);
+  // null means "the newest snapshot", so a new update always comes into view.
+  const [index, setIndex] = useState<number | null>(null);
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState<Record<string, number>>({});
   const [noteFor, setNoteFor] = useState<string | null>(null);
   const [note, setNote] = useState('');
   const [, tick] = useState(0);
 
-  // Keep showing the newest snapshot when one is added.
-  useEffect(() => setIndex(snaps.length - 1), [snaps.length]);
   // Refresh relative times ("a second ago") while the page is open.
   useEffect(() => {
     const id = setInterval(() => tick((n) => n + 1), 30000);
@@ -53,7 +52,7 @@ export function HillPanel({ projectKey }: { projectKey: string }) {
     );
   }
 
-  const shownIndex = Math.min(Math.max(index, 0), Math.max(last, 0));
+  const shownIndex = index === null ? Math.max(last, 0) : Math.min(Math.max(index, 0), Math.max(last, 0));
   const snapshot = snaps[shownIndex] as Snapshot | undefined;
   const dots = editing ? dotsFor(lists, draft) : snapshotDots(lists, snaps, shownIndex);
 
@@ -62,7 +61,7 @@ export function HillPanel({ projectKey }: { projectKey: string }) {
   const stale = !editing && lastSnap && project.status !== 'Done' && !allDone && daysSince(lastSnap.at) >= 14;
 
   const startUpdate = () => {
-    setIndex(last);
+    setIndex(null);
     setDraft(positionsFor(lists, lastSnap));
     setNoteFor(null);
     setEditing(true);
@@ -70,6 +69,7 @@ export function HillPanel({ projectKey }: { projectKey: string }) {
   const save = () => {
     const id = `${projectKey}-${newId()}`;
     dispatch({ type: 'saveSnapshot', project: projectKey, positions: draft, id });
+    setIndex(null);
     setEditing(false);
     setNoteFor(id);
     setNote('');
@@ -134,7 +134,7 @@ export function HillPanel({ projectKey }: { projectKey: string }) {
                   <span aria-live="polite">
                     {shownIndex + 1}/{snaps.length}
                   </span>
-                  <button aria-label="Next update" disabled={shownIndex >= last} onClick={() => setIndex(shownIndex + 1)}>
+                  <button aria-label="Next update" disabled={shownIndex >= last} onClick={() => setIndex(shownIndex + 1 >= last ? null : shownIndex + 1)}>
                     <ChevronRight />
                   </button>
                 </span>

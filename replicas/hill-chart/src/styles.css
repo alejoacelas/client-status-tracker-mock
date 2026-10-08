@@ -66,6 +66,10 @@ select {
   color: inherit;
   letter-spacing: inherit;
 }
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
 button {
   cursor: pointer;
   background: none;
@@ -104,7 +108,7 @@ button {
   box-shadow: 0 0 0 2px var(--canvas);
 }
 .avatars .avatar + .avatar {
-  margin-left: -5px;
+  margin-left: -4px;
 }
 
 /* ---------- buttons ---------- */
@@ -144,6 +148,7 @@ button {
   color: var(--blue);
   line-height: 30px;
   padding: 0 11px;
+  font-size: 14px;
 }
 .btn--update:hover,
 .btn--discuss:hover {
@@ -154,7 +159,7 @@ button {
   color: #fff;
   border-radius: 8px;
   padding: 0 12px 0 9px;
-  font-size: 16px;
+  font-size: 15px;
 }
 .btn--new:hover {
   background: var(--blue-hover);
@@ -173,7 +178,7 @@ button {
 }
 .switcher {
   position: absolute;
-  top: 12px;
+  top: 16px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 20;
@@ -182,12 +187,12 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
-  height: 46px;
-  padding: 0 10px;
-  border-radius: 10px;
-  font-size: 27px;
+  height: 40px;
+  padding: 0 8px;
+  border-radius: 8px;
+  font-size: 20px;
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.025em;
   white-space: nowrap;
 }
 .switcher__button:hover {
@@ -195,7 +200,7 @@ button {
 }
 .umenu {
   position: absolute;
-  top: 52px;
+  top: 46px;
   left: 50%;
   transform: translateX(-50%);
   width: min(480px, calc(100vw - 24px));
@@ -294,10 +299,10 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 44px;
-  padding: 0 8px 0 12px;
+  height: 40px;
+  padding: 0 4px 0 12px;
   box-shadow: 0 1px 0 var(--ink-30);
-  font-size: 16px;
+  font-size: 14px;
 }
 .bar__crumbs {
   display: flex;
@@ -346,8 +351,8 @@ button {
   gap: 4px;
 }
 .bar__people-btn {
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   border: 1px solid var(--ink-40);
   display: inline-flex;
@@ -356,45 +361,48 @@ button {
   margin-right: 2px;
 }
 
-/* ---------- project page ---------- */
+/* ---------- project page ----------
+   Sizes follow the published project mock, which is drawn on a 1088px screen:
+   tool cards are miniatures with 12px text. */
 .project {
-  padding: 36px 40px 56px;
+  padding: 32px 40px 56px;
 }
 .project__header {
-  margin-bottom: 56px;
+  min-height: 100px;
+  margin-bottom: 32px;
 }
 .project__client {
   color: var(--subtle);
-  font-size: 18px;
+  font-size: 13px;
   margin-bottom: 2px;
 }
 .project__name {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 40px;
+  gap: 6px;
+  font-size: 36px;
   font-weight: 700;
-  letter-spacing: -0.035em;
-  line-height: 1.15;
+  letter-spacing: -0.024em;
+  line-height: 41px;
 }
 .project__desc {
-  margin-top: 10px;
-  max-width: 680px;
+  margin-top: 8px;
+  max-width: 640px;
   color: var(--subtle);
-  font-size: 17px;
+  font-size: 15px;
 }
 .tools {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 40px 18px;
+  gap: 24px 18px;
 }
 .tool__title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   line-height: 24px;
   color: var(--title);
-  margin-bottom: 10px;
-  letter-spacing: -0.012em;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
 }
 .tool__title a {
   text-decoration: none;
@@ -408,23 +416,24 @@ button {
   overflow: hidden;
   text-decoration: none;
   background: var(--canvas);
-  font-size: 15px;
-  line-height: 1.3;
+  font-size: 12px;
+  line-height: 15px;
+  white-space: nowrap;
   transition: box-shadow 0.18s, transform 0.18s, outline-color 0.18s;
 }
 .tool__card:hover,
 .tool__card:focus-visible {
   outline: 2px solid var(--blue);
   box-shadow: 0 10px 40px -14px rgb(35 119 210 / 0.45);
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
 .tool__card:active {
   transform: scale(1) translateY(2px);
 }
 .add-tool {
-  margin-top: 40px;
-  width: 64px;
-  height: 64px;
+  margin-top: 28px;
+  width: 56px;
+  height: 56px;
   border-radius: 8px;
   border: 1.5px dashed var(--ink-50);
   color: var(--subtle);
@@ -435,29 +444,29 @@ button {
 
 /* message board card */
 .mcard {
-  padding: 16px 20px;
+  padding: 16px;
 }
 .mcard__featured {
   border-bottom: 1px solid var(--ink-30);
-  padding-bottom: 12px;
+  padding-bottom: 10px;
 }
 .mcard__byline {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
-  font-size: 15px;
-  line-height: 1.25;
+  gap: 6px;
+  margin-bottom: 8px;
 }
 .mcard strong {
   display: block;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 17.5px;
 }
 .mcard__featured strong {
   margin-bottom: 4px;
 }
 .mcard__featured p {
+  white-space: normal;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -466,8 +475,8 @@ button {
 .mcard__list li {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 12px;
+  gap: 8px;
+  margin-top: 10px;
 }
 .mcard__list li > div {
   min-width: 0;
@@ -475,20 +484,19 @@ button {
 .mcard__list .subtle,
 .mcard__list strong {
   display: block;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 /* docs card */
 .dcard {
-  padding: 20px;
+  padding: 16px 18px;
 }
 .dcard li {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 14px;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 .dcard svg {
   flex: none;
@@ -499,11 +507,12 @@ button {
 .dcard strong {
   display: block;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 17.5px;
 }
 .dcard .subtle {
   display: block;
-  white-space: nowrap;
+  line-height: 16.2px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -513,10 +522,10 @@ button {
   padding: 16px;
 }
 .tcard__hill {
-  background: var(--hill);
+  background: var(--bubble);
   border-radius: 8px;
   height: 120px;
-  margin-bottom: 22px;
+  margin-bottom: 26px;
 }
 .tcard__hill svg {
   display: block;
@@ -532,18 +541,19 @@ button {
   align-items: center;
   gap: 8px;
   font-weight: 600;
-  font-size: 15px;
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 18px;
+}
+.tcard__list ul {
+  margin-top: 1px;
 }
 .tcard__list li {
   display: flex;
   align-items: center;
   gap: 8px;
-  line-height: 21px;
-  white-space: nowrap;
+  line-height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 14.5px;
 }
 .tcard__list li::before {
   content: '';
@@ -561,37 +571,43 @@ button {
 
 /* chat card */
 .ccard {
-  padding: 16px 20px;
+  padding: 16px;
 }
 .ccard__line {
   display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
+  gap: 8px;
+  margin-bottom: 10px;
 }
 .ccard__bubble {
   background: var(--bubble);
-  border-radius: 10px;
-  padding: 8px 12px;
-  font-size: 15px;
+  border-radius: 8px;
+  padding: 7px 10px;
   min-width: 0;
+  white-space: normal;
 }
 .ccard__bubble strong {
   font-weight: 600;
-  font-size: 13px;
+  font-size: 11px;
 }
 .ccard__bubble .subtle {
-  font-size: 13px;
+  font-size: 11px;
 }
 .ccard--page {
   padding: 24px 0;
+  font-size: 16px;
+}
+.ccard--page .ccard__bubble strong,
+.ccard--page .ccard__bubble .subtle {
+  font-size: 14px;
 }
 
 /* schedule card */
 .cal__month {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
+  line-height: 17.5px;
   text-align: center;
-  margin: 14px 0 8px;
+  margin: 12px 0 8px;
 }
 .cal {
   border-bottom: 1px solid rgb(41 53 60 / 0.1);
@@ -605,8 +621,9 @@ button {
 }
 .cal__week--head span {
   color: var(--ink-50);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
+  line-height: 12.5px;
   padding: 4px 0;
   text-align: center;
   text-transform: uppercase;
@@ -616,10 +633,9 @@ button {
   flex-direction: column;
   align-items: center;
   font-weight: 500;
-  font-size: 13.5px;
-  height: 32px;
-  padding-top: 6px;
-  line-height: 14px;
+  height: 28.5px;
+  padding-top: 5px;
+  line-height: 12px;
 }
 .cal__week:not(.cal__week--head) span:not(:last-child) {
   border-right: 1px solid rgb(41 53 60 / 0.1);
@@ -637,30 +653,43 @@ button {
   content: '';
   width: 4px;
   height: 4px;
-  margin-top: 3px;
+  margin-top: 2px;
   border-radius: 50%;
   background: var(--blue);
+}
+.cal:not(.cal--small) .cal__month {
+  font-size: 18px;
+}
+.cal:not(.cal--small) .cal__week--head span {
+  font-size: 12px;
 }
 .cal:not(.cal--small) .cal__week:not(.cal__week--head) span {
   height: 64px;
   font-size: 16px;
+  line-height: 18px;
 }
 .scard__events {
-  padding: 12px 16px;
+  padding: 12px 14px;
 }
 .scard__events li {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
   margin-bottom: 10px;
 }
 .scard__events strong {
   display: block;
   font-weight: 600;
+  font-size: 14px;
+  line-height: 17.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .scard__events .subtle {
   display: block;
-  font-size: 14px;
+}
+.scard__events li > div {
+  min-width: 0;
 }
 .scard__events strong.is-done {
   text-decoration: line-through;
@@ -671,9 +700,9 @@ button {
   flex-direction: column;
   align-items: center;
   flex: none;
-  width: 42px;
-  border: 2px solid var(--blue);
-  border-radius: 5px;
+  width: 34px;
+  border: 1.5px solid var(--blue);
+  border-radius: 4px;
   overflow: hidden;
   line-height: 1;
 }
@@ -681,13 +710,30 @@ button {
   width: 100%;
   background: var(--blue);
   color: #fff;
-  font-size: 11px;
+  font-size: 9px;
   text-align: center;
-  padding: 2px 0 3px;
+  padding: 2px 0;
 }
 .datebadge b {
-  font-size: 18px;
-  padding: 3px 0 4px;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 2px 0 3px;
+}
+.scard__events--page strong {
+  font-size: 17px;
+  line-height: 1.3;
+}
+.scard__events--page .subtle {
+  font-size: 15px;
+}
+.scard__events--page .datebadge {
+  width: 44px;
+}
+.scard__events--page .datebadge span {
+  font-size: 11px;
+}
+.scard__events--page .datebadge b {
+  font-size: 19px;
 }
 
 /* card table card */
@@ -698,8 +744,8 @@ button {
   background: rgb(250 250 250);
 }
 .ktcard__triage {
-  padding: 18px 20px;
-  font-size: 13px;
+  padding: 16px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.02em;
 }
@@ -708,22 +754,22 @@ button {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
-  gap: 3px;
+  gap: 2px;
 }
 .ktcard__col {
   border-top: 4px solid;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding-top: 6px;
-  font-size: 12px;
+  gap: 5px;
+  padding-top: 5px;
+  font-size: 10.5px;
 }
 .ktcard__name {
   writing-mode: vertical-rl;
   font-weight: 600;
   letter-spacing: 0.08em;
-  font-size: 12px;
+  font-size: 10.5px;
 }
 
 /* ---------- tool pages ---------- */
@@ -735,7 +781,7 @@ button {
   margin: 0 auto;
 }
 .page__heading {
-  font-size: 38px;
+  font-size: 36px;
   font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1.1;
@@ -749,17 +795,17 @@ button {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 12px;
+  margin-top: 8px;
 }
 .filter {
   display: inline-flex;
   align-items: center;
-  height: 36px;
+  height: 32px;
   padding: 0 14px;
   border-radius: 8px;
   border: 1px solid var(--rule);
   width: 150px;
-  font-size: 16px;
+  font-size: 15px;
   background: var(--canvas);
 }
 .filter--menu {
@@ -778,7 +824,7 @@ button {
   right: auto;
 }
 .btn--new {
-  height: 36px;
+  height: 32px;
 }
 
 /* ---------- hill chart panel ---------- */
@@ -837,7 +883,7 @@ button {
   padding: 8px;
   border-top: 1px solid var(--ink-30);
   color: var(--subtle);
-  font-size: 15px;
+  font-size: 14px;
 }
 .hillbox__footer > :first-child {
   justify-self: start;
@@ -968,6 +1014,9 @@ button {
 }
 .hill__hit {
   fill: transparent;
+}
+.hill--editing {
+  touch-action: none; /* SVG children ignore touch-action, so set it on the chart while editing */
 }
 .hill--editing .hill__dot {
   cursor: move;
@@ -1504,10 +1553,8 @@ button {
   color: var(--ink);
 }
 .home__btn svg {
-  transform: scale(0.7);
-}
-.home__btn svg:first-child:not([width='32']) {
-  transform: none;
+  width: 20px;
+  height: 20px;
 }
 .home__center {
   background: rgb(248 244 240);
@@ -1620,6 +1667,8 @@ button {
   display: flex;
   gap: 28px;
   font-size: 17px;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 /* ---------- small screens ---------- */
@@ -1652,13 +1701,7 @@ button {
     top: 8px;
   }
   .switcher__button {
-    font-size: 22px;
-    height: 42px;
-  }
-  .switcher .mark,
-  .switcher .mark svg {
-    width: 28px;
-    height: 28px;
+    font-size: 19px;
   }
   .screen {
     min-height: calc(100vh - 60px);
@@ -1677,13 +1720,18 @@ button {
   }
   .project__name {
     font-size: 30px;
+    line-height: 34px;
   }
   .project__desc {
     font-size: 16px;
   }
   .tools {
     grid-template-columns: minmax(0, 1fr);
-    gap: 28px;
+    gap: 24px;
+  }
+  .tool__card {
+    font-size: 13px;
+    line-height: 17px;
   }
   .tool__card:hover {
     transform: none;

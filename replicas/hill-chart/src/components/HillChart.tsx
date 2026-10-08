@@ -133,14 +133,15 @@ function layout(g: Geo, dots: HillDot[], draggingId: string | null): Placed[] {
 
 const ease = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - (-2 * x + 2) ** 3 / 2);
 
-/** Animate positions towards the target so dots glide along the hill when stepping through history. */
+/** Animate positions towards the target so dots glide along the hill when stepping through history.
+ *  While editing (animate = false) dots follow the pointer or keyboard directly. */
 function useAnimatedPositions(target: HillDot[], animate: boolean) {
   const [shown, setShown] = useState(target);
   const shownRef = useRef(target);
-  shownRef.current = shown;
   const key = target.map((d) => `${d.id}:${d.pos}:${d.name}:${d.color}`).join('|');
   useEffect(() => {
     if (!animate) {
+      shownRef.current = target;
       setShown(target);
       return;
     }
@@ -150,17 +151,19 @@ function useAnimatedPositions(target: HillDot[], animate: boolean) {
     let raf = 0;
     const tick = (now: number) => {
       const k = ease(Math.min(1, (now - start) / dur));
-      setShown(target.map((d) => {
+      const next = target.map((d) => {
         const f = from.get(d.id);
         return f === undefined ? d : { ...d, pos: f + (d.pos - f) * k };
-      }));
+      });
+      shownRef.current = next;
+      setShown(next);
       if (k < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key, animate]);
-  return shown;
+  return animate ? shown : target;
 }
 
 interface Props {
@@ -225,9 +228,10 @@ export function HillChart({ dots, variant = 'full', editing = false, animate = f
   const onKey = (d: HillDot) => (e: KeyboardEvent<SVGGElement>) => {
     if (!editing) return;
     const step = e.shiftKey ? 5 : 1;
+    const cur = dots.find((x) => x.id === d.id)?.pos ?? d.pos;
     let next: number | null = null;
-    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') next = d.pos + step;
-    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') next = d.pos - step;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') next = cur + step;
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') next = cur - step;
     if (e.key === 'Home') next = 0;
     if (e.key === 'End') next = 100;
     if (next !== null) {
