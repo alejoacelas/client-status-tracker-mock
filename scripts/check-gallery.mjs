@@ -65,6 +65,25 @@ for (const [width, height, tag] of [[1440, 900, 'desktop'], [390, 844, 'phone']]
   await frameReady(page, order.at(-1));
   ok('left arrow key goes back');
 
+  await page.goto(`${base}/varun#statuspage`);
+  await frameReady(page, 'statuspage');
+  await page.locator('#frame').click({ position: { x: 300, y: 200 } });
+  await page.keyboard.press('ArrowRight');
+  await frameReady(page, 'delivery-tracker');
+  ok('arrow keys work after clicking inside a design');
+
+  const fresh = await context.newPage();
+  watch(fresh, `${tag} fresh tab`);
+  await fresh.goto(`${base}/varun#hill-chart`);
+  await fresh.waitForSelector('#hint.open');
+  await fresh.click('#side-next');
+  await fresh.waitForFunction(() => document.getElementById('frame').getAttribute('src') === '/portfolio-table/');
+  ok('side arrow works while the welcome overlay is open');
+  await fresh.keyboard.press('ArrowLeft');
+  await fresh.waitForFunction(() => document.getElementById('frame').getAttribute('src') === '/hill-chart/');
+  ok('arrow key works right after landing');
+  await fresh.close();
+
   await page.goto(`${base}/varun#hill-chart`);
   await frameReady(page, 'hill-chart');
   await page.click('#comments-btn');
