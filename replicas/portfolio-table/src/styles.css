@@ -767,7 +767,6 @@ body.dragging-bar, body.dragging-bar * { cursor: grabbing !important; user-selec
 .dc-head h3 { font-size: 14px; font-weight: 500; }
 .dc-body { flex: 1; padding: 20px 24px; display: flex; align-items: center; justify-content: center; }
 .dc-body > * { width: 100%; }
-.dc-body .donut-wrap { justify-content: center; width: auto; }
 .dc-foot { border-top: 1px solid var(--border); padding: 10px 16px; }
 .dash-note { margin-top: 16px; }
 .chart-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
@@ -825,9 +824,26 @@ body.dragging-bar, body.dragging-bar * { cursor: grabbing !important; user-selec
   .dash-number:nth-child(n+3) { border-top: 1px solid var(--border); }
   .dn-label { font-size: 13px; }
   .dn-value { font-size: 32px; line-height: 44px; }
-  .dash-grid { grid-template-columns: 1fr; }
+  .dash-grid { grid-template-columns: minmax(0, 1fr); }
   .tl-tools .btn-ghost { padding: 0 6px; }
   .tl-name a { font-size: 13px; }
   .index-body { padding: 8px 16px 40px; }
   .folder-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Narrow-screen fixes that must win over later component rules */
+.dc-body .donut-wrap { justify-content: center; }
+.tl-left { overflow: hidden; }
+@media (max-width: 767px) {
+  .hide-narrow { display: none !important; }
+  .toolbar { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .toolbar::-webkit-scrollbar { display: none; }
+  .toolbar-left { flex-wrap: nowrap; }
+  .name-sub, .drag-slot { display: none; }
+  .row-actions { padding-left: 2px; }
+  .project-page .ph-right .avatar { display: none; }
+  .composer-actions { gap: 4px; }
+  .composer-crumb { flex: 1; }
+  .tl-tools { gap: 0; }
+  .toolbar-left, .toolbar-right { flex: none; }
 }
