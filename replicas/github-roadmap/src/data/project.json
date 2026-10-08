@@ -1,0 +1,1398 @@
+{
+  "_note": "Mock data for the roadmap replica, derived from seed/seed.json. Sprints, issue numbers, repository name and project status are invented settings.",
+  "today": "2026-10-08",
+  "org": "Fieldwork Studio",
+  "project": {
+    "number": 3,
+    "title": "Client delivery",
+    "visibility": "private",
+    "status": {
+      "label": "At risk",
+      "color": "YELLOW",
+      "date": "2026-10-05",
+      "body": "Meridian go-live depends on EHR sandbox access; Lumen is waiting on board feedback."
+    },
+    "shortDescription": "Every active client project, with dates and status."
+  },
+  "users": [
+    {
+      "login": "maya-chen",
+      "name": "Maya Chen",
+      "role": "Project manager",
+      "color": "#bf3989"
+    },
+    {
+      "login": "tom-okafor",
+      "name": "Tom Okafor",
+      "role": "Development lead",
+      "color": "#0969da"
+    },
+    {
+      "login": "priya-nair",
+      "name": "Priya Nair",
+      "role": "Design lead",
+      "color": "#1a7f37"
+    }
+  ],
+  "fields": [
+    {
+      "id": "title",
+      "name": "Title",
+      "type": "title"
+    },
+    {
+      "id": "assignees",
+      "name": "Assignees",
+      "type": "assignees"
+    },
+    {
+      "id": "status",
+      "name": "Status",
+      "type": "single_select",
+      "options": [
+        {
+          "id": "not-started",
+          "name": "Not started",
+          "color": "GRAY",
+          "description": "This work hasn't started yet"
+        },
+        {
+          "id": "on-track",
+          "name": "On track",
+          "color": "GREEN",
+          "description": "Moving to plan"
+        },
+        {
+          "id": "at-risk",
+          "name": "At risk",
+          "color": "YELLOW",
+          "description": "The date may slip"
+        },
+        {
+          "id": "blocked",
+          "name": "Blocked",
+          "color": "RED",
+          "description": "Waiting on someone else"
+        },
+        {
+          "id": "done",
+          "name": "Done",
+          "color": "PURPLE",
+          "description": "Delivered to the client"
+        }
+      ]
+    },
+    {
+      "id": "client",
+      "name": "Client",
+      "type": "single_select",
+      "options": [
+        {
+          "id": "harbor",
+          "name": "Harbor & Pine Coffee",
+          "color": "ORANGE",
+          "description": "Contact: Dana Ruiz"
+        },
+        {
+          "id": "meridian",
+          "name": "Meridian Family Clinic",
+          "color": "BLUE",
+          "description": "Contact: Dr. Sam Patel"
+        },
+        {
+          "id": "lumen",
+          "name": "Lumen Books",
+          "color": "PINK",
+          "description": "Contact: Iris Novak"
+        },
+        {
+          "id": "atlas",
+          "name": "Atlas Robotics",
+          "color": "GREEN",
+          "description": "Contact: Kofi Mensah"
+        }
+      ]
+    },
+    {
+      "id": "phase",
+      "name": "Phase",
+      "type": "single_select",
+      "options": [
+        {
+          "id": "discovery",
+          "name": "Discovery",
+          "color": "GRAY",
+          "description": ""
+        },
+        {
+          "id": "design",
+          "name": "Design",
+          "color": "PINK",
+          "description": ""
+        },
+        {
+          "id": "build",
+          "name": "Build",
+          "color": "BLUE",
+          "description": ""
+        },
+        {
+          "id": "launch",
+          "name": "Launch",
+          "color": "GREEN",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": "start",
+      "name": "Start date",
+      "type": "date"
+    },
+    {
+      "id": "target",
+      "name": "Target date",
+      "type": "date"
+    },
+    {
+      "id": "progress",
+      "name": "Progress",
+      "type": "number"
+    },
+    {
+      "id": "milestone",
+      "name": "Milestone",
+      "type": "milestone"
+    },
+    {
+      "id": "sprint",
+      "name": "Sprint",
+      "type": "iteration"
+    },
+    {
+      "id": "subIssuesProgress",
+      "name": "Sub-issues progress",
+      "type": "sub_issues_progress"
+    },
+    {
+      "id": "parent",
+      "name": "Parent issue",
+      "type": "parent_issue"
+    }
+  ],
+  "milestones": [
+    {
+      "id": "m1",
+      "project": "harbor-shop",
+      "title": "Discovery workshop",
+      "dueOn": "2026-08-08",
+      "state": "closed",
+      "status": "Done",
+      "closedOn": "2026-08-08"
+    },
+    {
+      "id": "m2",
+      "project": "harbor-shop",
+      "title": "Design sign-off",
+      "dueOn": "2026-09-05",
+      "state": "closed",
+      "status": "Done",
+      "closedOn": "2026-09-04"
+    },
+    {
+      "id": "m3",
+      "project": "harbor-shop",
+      "title": "Product catalogue import",
+      "dueOn": "2026-09-26",
+      "state": "closed",
+      "status": "Done",
+      "closedOn": "2026-09-25"
+    },
+    {
+      "id": "m4",
+      "project": "harbor-shop",
+      "title": "Checkout and payments",
+      "dueOn": "2026-10-17",
+      "state": "open",
+      "status": "In progress",
+      "closedOn": null
+    },
+    {
+      "id": "m5",
+      "project": "harbor-shop",
+      "title": "Content load and QA",
+      "dueOn": "2026-10-31",
+      "state": "open",
+      "status": "Not started",
+      "closedOn": null
+    },
+    {
+      "id": "m6",
+      "project": "harbor-shop",
+      "title": "Launch",
+      "dueOn": "2026-11-14",
+      "state": "open",
+      "status": "Not started",
+      "closedOn": null
+    },
+    {
+      "id": "m7",
+      "project": "meridian-portal",
+      "title": "Requirements sign-off",
+      "dueOn": "2026-07-25",
+      "state": "closed",
+      "status": "Done",
+      "closedOn": "2026-07-24"
+    },
+    {
+      "id": "m8",
+      "project": "meridian-portal",
+      "title": "Form designs approved",
+      "dueOn": "2026-08-22",
+      "state": "closed",
+      "status": "Done",
+      "closedOn": "2026-08-26"
+    },
+    {
+      "id": "m9",
+      "project": "meridian-portal",
+      "title": "EHR integration",
+      "dueOn": "2026-10-10",
+      "state": "open",
+      "status": "In progress",
+      "closedOn": null
+    },
+    {
+      "id": "m10",
+      "project": "meridian-portal",
+      "title": "Accessibility audit",
+      "dueOn": "2026-10-20",
+      "state": "open",
+      "status": "Not started",
+      "closedOn": null
+    },
+    {
+      "id": "m11",
+      "project": "meridian-portal",
+      "title": "Staff training",
+      "dueOn": "2026-10-27",
+      "state": "open",
+      "status": "Not started",
+      "closedOn": null
+    },
+    {
+      "id": "m12",
+      "project": "meridian-portal",
+      "title": "Go-live",
+      "dueOn": "2026-10-30",
+      "state": "open",
+      "status": "Not started",
+      "closedOn": null
+    },
+    {
+      "id": "m13",
+      "project": "lumen-brand",
+      "title": "Brand audit",
+      "dueOn": "2026-08-28",
+      "state": "closed",
+      "status": "Done",
+      "closedOn": "2026-08-27"
+    },
+    {
+      "id": "m14",
+      "project": "lumen-brand",
+      "title": "Logo concepts, round one",
+      "dueOn": "2026-09-11",
+      "state": "closed",
+      "status": "Done",
+      "closedOn": "2026-09-11"
+    },
+    {
+      "id": "m15",
+      "project": "lumen-brand",
+      "title": "Logo concepts, round two",
+      "dueOn": "2026-09-25",
+      "state": "closed",
+      "status": "Done",
+      "closedOn": "2026-09-25"
+    },
+    {
+      "id": "m16",
+      "project": "lumen-brand",
+      "title": "Client feedback on round two",
+      "dueOn": "2026-10-02",
+      "state": "open",
+      "status": "In progress",
+      "closedOn": null
+    },
+    {
+      "id": "m17",
+      "project": "lumen-brand",
+      "title": "Brand guidelines",
+      "dueOn": "2026-10-17",
+      "state": "open",
+      "status": "Not started",
+      "closedOn": null
+    },
+    {
+      "id": "m18",
+      "project": "lumen-brand",
+      "title": "Final asset handoff",
+      "dueOn": "2026-10-24",
+      "state": "open",
+      "status": "Not started",
+      "closedOn": null
+    },
+    {
+      "id": "m19",
+      "project": "atlas-site",
+      "title": "Content outline",
+      "dueOn": "2026-07-17",
+      "state": "closed",
+      "status": "Done",
+      "closedOn": "2026-07-16"
+    },
+    {
+      "id": "m20",
+      "project": "atlas-site",
+      "title": "Design and copy approved",
+      "dueOn": "2026-08-14",
+      "state": "closed",
+      "status": "Done",
+      "closedOn": "2026-08-14"
+    },
+    {
+      "id": "m21",
+      "project": "atlas-site",
+      "title": "Launch",
+      "dueOn": "2026-09-19",
+      "state": "closed",
+      "status": "Done",
+      "closedOn": "2026-09-19"
+    },
+    {
+      "id": "m22",
+      "project": "atlas-docs",
+      "title": "Docs audit",
+      "dueOn": "2026-10-09",
+      "state": "open",
+      "status": "In progress",
+      "closedOn": null
+    },
+    {
+      "id": "m23",
+      "project": "atlas-docs",
+      "title": "Migration plan",
+      "dueOn": "2026-10-16",
+      "state": "open",
+      "status": "Not started",
+      "closedOn": null
+    },
+    {
+      "id": "m24",
+      "project": "atlas-docs",
+      "title": "Converter and first 50 pages",
+      "dueOn": "2026-11-13",
+      "state": "open",
+      "status": "Not started",
+      "closedOn": null
+    },
+    {
+      "id": "m25",
+      "project": "atlas-docs",
+      "title": "Full migration and redirects",
+      "dueOn": "2026-12-12",
+      "state": "open",
+      "status": "Not started",
+      "closedOn": null
+    }
+  ],
+  "sprints": [
+    {
+      "id": "s12",
+      "title": "Sprint 12",
+      "startDate": "2026-06-29",
+      "duration": 14
+    },
+    {
+      "id": "s13",
+      "title": "Sprint 13",
+      "startDate": "2026-07-13",
+      "duration": 14
+    },
+    {
+      "id": "s14",
+      "title": "Sprint 14",
+      "startDate": "2026-07-27",
+      "duration": 14
+    },
+    {
+      "id": "s15",
+      "title": "Sprint 15",
+      "startDate": "2026-08-10",
+      "duration": 14
+    },
+    {
+      "id": "s16",
+      "title": "Sprint 16",
+      "startDate": "2026-08-24",
+      "duration": 14
+    },
+    {
+      "id": "s17",
+      "title": "Sprint 17",
+      "startDate": "2026-09-07",
+      "duration": 14
+    },
+    {
+      "id": "s18",
+      "title": "Sprint 18",
+      "startDate": "2026-09-21",
+      "duration": 14
+    },
+    {
+      "id": "s19",
+      "title": "Sprint 19",
+      "startDate": "2026-10-05",
+      "duration": 14
+    },
+    {
+      "id": "s20",
+      "title": "Sprint 20",
+      "startDate": "2026-10-19",
+      "duration": 14
+    },
+    {
+      "id": "s21",
+      "title": "Sprint 21",
+      "startDate": "2026-11-02",
+      "duration": 14
+    },
+    {
+      "id": "s22",
+      "title": "Sprint 22",
+      "startDate": "2026-11-16",
+      "duration": 14
+    },
+    {
+      "id": "s23",
+      "title": "Sprint 23",
+      "startDate": "2026-11-30",
+      "duration": 14
+    },
+    {
+      "id": "s24",
+      "title": "Sprint 24",
+      "startDate": "2026-12-14",
+      "duration": 14
+    },
+    {
+      "id": "s25",
+      "title": "Sprint 25",
+      "startDate": "2026-12-28",
+      "duration": 14
+    }
+  ],
+  "items": [
+    {
+      "id": "harbor-shop",
+      "number": 14,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Online shop rebuild",
+      "createdAt": "2026-08-04",
+      "author": "tom-okafor",
+      "clientSummary": "The product catalogue is fully imported. We're now building checkout and payments, on schedule for a mid-November launch.",
+      "internalNotes": "Stripe account is in Dana's name; she needs to add Tom as a developer before we can test live payments.",
+      "fields": {
+        "status": "on-track",
+        "client": "harbor",
+        "phase": "build",
+        "assignees": [
+          "tom-okafor"
+        ],
+        "start": "2026-08-04",
+        "target": "2026-11-14",
+        "progress": 60,
+        "milestone": "m4"
+      },
+      "subIssues": [
+        "harbor-shop--m1",
+        "harbor-shop--m2",
+        "harbor-shop--m3",
+        "harbor-shop--m4",
+        "harbor-shop--m5",
+        "harbor-shop--m6"
+      ],
+      "comments": [
+        {
+          "author": "tom-okafor",
+          "date": "2026-09-25",
+          "source": "Slack",
+          "clientVisible": true,
+          "body": "All 212 products imported with photos and variants. Spot-checked 30 against the old shop."
+        },
+        {
+          "author": "tom-okafor",
+          "date": "2026-10-02",
+          "source": "Slack",
+          "clientVisible": false,
+          "body": "Waiting on Dana to add Tom to the Stripe account before testing live payments."
+        }
+      ]
+    },
+    {
+      "id": "meridian-portal",
+      "number": 9,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Patient intake portal",
+      "createdAt": "2026-07-14",
+      "author": "maya-chen",
+      "clientSummary": "Forms and the patient dashboard are built. Connecting to your records system is waiting on sandbox access from your EHR vendor, which puts the 30 October go-live at risk.",
+      "internalNotes": "CareStack still hasn't issued sandbox API keys. Escalate to Sam if nothing arrives by Thursday 8 Oct.",
+      "fields": {
+        "status": "at-risk",
+        "client": "meridian",
+        "phase": "build",
+        "assignees": [
+          "maya-chen"
+        ],
+        "start": "2026-07-14",
+        "target": "2026-10-30",
+        "progress": 70,
+        "milestone": "m9"
+      },
+      "subIssues": [
+        "meridian-portal--m7",
+        "meridian-portal--m8",
+        "meridian-portal--m9",
+        "meridian-portal--m10",
+        "meridian-portal--m11",
+        "meridian-portal--m12"
+      ],
+      "comments": [
+        {
+          "author": "maya-chen",
+          "date": "2026-09-28",
+          "source": "Email",
+          "clientVisible": false,
+          "body": "Asked CareStack support for sandbox API keys a second time; ticket #48213."
+        },
+        {
+          "author": "maya-chen",
+          "date": "2026-09-30",
+          "source": "Slack",
+          "clientVisible": true,
+          "body": "Patient dashboard and all six intake forms are built and in staging."
+        },
+        {
+          "author": "maya-chen",
+          "date": "2026-10-05",
+          "source": "Email",
+          "clientVisible": true,
+          "body": "Still waiting on EHR sandbox access. Go-live on 30 Oct is at risk if access isn't granted by 10 Oct."
+        }
+      ]
+    },
+    {
+      "id": "lumen-brand",
+      "number": 17,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Brand refresh",
+      "createdAt": "2026-08-18",
+      "author": "priya-nair",
+      "clientSummary": "Round two logo concepts were shared on 25 September. We need your team's feedback before we can start the brand guidelines.",
+      "internalNotes": "Iris said the board meets 9 Oct. Due date will slip a week if feedback lands after that.",
+      "fields": {
+        "status": "blocked",
+        "client": "lumen",
+        "phase": "design",
+        "assignees": [
+          "priya-nair"
+        ],
+        "start": "2026-08-18",
+        "target": "2026-10-24",
+        "progress": 45,
+        "milestone": "m16"
+      },
+      "subIssues": [
+        "lumen-brand--m13",
+        "lumen-brand--m14",
+        "lumen-brand--m15",
+        "lumen-brand--m16",
+        "lumen-brand--m17",
+        "lumen-brand--m18"
+      ],
+      "comments": [
+        {
+          "author": "priya-nair",
+          "date": "2026-09-25",
+          "source": "Email",
+          "clientVisible": true,
+          "body": "Shared round two logo concepts (three directions) with Iris for board review."
+        },
+        {
+          "author": "priya-nair",
+          "date": "2026-10-01",
+          "source": "Email",
+          "clientVisible": false,
+          "body": "Iris replied that the board reviews logos on 9 Oct; no feedback before then."
+        }
+      ]
+    },
+    {
+      "id": "atlas-site",
+      "number": 6,
+      "type": "issue",
+      "state": "closed",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Investor website",
+      "createdAt": "2026-06-30",
+      "author": "maya-chen",
+      "clientSummary": "Launched on 19 September. Analytics are live and the handoff documentation is in your shared folder.",
+      "internalNotes": "Invoice for final 30% sent 22 Sep.",
+      "fields": {
+        "status": "done",
+        "client": "atlas",
+        "phase": "launch",
+        "assignees": [
+          "maya-chen"
+        ],
+        "start": "2026-06-30",
+        "target": "2026-09-19",
+        "progress": 100,
+        "milestone": "m21"
+      },
+      "subIssues": [
+        "atlas-site--m19",
+        "atlas-site--m20",
+        "atlas-site--m21"
+      ],
+      "comments": [
+        {
+          "author": "maya-chen",
+          "date": "2026-09-19",
+          "source": "Manual",
+          "clientVisible": true,
+          "body": "Investor site launched. DNS switched at 10:00 and analytics confirmed live."
+        }
+      ]
+    },
+    {
+      "id": "atlas-docs",
+      "number": 21,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Developer docs migration",
+      "createdAt": "2026-09-29",
+      "author": "tom-okafor",
+      "clientSummary": "We're auditing the 140 existing docs pages and mapping them to the new structure. Expect the migration plan by 16 October.",
+      "internalNotes": "Old docs use a custom Markdown dialect; budget extra time for the converter.",
+      "fields": {
+        "status": "on-track",
+        "client": "atlas",
+        "phase": "discovery",
+        "assignees": [
+          "tom-okafor"
+        ],
+        "start": "2026-09-29",
+        "target": "2026-12-12",
+        "progress": 10,
+        "milestone": "m22"
+      },
+      "subIssues": [
+        "atlas-docs--m22",
+        "atlas-docs--m23",
+        "atlas-docs--m24",
+        "atlas-docs--m25"
+      ],
+      "comments": [
+        {
+          "author": "tom-okafor",
+          "date": "2026-09-29",
+          "source": "Manual",
+          "clientVisible": true,
+          "body": "Kickoff call with Kofi. Agreed to keep existing URLs where possible."
+        },
+        {
+          "author": "tom-okafor",
+          "date": "2026-10-05",
+          "source": "Slack",
+          "clientVisible": true,
+          "body": "Audited 60 of 140 pages. About a third are out of date and will be flagged for review."
+        }
+      ]
+    },
+    {
+      "id": "harbor-shop--m1",
+      "number": 22,
+      "type": "issue",
+      "state": "closed",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Discovery workshop",
+      "createdAt": "2026-08-04",
+      "author": "tom-okafor",
+      "parent": "harbor-shop",
+      "closedOn": "2026-08-08",
+      "fields": {
+        "status": "done",
+        "client": "harbor",
+        "assignees": [
+          "tom-okafor"
+        ],
+        "target": "2026-08-08",
+        "milestone": "m1"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "harbor-shop--m2",
+      "number": 23,
+      "type": "issue",
+      "state": "closed",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Design sign-off",
+      "createdAt": "2026-08-04",
+      "author": "tom-okafor",
+      "parent": "harbor-shop",
+      "closedOn": "2026-09-04",
+      "fields": {
+        "status": "done",
+        "client": "harbor",
+        "assignees": [
+          "tom-okafor"
+        ],
+        "target": "2026-09-05",
+        "milestone": "m2"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "harbor-shop--m3",
+      "number": 24,
+      "type": "issue",
+      "state": "closed",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Product catalogue import",
+      "createdAt": "2026-08-04",
+      "author": "tom-okafor",
+      "parent": "harbor-shop",
+      "closedOn": "2026-09-25",
+      "fields": {
+        "status": "done",
+        "client": "harbor",
+        "assignees": [
+          "tom-okafor"
+        ],
+        "target": "2026-09-26",
+        "milestone": "m3"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "harbor-shop--m4",
+      "number": 25,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Checkout and payments",
+      "createdAt": "2026-08-04",
+      "author": "tom-okafor",
+      "parent": "harbor-shop",
+      "closedOn": null,
+      "fields": {
+        "status": "on-track",
+        "client": "harbor",
+        "assignees": [
+          "tom-okafor"
+        ],
+        "target": "2026-10-17",
+        "milestone": "m4"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "harbor-shop--m5",
+      "number": 26,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Content load and QA",
+      "createdAt": "2026-08-04",
+      "author": "tom-okafor",
+      "parent": "harbor-shop",
+      "closedOn": null,
+      "fields": {
+        "status": "not-started",
+        "client": "harbor",
+        "assignees": [
+          "tom-okafor"
+        ],
+        "target": "2026-10-31",
+        "milestone": "m5"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "harbor-shop--m6",
+      "number": 27,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Launch",
+      "createdAt": "2026-08-04",
+      "author": "tom-okafor",
+      "parent": "harbor-shop",
+      "closedOn": null,
+      "fields": {
+        "status": "not-started",
+        "client": "harbor",
+        "assignees": [
+          "tom-okafor"
+        ],
+        "target": "2026-11-14",
+        "milestone": "m6"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "meridian-portal--m7",
+      "number": 28,
+      "type": "issue",
+      "state": "closed",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Requirements sign-off",
+      "createdAt": "2026-07-14",
+      "author": "maya-chen",
+      "parent": "meridian-portal",
+      "closedOn": "2026-07-24",
+      "fields": {
+        "status": "done",
+        "client": "meridian",
+        "assignees": [
+          "maya-chen"
+        ],
+        "target": "2026-07-25",
+        "milestone": "m7"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "meridian-portal--m8",
+      "number": 29,
+      "type": "issue",
+      "state": "closed",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Form designs approved",
+      "createdAt": "2026-07-14",
+      "author": "maya-chen",
+      "parent": "meridian-portal",
+      "closedOn": "2026-08-26",
+      "fields": {
+        "status": "done",
+        "client": "meridian",
+        "assignees": [
+          "maya-chen"
+        ],
+        "target": "2026-08-22",
+        "milestone": "m8"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "meridian-portal--m9",
+      "number": 30,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "EHR integration",
+      "createdAt": "2026-07-14",
+      "author": "maya-chen",
+      "parent": "meridian-portal",
+      "closedOn": null,
+      "fields": {
+        "status": "at-risk",
+        "client": "meridian",
+        "assignees": [
+          "maya-chen"
+        ],
+        "target": "2026-10-10",
+        "milestone": "m9"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "meridian-portal--m10",
+      "number": 31,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Accessibility audit",
+      "createdAt": "2026-07-14",
+      "author": "maya-chen",
+      "parent": "meridian-portal",
+      "closedOn": null,
+      "fields": {
+        "status": "not-started",
+        "client": "meridian",
+        "assignees": [
+          "maya-chen"
+        ],
+        "target": "2026-10-20",
+        "milestone": "m10"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "meridian-portal--m11",
+      "number": 32,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Staff training",
+      "createdAt": "2026-07-14",
+      "author": "maya-chen",
+      "parent": "meridian-portal",
+      "closedOn": null,
+      "fields": {
+        "status": "not-started",
+        "client": "meridian",
+        "assignees": [
+          "maya-chen"
+        ],
+        "target": "2026-10-27",
+        "milestone": "m11"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "meridian-portal--m12",
+      "number": 33,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Go-live",
+      "createdAt": "2026-07-14",
+      "author": "maya-chen",
+      "parent": "meridian-portal",
+      "closedOn": null,
+      "fields": {
+        "status": "not-started",
+        "client": "meridian",
+        "assignees": [
+          "maya-chen"
+        ],
+        "target": "2026-10-30",
+        "milestone": "m12"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "lumen-brand--m13",
+      "number": 34,
+      "type": "issue",
+      "state": "closed",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Brand audit",
+      "createdAt": "2026-08-18",
+      "author": "priya-nair",
+      "parent": "lumen-brand",
+      "closedOn": "2026-08-27",
+      "fields": {
+        "status": "done",
+        "client": "lumen",
+        "assignees": [
+          "priya-nair"
+        ],
+        "target": "2026-08-28",
+        "milestone": "m13"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "lumen-brand--m14",
+      "number": 35,
+      "type": "issue",
+      "state": "closed",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Logo concepts, round one",
+      "createdAt": "2026-08-18",
+      "author": "priya-nair",
+      "parent": "lumen-brand",
+      "closedOn": "2026-09-11",
+      "fields": {
+        "status": "done",
+        "client": "lumen",
+        "assignees": [
+          "priya-nair"
+        ],
+        "target": "2026-09-11",
+        "milestone": "m14"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "lumen-brand--m15",
+      "number": 36,
+      "type": "issue",
+      "state": "closed",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Logo concepts, round two",
+      "createdAt": "2026-08-18",
+      "author": "priya-nair",
+      "parent": "lumen-brand",
+      "closedOn": "2026-09-25",
+      "fields": {
+        "status": "done",
+        "client": "lumen",
+        "assignees": [
+          "priya-nair"
+        ],
+        "target": "2026-09-25",
+        "milestone": "m15"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "lumen-brand--m16",
+      "number": 37,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Client feedback on round two",
+      "createdAt": "2026-08-18",
+      "author": "priya-nair",
+      "parent": "lumen-brand",
+      "closedOn": null,
+      "fields": {
+        "status": "blocked",
+        "client": "lumen",
+        "assignees": [
+          "priya-nair"
+        ],
+        "target": "2026-10-02",
+        "milestone": "m16"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "lumen-brand--m17",
+      "number": 38,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Brand guidelines",
+      "createdAt": "2026-08-18",
+      "author": "priya-nair",
+      "parent": "lumen-brand",
+      "closedOn": null,
+      "fields": {
+        "status": "not-started",
+        "client": "lumen",
+        "assignees": [
+          "priya-nair"
+        ],
+        "target": "2026-10-17",
+        "milestone": "m17"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "lumen-brand--m18",
+      "number": 39,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Final asset handoff",
+      "createdAt": "2026-08-18",
+      "author": "priya-nair",
+      "parent": "lumen-brand",
+      "closedOn": null,
+      "fields": {
+        "status": "not-started",
+        "client": "lumen",
+        "assignees": [
+          "priya-nair"
+        ],
+        "target": "2026-10-24",
+        "milestone": "m18"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "atlas-site--m19",
+      "number": 40,
+      "type": "issue",
+      "state": "closed",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Content outline",
+      "createdAt": "2026-06-30",
+      "author": "maya-chen",
+      "parent": "atlas-site",
+      "closedOn": "2026-07-16",
+      "fields": {
+        "status": "done",
+        "client": "atlas",
+        "assignees": [
+          "maya-chen"
+        ],
+        "target": "2026-07-17",
+        "milestone": "m19"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "atlas-site--m20",
+      "number": 41,
+      "type": "issue",
+      "state": "closed",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Design and copy approved",
+      "createdAt": "2026-06-30",
+      "author": "maya-chen",
+      "parent": "atlas-site",
+      "closedOn": "2026-08-14",
+      "fields": {
+        "status": "done",
+        "client": "atlas",
+        "assignees": [
+          "maya-chen"
+        ],
+        "target": "2026-08-14",
+        "milestone": "m20"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "atlas-site--m21",
+      "number": 42,
+      "type": "issue",
+      "state": "closed",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Launch",
+      "createdAt": "2026-06-30",
+      "author": "maya-chen",
+      "parent": "atlas-site",
+      "closedOn": "2026-09-19",
+      "fields": {
+        "status": "done",
+        "client": "atlas",
+        "assignees": [
+          "maya-chen"
+        ],
+        "target": "2026-09-19",
+        "milestone": "m21"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "atlas-docs--m22",
+      "number": 43,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Docs audit",
+      "createdAt": "2026-09-29",
+      "author": "tom-okafor",
+      "parent": "atlas-docs",
+      "closedOn": null,
+      "fields": {
+        "status": "on-track",
+        "client": "atlas",
+        "assignees": [
+          "tom-okafor"
+        ],
+        "target": "2026-10-09",
+        "milestone": "m22"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "atlas-docs--m23",
+      "number": 44,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Migration plan",
+      "createdAt": "2026-09-29",
+      "author": "tom-okafor",
+      "parent": "atlas-docs",
+      "closedOn": null,
+      "fields": {
+        "status": "not-started",
+        "client": "atlas",
+        "assignees": [
+          "tom-okafor"
+        ],
+        "target": "2026-10-16",
+        "milestone": "m23"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "atlas-docs--m24",
+      "number": 45,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Converter and first 50 pages",
+      "createdAt": "2026-09-29",
+      "author": "tom-okafor",
+      "parent": "atlas-docs",
+      "closedOn": null,
+      "fields": {
+        "status": "not-started",
+        "client": "atlas",
+        "assignees": [
+          "tom-okafor"
+        ],
+        "target": "2026-11-13",
+        "milestone": "m24"
+      },
+      "subIssues": [],
+      "comments": []
+    },
+    {
+      "id": "atlas-docs--m25",
+      "number": 46,
+      "type": "issue",
+      "state": "open",
+      "repo": "fieldwork-studio/client-delivery",
+      "title": "Full migration and redirects",
+      "createdAt": "2026-09-29",
+      "author": "tom-okafor",
+      "parent": "atlas-docs",
+      "closedOn": null,
+      "fields": {
+        "status": "not-started",
+        "client": "atlas",
+        "assignees": [
+          "tom-okafor"
+        ],
+        "target": "2026-12-12",
+        "milestone": "m25"
+      },
+      "subIssues": [],
+      "comments": []
+    }
+  ],
+  "views": [
+    {
+      "id": 1,
+      "name": "Roadmap",
+      "layout": "roadmap",
+      "filter": "no:parent-issue",
+      "groupBy": "client",
+      "sort": [],
+      "zoom": "month",
+      "markers": [
+        "milestone"
+      ],
+      "startField": "start",
+      "targetField": "target",
+      "fields": [
+        "title",
+        "status",
+        "client",
+        "assignees",
+        "phase",
+        "start",
+        "target",
+        "progress"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Milestones",
+      "layout": "roadmap",
+      "filter": "has:parent-issue",
+      "groupBy": "parent",
+      "sort": [
+        {
+          "field": "target",
+          "dir": "asc"
+        }
+      ],
+      "zoom": "quarter",
+      "markers": [],
+      "startField": "start",
+      "targetField": "target",
+      "fields": [
+        "title",
+        "status",
+        "client",
+        "assignees",
+        "target"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "All items",
+      "layout": "table",
+      "filter": "",
+      "groupBy": null,
+      "sort": [],
+      "zoom": "month",
+      "markers": [],
+      "startField": "start",
+      "targetField": "target",
+      "fields": [
+        "title",
+        "status",
+        "client",
+        "assignees",
+        "phase",
+        "start",
+        "target",
+        "progress",
+        "subIssuesProgress"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Status board",
+      "layout": "board",
+      "filter": "no:parent-issue",
+      "groupBy": "status",
+      "sort": [],
+      "zoom": "month",
+      "markers": [],
+      "startField": "start",
+      "targetField": "target",
+      "fields": [
+        "client",
+        "assignees",
+        "target"
+      ]
+    }
+  ]
+}

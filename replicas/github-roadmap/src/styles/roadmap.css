@@ -1,0 +1,601 @@
+/* Roadmap layout. Sizes follow the original's CSS variables:
+   row 40px, group header 44px, pill 28px, number column 60px, title column 420px. */
+
+.Roadmap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+.Roadmap.is-dragging,
+.Roadmap.is-dragging * {
+  cursor: grabbing !important;
+  user-select: none;
+}
+.Roadmap-scroll {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  background-color: var(--bgColor-muted);
+  overscroll-behavior: contain;
+}
+.Roadmap-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+/* ---------- Header ---------- */
+
+.Roadmap-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  flex-shrink: 0;
+  background-color: var(--bgColor-default);
+  border-bottom: var(--borderWidth-thick) solid var(--borderColor-default);
+  color: var(--fgColor-muted);
+  font-size: var(--text-body-size-small);
+  line-height: 18px;
+  contain: layout;
+}
+.Roadmap-monthRow,
+.Roadmap-dayRow {
+  position: relative;
+  height: 32px;
+}
+.Roadmap-markerRow {
+  position: relative;
+  height: 24px;
+}
+.Roadmap-month {
+  position: absolute;
+  top: 0;
+  height: 32px;
+  padding-top: var(--base-size-8);
+  white-space: nowrap;
+}
+.Roadmap-monthLabel {
+  position: sticky;
+  left: 16px;
+  display: inline-block;
+}
+.Roadmap-day {
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+  font-size: 12px;
+}
+.Roadmap-day.is-today {
+  color: var(--fgColor-danger);
+  font-weight: var(--base-text-weight-semibold);
+}
+.Roadmap-markerLabel {
+  position: absolute;
+  top: 6px;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 4px 0 0;
+  background-color: var(--bgColor-default);
+  box-shadow: 0 0 11px 1px var(--bgColor-default);
+  font-size: var(--text-body-size-small);
+  font-weight: var(--base-text-weight-semibold);
+  line-height: 12px;
+  white-space: nowrap;
+  cursor: help;
+}
+.Roadmap-markerLabel:hover {
+  z-index: 1;
+  max-width: none;
+}
+.Roadmap-markerLabel.is-milestone {
+  color: var(--fgColor-success);
+}
+.Roadmap-markerLabel.is-sprint {
+  color: var(--fgColor-muted);
+  padding-left: 12px;
+}
+.Roadmap-markerLabel.is-currentSprint {
+  color: var(--fgColor-accent);
+  padding-left: 12px;
+}
+.Roadmap-todayNub,
+.Roadmap-nub {
+  position: absolute;
+  bottom: -5px;
+  z-index: 2;
+  width: 8px;
+  height: 8px;
+}
+.Roadmap-todayNub {
+  border-radius: 50%;
+  background-color: var(--fgColor-danger);
+}
+.Roadmap-nub.is-milestone {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background-color: var(--fgColor-success);
+  transform: rotate(45deg);
+}
+.Roadmap-nub.is-sprint,
+.Roadmap-nub.is-currentSprint {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: var(--borderWidth-thick) solid var(--fgColor-muted);
+  background-color: var(--bgColor-default);
+}
+.Roadmap-nub.is-currentSprint {
+  border-color: var(--fgColor-accent);
+}
+.Roadmap-nub.is-date {
+  width: 0;
+  height: 0;
+  bottom: -4px;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 5px solid var(--fgColor-muted);
+}
+
+/* ---------- Toolbar ---------- */
+
+.Roadmap-controls {
+  position: absolute;
+  top: 3px;
+  right: 16px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  background-color: var(--bgColor-default);
+}
+.Roadmap-controls::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -20px;
+  width: 20px;
+  height: 100%;
+  background-color: var(--bgColor-default);
+  mask-image: linear-gradient(90deg, transparent 0%, #fff 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #fff 100%);
+}
+.Roadmap-control {
+  color: var(--fgColor-muted);
+  font-weight: var(--base-text-weight-normal);
+}
+.Roadmap-control .Btn-visual {
+  color: var(--fgColor-muted);
+}
+.Roadmap-control.is-open {
+  box-shadow: inset 0 0 0 2px var(--focus-outlineColor);
+}
+.Roadmap-today {
+  color: var(--fgColor-muted);
+}
+
+.Roadmap-paneHandle {
+  position: absolute;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 24px;
+  background-color: var(--bgColor-default);
+  color: var(--fgColor-muted);
+  cursor: col-resize;
+  touch-action: none;
+}
+.Roadmap-paneHandle:hover {
+  color: var(--fgColor-accent);
+}
+
+/* ---------- Body ---------- */
+
+.Roadmap-body {
+  position: relative;
+  flex: 1;
+  padding-bottom: var(--base-size-32);
+}
+.Roadmap-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.Line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: var(--borderWidth-thin) solid var(--borderColor-default);
+}
+.Line.is-today {
+  border-left: var(--borderWidth-thick) solid var(--borderColor-danger-muted);
+}
+.Line.is-milestone {
+  border-left-color: var(--borderColor-success-muted);
+}
+.Line.is-sprint {
+  border-left-color: var(--fgColor-muted);
+  opacity: 0.33;
+}
+.Line.is-currentSprint {
+  border-left-color: var(--borderColor-accent-muted);
+}
+.Line.is-date {
+  border-left-color: var(--fgColor-muted);
+  opacity: 0.33;
+}
+
+.Roadmap-group {
+  position: relative;
+  border-top: var(--borderWidth-thin) solid var(--borderColor-default);
+  box-shadow: var(--shadow-resting-small);
+}
+.Roadmap-group:first-of-type {
+  border-top: none;
+}
+.Roadmap-gap {
+  height: var(--base-size-16);
+}
+.Roadmap-gapPane {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  height: 100%;
+  background-color: var(--bgColor-muted);
+}
+.Roadmap-gap + .Roadmap-group {
+  border-top: var(--borderWidth-thin) solid var(--borderColor-default);
+}
+.Roadmap-group.is-ungrouped {
+  box-shadow: none;
+}
+.Roadmap-group.is-collapsed {
+  border-bottom: var(--borderWidth-thin) solid var(--borderColor-default);
+}
+
+.Roadmap-groupHeader {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.Roadmap-groupLabel {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: var(--base-size-8);
+  height: 100%;
+  padding-left: var(--base-size-8);
+  padding-right: var(--base-size-8);
+  overflow: hidden;
+  background-color: var(--bgColor-default);
+  border-bottom: var(--borderWidth-thin) solid var(--borderColor-muted);
+  flex-shrink: 0;
+}
+.Roadmap-chevron,
+.Roadmap-groupMenu {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--borderRadius-medium);
+  background: transparent;
+  color: var(--fgColor-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.Roadmap-chevron:hover,
+.Roadmap-groupMenu:hover {
+  background-color: var(--control-transparent-bgColor-hover);
+}
+.Roadmap-chevron .octicon {
+  transition: transform 120ms ease;
+}
+.Roadmap-chevron[aria-expanded='false'] .octicon {
+  transform: rotate(-90deg);
+}
+.Roadmap-groupName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--text-body-size-large, 16px);
+  font-weight: var(--base-text-weight-semibold);
+  line-height: 24px;
+  color: var(--fgColor-default);
+}
+.Roadmap-groupLabel .Counter {
+  color: var(--fgColor-muted);
+}
+
+.GroupPill {
+  position: absolute;
+  top: 8px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  height: 28px;
+  padding: 0;
+  border: var(--borderWidth-thick) solid var(--borderColor-default);
+  border-radius: 14px;
+  background-color: var(--bgColor-default);
+  color: var(--fgColor-muted);
+  white-space: nowrap;
+  line-height: 24px;
+}
+.GroupPill-label {
+  display: inline-block;
+  padding: 0 var(--base-size-8);
+}
+
+.Roadmap-row {
+  position: relative;
+  display: flex;
+}
+.Roadmap-pane {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  display: flex;
+  height: 100%;
+  background-color: var(--bgColor-default);
+  border-bottom: var(--borderWidth-thin) solid var(--borderColor-muted);
+  box-shadow: 1px 0 0 var(--borderColor-muted);
+  flex-shrink: 0;
+}
+.Roadmap-row:hover .Roadmap-pane,
+.Roadmap-row.is-dragging .Roadmap-pane {
+  background-color: var(--bgColor-muted);
+}
+.Roadmap-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 24px;
+  color: var(--fgColor-muted);
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+.Roadmap-title {
+  container-type: inline-size;
+  display: flex;
+  align-items: center;
+  gap: var(--base-size-8);
+  min-width: 0;
+  padding: 0 var(--base-size-12);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.Roadmap-titleLink {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--fgColor-default);
+  flex: 0 1 auto;
+}
+.Roadmap-titleLink:hover {
+  color: var(--fgColor-accent);
+}
+.Roadmap-number-ref {
+  color: var(--fgColor-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.Roadmap-dateCell {
+  display: flex;
+  align-items: center;
+  width: 120px;
+  padding: 0 var(--base-size-8);
+  border-left: var(--borderWidth-thin) solid var(--borderColor-muted);
+  color: var(--fgColor-default);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.Roadmap-addRow .Roadmap-pane {
+  border-bottom: 0;
+}
+.Roadmap-empty {
+  padding: var(--base-size-16);
+  color: var(--fgColor-muted);
+  background: var(--bgColor-default);
+  position: sticky;
+  left: 0;
+  z-index: 3;
+}
+
+/* ---------- Item pills ---------- */
+
+.Pill {
+  position: absolute;
+  top: 6px;
+  z-index: 1;
+  height: 28px;
+}
+.Pill-bg {
+  position: absolute;
+  inset: 0;
+  border: var(--borderWidth-thin) solid transparent;
+  border-radius: 5px;
+  background-color: var(--bgColor-default);
+  box-shadow: var(--shadow-resting-medium);
+  cursor: grab;
+}
+.Roadmap-row:hover .Pill-bg,
+.Pill.is-active .Pill-bg {
+  border-color: var(--fgColor-muted);
+  border-radius: var(--borderRadius-small, 3px);
+}
+.Pill-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--base-size-8);
+  height: 28px;
+  padding: 0 var(--base-size-8);
+  white-space: nowrap;
+  cursor: grab;
+  touch-action: pan-y;
+}
+.Pill-title {
+  color: var(--fgColor-default);
+}
+.Pill.is-narrow .Pill-title,
+.Pill.is-narrow .Pill-number {
+  color: var(--fgColor-muted);
+}
+.Pill-number {
+  color: var(--fgColor-default);
+}
+.Pill-content:hover .Pill-title {
+  color: var(--fgColor-accent);
+}
+.Pill-avatars {
+  display: inline-flex;
+  gap: 2px;
+}
+.Pill-handle {
+  position: absolute;
+  top: 3px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 21px;
+  height: 21px;
+  cursor: col-resize;
+  touch-action: none;
+}
+.Pill-handle--start {
+  right: 100%;
+  margin-right: -10px;
+}
+.Pill-handle--end {
+  left: 100%;
+  margin-left: -10px;
+}
+.Pill-handle span {
+  width: 3px;
+  height: 21px;
+  border-radius: 2px;
+  background-color: transparent;
+}
+.Pill-handle:hover span {
+  background-color: var(--fgColor-muted);
+}
+.Pill.is-active .Pill-handle span {
+  background-color: transparent;
+}
+.Pill-jump,
+.Pill-add {
+  position: absolute;
+  top: 6px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 28px;
+  padding: 0;
+  border: var(--borderWidth-thin) solid var(--borderColor-muted);
+  border-radius: 5px;
+  background-color: var(--bgColor-default);
+  color: var(--fgColor-muted);
+  cursor: pointer;
+}
+.Pill-jump:hover,
+.Pill-add:hover {
+  color: var(--fgColor-accent);
+  border-color: var(--borderColor-default);
+}
+.Pill-ghost {
+  position: absolute;
+  top: 6px;
+  z-index: 1;
+  height: 28px;
+  border: var(--borderWidth-thin) dotted var(--fgColor-muted);
+  border-radius: 5px;
+  background-color: var(--bgColor-default);
+  opacity: 0.7;
+  pointer-events: none;
+}
+.PillTooltip {
+  position: absolute;
+  z-index: 20;
+  padding: var(--base-size-4) var(--base-size-8);
+  border-radius: var(--borderRadius-medium);
+  background-color: var(--tooltip-bgColor);
+  color: var(--tooltip-fgColor);
+  font-size: var(--text-body-size-small);
+  line-height: 18px;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* ---------- Add item ---------- */
+
+.AddItem {
+  display: flex;
+  align-items: center;
+  gap: var(--base-size-8);
+  width: 100%;
+  height: 100%;
+  padding: 0 var(--base-size-12) 0 22px;
+  border: 0;
+  background: transparent;
+  color: var(--fgColor-muted);
+  font-size: var(--text-body-size-medium);
+  text-align: left;
+  cursor: pointer;
+}
+.AddItem > span {
+  margin-left: 20px;
+}
+.AddItem:hover:not(.AddItem--editing) {
+  color: var(--fgColor-default);
+}
+.AddItem--editing {
+  cursor: default;
+}
+.AddItem-input {
+  flex: 1;
+  min-width: 0;
+  height: 28px;
+  margin-left: 12px;
+  padding: 0 var(--base-size-8);
+  border: var(--borderWidth-thin) solid var(--borderColor-default);
+  border-radius: var(--borderRadius-medium);
+  background-color: var(--bgColor-default);
+  color: var(--fgColor-default);
+  font: inherit;
+}
+.AddItem-input:focus {
+  outline: 2px solid var(--focus-outlineColor);
+  outline-offset: -1px;
+  border-color: transparent;
+}
+
+@container (max-width: 100px) {
+  .Roadmap-titleLink {
+    display: none;
+  }
+}
+.Roadmap-addRow .AddItem {
+  white-space: nowrap;
+  overflow: hidden;
+}
