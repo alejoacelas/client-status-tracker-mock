@@ -2,40 +2,24 @@
 
 ## Core decisions
 
-### Keeping client data separate
-- [Clients read their data only through `client_portal(token)`](#client-portal-function)
-
-### Automation
-- [The daily routine commits change files; a GitHub Action applies them](#change-files-and-the-action)
-- [Change files are applied once, when added](#apply-once)
-
-### Airtable sharing
-- [The Airtable client link is a shared base view](#airtable-client-link)
+### Replicas
+- [Replicas are internal and unbranded](#internal-unbranded-replicas)
+- [Third-party captures stay out of the repository](#reference-captures)
 
 ## Details
 
-### Client portal function
-Row-level security blocks anonymous reads of every table. Client pages call the
-security-definer function `client_portal(token)` in
-[supabase/schema.sql](supabase/schema.sql), which returns only client-visible
-fields and updates. Adding a field to the client page means adding it to that
-function; never grant `anon` select on the tables.
+### Internal, unbranded replicas
+Each replica copies its original's layout, palette and behaviour as closely as
+the public material allows, so that design discussions can point at a concrete
+page. Logos and brand names are replaced with "Fieldwork Studio". Anything
+adopted from a replica is restyled before Varun uses it commercially.
 
-### Change files and the Action
-Claude routines use claude.ai connectors but can't be given secrets, so the
-routine never writes to Supabase or Airtable. It commits
-`changes/YYYY-MM-DD.json`, and [the Action](.github/workflows/apply-changes.yml)
-applies it with repository secrets. The git history doubles as an audit log of
-automated edits.
-
-### Apply once
-The Action applies only change files added in the triggering push. Re-applying
-old files would overwrite later manual edits to status or progress. Updates are
-also de-duplicated by `source_ref`.
-
-### Airtable client link
-On Airtable's free plan, public interface pages need the Team plan and external
-viewers need the Portals add-on. The free option is a public read-only link to a
-filtered base view with internal fields hidden.
+### Reference captures
+Screenshots, HTML and CSS captured from the original sites live in each
+replica's ignored `reference/` folder. The repository is public, and the
+captures belong to their owners.
 
 ## Decision log
+
+- 2026-10-08: Deleted the Airtable and Supabase prototypes after the comparison
+  (findings kept in README.md). Started the replica gallery.
