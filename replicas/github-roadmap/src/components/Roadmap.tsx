@@ -579,7 +579,7 @@ function Row(p: RowProps) {
             <GrabberIcon size={16} />
           </span>
         </div>
-        <div className={`Roadmap-title${p.view.truncateTitles === false ? '' : ''}`} style={{ width: p.pane - NUMBER_W }}>
+        <div className="Roadmap-title" style={{ width: p.pane - NUMBER_W }}>
           <ItemIcon item={item} />
           <a
             className="Roadmap-titleLink"
@@ -603,7 +603,11 @@ function Row(p: RowProps) {
       {span && !offLeft && !offRight && (
         <div className={`Pill${p.dragging ? ' is-active' : ''}${w <= MIN_PILL + 16 ? ' is-narrow' : ''}`} style={{ left, width: w }} title={fmtRange(span.start, span.end, TODAY)}>
           <div className="Pill-bg" onPointerDown={(e) => p.onPointerDown(e, 'move')} />
-          <div className="Pill-content" style={{ transform: `translateX(${contentOffset}px)` }} onPointerDown={(e) => p.onPointerDown(e, 'move')}>
+          <div
+            className={`Pill-content${p.view.truncateTitles ? ' is-truncated' : ''}`}
+            style={{ transform: `translateX(${contentOffset}px)`, maxWidth: p.view.truncateTitles ? Math.max(MIN_PILL, w - contentOffset) : undefined }}
+            onPointerDown={(e) => p.onPointerDown(e, 'move')}
+          >
             <ItemIcon item={item} />
             <span className="Pill-title">
               {item.title}

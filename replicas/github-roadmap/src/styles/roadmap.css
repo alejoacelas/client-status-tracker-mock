@@ -669,3 +669,12 @@ body.is-row-dragging * {
 .Roadmap-row.is-drop-after .Roadmap-pane {
   box-shadow: inset 0 -2px 0 var(--borderColor-accent-emphasis);
 }
+
+.Pill-content.is-truncated {
+  overflow: hidden;
+}
+.Pill-content.is-truncated .Pill-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
