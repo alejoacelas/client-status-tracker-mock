@@ -2,35 +2,44 @@ import { useRef, useState } from 'react';
 import type { StatusUpdate } from '../data/mock';
 import { fmtDate, fmtRange } from '../lib/dates';
 import { STATUS } from '../lib/status';
-import { getPerson, hrefFor, itemInfo, navigate, useStore, useToast } from '../store';
+import { getField, getPerson, hrefFor, itemInfo, navigate, useStore, useToast } from '../store';
 import { HighlightBlock } from './Highlights';
 import { IconLink, IconLockFilled, IconMore, IconPencil, IconThumb, IconTrash } from './Icons';
-import { Avatar, MenuItem, MenuSep, Popover, StatusChip } from './ui';
+import { Avatar, MenuItem, MenuSep, Pill, Popover, StatusChip } from './ui';
 
-export function UpdateFields({ u }: { u: StatusUpdate }) {
+export const UPDATE_FIELD_CHOICES = [
+  { id: 'owner', label: 'Owner' },
+  { id: 'dates', label: 'Dates' },
+  { id: 'priority', label: 'Priority' },
+  { id: 'phase', label: 'Phase' },
+  { id: 'source', label: 'Source' },
+];
+
+export function FieldValue({ u, fieldId }: { u: Pick<StatusUpdate, 'parent' | 'source'>; fieldId: string }) {
   const { data } = useStore();
   const info = itemInfo(data, u.parent);
-  const owner = getPerson(data, info?.ownerId);
+  if (fieldId === 'owner') return <span>{getPerson(data, info?.ownerId)?.name ?? '—'}</span>;
+  if (fieldId === 'dates') return <span>{info ? fmtRange(info.startDate, info.dueDate) || '—' : '—'}</span>;
+  if (fieldId === 'source') return <span>{u.source ?? 'Manual'}</span>;
+  const f = getField(data, fieldId);
+  const o = f?.options?.find((x) => x.id === data.values[u.parent.id]?.[fieldId]);
+  return o ? <Pill name={o.name} color={o.color} /> : <span className="muted">—</span>;
+}
+
+export function UpdateFields({ u }: { u: StatusUpdate }) {
+  const fields = u.fields ?? ['owner', 'dates', ...(u.source ? ['source'] : [])];
   return (
     <div className="su-fields">
       <div className="su-field">
         <span className="su-field-label">Status</span>
-        <StatusChip status={u.status} size="sm" />
+        <span><StatusChip status={u.status} size="sm" /></span>
       </div>
-      <div className="su-field">
-        <span className="su-field-label">Owner</span>
-        <span>{owner?.name ?? '—'}</span>
-      </div>
-      <div className="su-field">
-        <span className="su-field-label">Dates</span>
-        <span>{info ? fmtRange(info.startDate, info.dueDate) || '—' : '—'}</span>
-      </div>
-      {u.source && (
-        <div className="su-field">
-          <span className="su-field-label">Source</span>
-          <span>{u.source}</span>
+      {fields.map((f) => (
+        <div key={f} className="su-field">
+          <span className="su-field-label">{UPDATE_FIELD_CHOICES.find((c) => c.id === f)?.label ?? f}</span>
+          <FieldValue u={u} fieldId={f} />
         </div>
-      )}
+      ))}
     </div>
   );
 }

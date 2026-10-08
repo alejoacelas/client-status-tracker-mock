@@ -97,6 +97,7 @@ export interface StatusUpdate {
   isPrivate: boolean;
   source?: string;
   sections: UpdateSection[];
+  fields?: string[]; // which project fields the update shows; defaults to owner and dates
   likes: string[];
   comments: StatusComment[];
 }
@@ -141,6 +142,7 @@ export interface PortfolioView {
   groupBy: string | null;
   progressType: 'task' | 'milestone';
   nameWidth: number;
+  charts?: string[]; // dashboard chart ids, in order
 }
 
 export interface Data {
@@ -324,9 +326,10 @@ const seedUpdates: { project: string; date: string; source: string; visible: boo
   { project: 'meridian-portal', date: '2026-10-05', source: 'Email', visible: true, status: 'at_risk', summary: "Still waiting on EHR sandbox access. Go-live on 30 Oct is at risk if access isn't granted by 10 Oct." },
 ];
 
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const shortDate = (iso: string) => {
-  const d = new Date(iso + 'T00:00:00');
-  return `${d.getDate()} ${d.toLocaleString('en-GB', { month: 'short' })}`;
+  const [, m, d] = iso.split('-').map(Number);
+  return `${d} ${MONTHS[m - 1]}`;
 };
 
 const projectUpdates: StatusUpdate[] = seedUpdates.map((u, i) => {

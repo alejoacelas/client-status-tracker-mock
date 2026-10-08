@@ -32,7 +32,12 @@ export function ListView({ portfolioId, customize, setCustomize }: { portfolioId
     setPane(null);
   };
 
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  // The top-level portfolio opens with its client portfolios expanded.
+  const [expanded, setExpanded] = useState<Record<string, boolean>>(() =>
+    portfolioId === data.rootPortfolioId
+      ? Object.fromEntries(pf.items.filter((i) => i.type === 'portfolio').map((i) => [`${portfolioId}/${i.id}`, true]))
+      : {},
+  );
   const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({});
   const [pop, setPop] = useState<{ kind: string; el: HTMLElement; data?: string } | null>(null);
   const [renaming, setRenaming] = useState<string | null>(null);

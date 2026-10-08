@@ -116,10 +116,10 @@ export function PortfolioPage({ id, tab }: { id: string; tab: string }) {
       </header>
 
       <div className="page-content">
-        {tab === 'list' && <ListView portfolioId={id} customize={customize} setCustomize={setCustomize} />}
-        {tab === 'timeline' && <TimelineView portfolioId={id} />}
-        {tab === 'dashboard' && <DashboardView portfolioId={id} />}
-        {tab === 'progress' && <ProgressView portfolioId={id} />}
+        {tab === 'list' && <ListView key={id} portfolioId={id} customize={customize} setCustomize={setCustomize} />}
+        {tab === 'timeline' && <TimelineView key={id} portfolioId={id} />}
+        {tab === 'dashboard' && <DashboardView key={id} portfolioId={id} />}
+        {tab === 'progress' && <ProgressView key={id} portfolioId={id} />}
         {tab === 'workload' && <NotReplicated title="Workload" text="Workload shows each person's tasks across projects. The seed has no tasks, so this tab is not replicated." />}
         {tab === 'messages' && <NotReplicated title="Messages" text="Send a message to everyone in this portfolio. Messaging is not part of this replica." />}
       </div>
