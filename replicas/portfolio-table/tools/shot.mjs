@@ -3,7 +3,7 @@ import { chromium } from 'playwright';
 import fs from 'node:fs';
 const [hash, out, width = '1440', height = '900', script] = process.argv.slice(2);
 const browser = await chromium.launch();
-const page = await browser.newPage({ viewport: { width: +width, height: +height }, deviceScaleFactor: 1 });
+const page = await browser.newPage({ viewport: { width: +width, height: +height }, deviceScaleFactor: Number(process.env.DPR ?? 1) });
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
 page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });

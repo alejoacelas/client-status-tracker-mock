@@ -161,7 +161,7 @@ body.resizing, body.resizing * { cursor: col-resize !important; user-select: non
 .page-content { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
 
 /* ---------------- Page header ---------------- */
-.page-header { flex: none; padding: 16px 24px 0; border-bottom: 1px solid var(--border); }
+.page-header { flex: none; padding: 12px 24px 0; border-bottom: 1px solid var(--border); }
 .ph-top { display: flex; align-items: center; gap: 12px; min-height: 52px; }
 .ph-icon { flex: none; border-radius: 8px; padding: 0; display: flex; }
 .ph-icon:hover { background: var(--bg-hover); }
@@ -181,9 +181,9 @@ body.resizing, body.resizing * { cursor: col-resize !important; user-select: non
 .members-btn { display: inline-flex; border-radius: 16px; padding: 2px; }
 .members-btn:hover { background: var(--bg-menu-hover); }
 .vsep { width: 1px; height: 24px; background: var(--border); margin: 0 4px; }
-.tabs { display: flex; gap: 20px; margin-top: 8px; overflow-x: auto; scrollbar-width: none; }
+.tabs { display: flex; gap: 20px; margin-top: 0; overflow-x: auto; scrollbar-width: none; }
 .tabs::-webkit-scrollbar { display: none; }
-.tab { position: relative; padding: 8px 0 10px; color: var(--text-weak); font-size: 14px; white-space: nowrap; }
+.tab { position: relative; padding: 6px 0 9px; color: var(--text-weak); font-size: 14px; white-space: nowrap; }
 .tab:hover { color: var(--text); }
 .tab.active { color: var(--text); font-weight: 500; }
 .tab.active::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--text); border-radius: 1px; }
@@ -441,7 +441,7 @@ textarea.input { height: auto; padding: 8px 10px; resize: vertical; }
 .prev-updates a:hover { background: var(--bg-hover); }
 
 /* ---------------- Status card & update body ---------------- */
-.status-card { border: 1px solid var(--border); border-top: 8px solid var(--green); border-radius: 8px; padding: 20px 24px 24px; background: #fff; }
+.status-card { border: 1px solid var(--border); border-top: 6px solid var(--green); border-radius: 8px; padding: 20px 24px 24px; background: #fff; }
 .sc-head { display: flex; align-items: flex-start; gap: 8px; }
 .sc-title { flex: 1; font-size: 20px; line-height: 28px; font-weight: 500; }
 .sc-title:hover { text-decoration: underline; }
