@@ -24,15 +24,9 @@ it commercially. Run one with `cd replicas/<name> && npm install && npm run dev`
 https://status-tracker-designs.vercel.app shows every replica behind one
 wrapper (`gallery/index.html`): a top bar with the design name, its
 inspiration and arrows, plus a first-visit help popup. The site sends
-`noindex`. Rebuild and redeploy with:
-
-```sh
-./scripts/build-site.sh && cp -R .vercel site/ && (cd site && vercel deploy --prod --yes)
-```
-
-The repo root must be linked to Vercel project `status-tracker-designs` (team
-`alejandros-projects-a115cc74`); run
-`vercel link --yes --project status-tracker-designs --scope alejandros-projects-a115cc74`
-if `.vercel/` is missing, then delete the `.env.local` it creates. To add a
+`noindex`. Vercel project `status-tracker-designs` (team
+`alejandros-projects-a115cc74`) is connected to this repository: every push to
+`main` runs `scripts/build-site.sh` per [vercel.json](vercel.json) and deploys
+`site/`. Run the same script locally to check a build. To add a
 design, add its folder under `replicas/` and an entry to the `designs` list in
 `gallery/index.html`.

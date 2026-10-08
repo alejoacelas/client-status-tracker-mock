@@ -1,0 +1,7 @@
+{
+  "framework": null,
+  "installCommand": "true",
+  "buildCommand": "sh scripts/build-site.sh",
+  "outputDirectory": "site",
+  "headers": [{ "source": "/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }]
+}
