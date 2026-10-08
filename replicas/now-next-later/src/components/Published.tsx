@@ -139,11 +139,11 @@ function PubHeader({ name, description }: { name: string; description?: string }
   );
 }
 
-function ProductHead({ name, color, summary }: { name: string; color: string; summary?: string }) {
+function ProductHead({ name, summary }: { name: string; summary?: string }) {
   return (
     <>
       <div className="pub-roadmap__header">
-        <span className="pub-product-image" style={{ background: color }}>
+        <span className="pub-product-image">
           {name[0]}
         </span>
         <h2>{name}</h2>
@@ -237,7 +237,7 @@ export function PublishedPage({ token }: { token: string }) {
         <PubHeader name="Upcoming" description={roadmap.description} />
         {upcoming.map(({ p, items }) => (
           <div className="pub-roadmap" key={p.id}>
-            <ProductHead name={p.name} color={p.color} summary={p.clientSummary} />
+            <ProductHead name={p.name} summary={p.clientSummary} />
             <UpcomingProduct items={items} columns={state.columns} />
           </div>
         ))}
@@ -250,7 +250,7 @@ export function PublishedPage({ token }: { token: string }) {
         <PubHeader name="Recently Launched" />
         {done.map(({ p, items }) => (
           <div className="pub-roadmap" key={p.id}>
-            <ProductHead name={p.name} color={p.color} summary={upcoming.some((u) => u.p.id === p.id) ? undefined : p.clientSummary} />
+            <ProductHead name={p.name} summary={upcoming.some((u) => u.p.id === p.id) ? undefined : p.clientSummary} />
             <CompletedProduct items={items} />
           </div>
         ))}
